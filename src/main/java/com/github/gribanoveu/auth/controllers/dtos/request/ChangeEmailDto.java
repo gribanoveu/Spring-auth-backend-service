@@ -1,11 +1,11 @@
 package com.github.gribanoveu.auth.controllers.dtos.request;
 
-import com.github.gribanoveu.auth.entities.tables.User;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-import static com.github.gribanoveu.auth.constants.RegexpFormat.*;
-import static com.github.gribanoveu.auth.constants.ValidationMessages.*;
+import static com.github.gribanoveu.auth.constants.RegexpFormat.EMAIL_PATTERN;
+import static com.github.gribanoveu.auth.constants.ValidationMessages.EMAIL_FORMAT_MESSAGE;
+import static com.github.gribanoveu.auth.constants.ValidationMessages.EMAIL_SIZE_MESSAGE;
 
 /**
  * @author Evgeny Gribanov

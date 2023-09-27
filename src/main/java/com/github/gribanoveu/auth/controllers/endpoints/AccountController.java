@@ -5,8 +5,6 @@ import com.github.gribanoveu.auth.controllers.dtos.request.ChangePasswordDto;
 import com.github.gribanoveu.auth.controllers.dtos.request.GenerateOtpDto;
 import com.github.gribanoveu.auth.controllers.dtos.request.RestorePasswordDto;
 import com.github.gribanoveu.auth.controllers.facade.AccountControllerFacade;
-import com.github.gribanoveu.auth.controllers.facade.UserControllerFacade;
-import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

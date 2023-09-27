@@ -1,10 +1,8 @@
 package com.github.gribanoveu.auth.controllers.endpoints;
 
 import com.github.gribanoveu.auth.controllers.dtos.request.LoginDto;
-import com.github.gribanoveu.auth.controllers.dtos.response.StatusResponse;
 import com.github.gribanoveu.auth.controllers.dtos.response.TokenResponse;
 import com.github.gribanoveu.auth.controllers.facade.TokenControllerFacade;
-import jakarta.annotation.security.PermitAll;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

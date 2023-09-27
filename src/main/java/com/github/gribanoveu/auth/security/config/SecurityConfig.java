@@ -19,7 +19,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static com.github.gribanoveu.auth.entities.enums.Permissions.*;
+import static com.github.gribanoveu.auth.entities.enums.Permissions.AU_PERMISSIONS_MANAGEMENT;
+import static com.github.gribanoveu.auth.entities.enums.Permissions.AU_USERS_MANAGEMENT;
 
 /**
  * @author Evgeny Gribanov

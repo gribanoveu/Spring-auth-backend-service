@@ -2,7 +2,6 @@ package com.github.gribanoveu.auth.controllers.dtos.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.github.gribanoveu.auth.entities.tables.Permission;
 import com.github.gribanoveu.auth.entities.tables.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;

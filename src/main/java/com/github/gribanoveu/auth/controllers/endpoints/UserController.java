@@ -1,15 +1,13 @@
 package com.github.gribanoveu.auth.controllers.endpoints;
 
-import com.github.gribanoveu.auth.controllers.dtos.request.ChangePasswordDto;
-import com.github.gribanoveu.auth.controllers.dtos.request.RegisterDto;
-import com.github.gribanoveu.auth.controllers.dtos.request.ChangeEmailDto;
 import com.github.gribanoveu.auth.controllers.facade.UserControllerFacade;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Evgeny Gribanov

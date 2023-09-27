@@ -1,6 +1,5 @@
 package com.github.gribanoveu.auth.controllers.facade;
 
-import com.github.gribanoveu.auth.constants.ErrorMessages;
 import com.github.gribanoveu.auth.controllers.dtos.request.ChangeEmailDto;
 import com.github.gribanoveu.auth.controllers.dtos.request.ChangePasswordDto;
 import com.github.gribanoveu.auth.controllers.dtos.request.GenerateOtpDto;
@@ -9,7 +8,6 @@ import com.github.gribanoveu.auth.controllers.dtos.response.StatusResponse;
 import com.github.gribanoveu.auth.controllers.exeptions.CredentialEx;
 import com.github.gribanoveu.auth.entities.services.contract.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;

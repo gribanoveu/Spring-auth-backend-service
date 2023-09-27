@@ -4,7 +4,9 @@ package com.github.gribanoveu.auth.entities.tables;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.gribanoveu.auth.constants.Constants;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Collection;

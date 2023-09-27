@@ -2,7 +2,6 @@ package com.github.gribanoveu.auth.controllers.exeptions;
 
 import com.github.gribanoveu.auth.controllers.dtos.response.StatusResponse;
 import com.github.gribanoveu.auth.utils.JsonUtils;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

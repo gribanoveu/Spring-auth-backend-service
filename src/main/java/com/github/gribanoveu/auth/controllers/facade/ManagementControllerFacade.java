@@ -10,12 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Set;
 
 import static com.github.gribanoveu.auth.constants.ErrorMessages.*;
-import static com.github.gribanoveu.auth.constants.ErrorMessages.USER_CREATED;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
 
