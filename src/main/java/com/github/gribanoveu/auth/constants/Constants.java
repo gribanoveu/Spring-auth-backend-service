@@ -1,0 +1,9 @@
+package com.github.gribanoveu.auth.constants;
+
+/**
+ * @author Evgeny Gribanov
+ * @version 18.09.2023
+ */
+public class Constants {
+    public static final String DEFAULT_USER_POSITION = "USER";
+}
