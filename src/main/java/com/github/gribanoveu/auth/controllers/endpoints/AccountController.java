@@ -33,11 +33,11 @@ public class AccountController {
 
     @PostMapping("/generate-code") // anonymous access
     public ResponseEntity<?> generateOtpCode(@Valid @RequestBody GenerateOtpDto request) {
-        return userControllerFacade.generateOtpCode(request); // todo implement
+        return userControllerFacade.generateOtpCode(request);
     }
 
-    @PostMapping("/restore-password") // anonymous access  todo restore by otp email code
+    @PostMapping("/restore-password") // anonymous access
     public ResponseEntity<?> restorePassword(@Valid @RequestBody RestorePasswordDto request) {
-        return userControllerFacade.restorePasswordByOtp(request); // todo implement
+        return userControllerFacade.restorePasswordByOtp(request);
     }
 }

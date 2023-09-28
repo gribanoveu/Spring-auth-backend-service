@@ -29,4 +29,7 @@ public class ErrorMessages {
     public static final String PERMISSION_DELETED = "Permission successfully deleted";
     public static final String PERMISSION_UPDATED = "Permission successfully updated";
     public static final String PERMISSION_NOT_UPDATED = "Permission not updated";
+
+    public static final String OTP_CODE_CREATED = "OTP code created";
+    public static final String OTP_CODE_EXIST = "OTP code already exist. Wait %s minutes, and try again";
 }

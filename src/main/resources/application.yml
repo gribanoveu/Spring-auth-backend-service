@@ -2,9 +2,10 @@ server:
   port: 8189
   servlet:
     context-path: /api/secure
-jwt:
+time-variable:
   accessTokenLifetime: 15m
   refreshTokenLifetime: 7d
+  otpCodeLifetime: 15m
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
@@ -27,3 +28,7 @@ spring:
     default-property-inclusion: non_null
     serialization:
       write-dates-as-timestamps: false
+  data:
+    redis:
+      host: localhost
+      port: 6379

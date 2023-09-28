@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * @author Evgeny Gribanov
  * @version 29.08.2023
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class JsonUtils {
+
     public String convertDtoToJson(Object dto) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules();
@@ -21,5 +24,12 @@ public class JsonUtils {
             log.error(e.getLocalizedMessage());
         }
         return "";
+    }
+
+    public int generateRandomOtpCode() {
+        String NUMBERS = "0123456789";
+        var sb = new StringBuilder();
+        for (int i = 0; i < 6; i++) sb.append(NUMBERS.charAt(ThreadLocalRandom.current().nextInt(NUMBERS.length())));
+        return Integer.parseInt(sb.toString());
     }
 }

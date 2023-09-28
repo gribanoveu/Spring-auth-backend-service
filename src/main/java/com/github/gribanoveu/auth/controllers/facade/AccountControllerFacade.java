@@ -1,21 +1,26 @@
 package com.github.gribanoveu.auth.controllers.facade;
 
+import com.github.gribanoveu.auth.constants.ErrorMessages;
 import com.github.gribanoveu.auth.controllers.dtos.request.ChangeEmailDto;
 import com.github.gribanoveu.auth.controllers.dtos.request.ChangePasswordDto;
 import com.github.gribanoveu.auth.controllers.dtos.request.GenerateOtpDto;
 import com.github.gribanoveu.auth.controllers.dtos.request.RestorePasswordDto;
 import com.github.gribanoveu.auth.controllers.dtos.response.StatusResponse;
 import com.github.gribanoveu.auth.controllers.exeptions.CredentialEx;
+import com.github.gribanoveu.auth.entities.services.contract.RedisService;
 import com.github.gribanoveu.auth.entities.services.contract.UserService;
+import com.github.gribanoveu.auth.utils.JsonUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+
 import static com.github.gribanoveu.auth.constants.ErrorMessages.*;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 /**
  * @author Evgeny Gribanov
@@ -24,12 +29,16 @@ import static org.springframework.http.HttpStatus.OK;
 @Service
 @RequiredArgsConstructor
 public class AccountControllerFacade {
+    @Value("${time-variable.otpCodeLifetime}")
+    private Duration otpCodeLifeTime;
     private final UserService userService;
+    private final RedisService redisService;
     private final PasswordEncoder passwordEncoder;
+    private final JsonUtils jsonUtils;
 
     // user change email from app, authenticated
     public ResponseEntity<?> changeEmail(ChangeEmailDto request, Authentication authentication) {
-        if (!authentication.isAuthenticated()) throw new CredentialEx(FORBIDDEN, BAD_REQUEST);
+        if (!authentication.isAuthenticated()) throw new CredentialEx(ErrorMessages.FORBIDDEN, BAD_REQUEST);
 
         var userId = userService.findUserByEmail(authentication.getName()).getId();
         var updated = userService.updateEmail(userId, request.email());
@@ -40,7 +49,7 @@ public class AccountControllerFacade {
 
     // check that password and confirm password match
     // find user, if not exist -> error
-    // verify that the old password matches, if not -> error // todo make email code confirm
+    // verify that the old password matches, if not -> error
     // check that old password not equals new password, else -> error
     // change password
     public ResponseEntity<?> changePassword(ChangePasswordDto request, Authentication authentication) {
@@ -59,17 +68,26 @@ public class AccountControllerFacade {
     }
 
     // user open restore form and enter email
-    // service find user by email, generate and save otp code to db (with lifetime) todo find db (mb redis)
-    // send email with code
+    // service find user by email,
+    // if user not found -> error
+    // service find otp code
+    // if exist -> error
+    // else create new code
+    // save otp code to db (with lifetime)
+    // todo send email with code
     public ResponseEntity<?> generateOtpCode(GenerateOtpDto request) {
-        return null;
+        var userExist = userService.userExistByEmail(request.email());
+        if (!userExist) throw new CredentialEx(USER_NOT_EXIST, BAD_REQUEST);
+        var otpCode = jsonUtils.generateRandomOtpCode();
+        redisService.saveOptCode(request.email(), otpCode, otpCodeLifeTime);
+        return ResponseEntity.ok(StatusResponse.create(OK, OTP_CODE_CREATED));
     }
 
     // next screen user enter otp code and new password and re-enter password again
     // service check that code exist and have valid lifetime
     // service find userId by otp code and change password in db
     // send successful email
-    public ResponseEntity<?> restorePasswordByOtp(RestorePasswordDto request) {
+    public ResponseEntity<?> restorePasswordByOtp(RestorePasswordDto request) { // todo implement
         return null;
     }
 }

@@ -43,9 +43,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("*/permission").hasAuthority(AU_PERMISSIONS_MANAGEMENT.scope())
                         .requestMatchers("*/user-manage/**").hasAuthority(AU_USERS_MANAGEMENT.scope())
-                        .requestMatchers("*/token/**").permitAll()
-                        .requestMatchers("*/account/generate-code").permitAll()
-                        .requestMatchers("*/account/restore-password").permitAll()
+                        .requestMatchers("*/token/**").permitAll() // allow auth and anonymous users
+                        .requestMatchers("*/account/generate-code").anonymous() // allow only anonymous
+                        .requestMatchers("*/account/restore-password").anonymous()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager
