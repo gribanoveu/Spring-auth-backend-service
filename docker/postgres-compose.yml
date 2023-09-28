@@ -3,6 +3,7 @@ version: '3.7'
 services:
   postgres-db:
     image: postgres:15.4-alpine
+    container_name: auth_service_db_postgres
     restart: always
     environment:
       POSTGRES_USER: auth_postgres
