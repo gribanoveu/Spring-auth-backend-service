@@ -26,9 +26,4 @@ public class UserController {
     public ResponseEntity<?> getUserData(Authentication authentication) {
         return userControllerFacade.getUserData(authentication);
     }
-
-    @GetMapping("/all")
-    public ResponseEntity<?> getAllUsersList(@RequestParam int pageNumber, @RequestParam int pageSize) {
-        return userControllerFacade.getAllUsersList(pageNumber, pageSize);
-    }
 }

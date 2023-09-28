@@ -2,6 +2,7 @@ package com.github.gribanoveu.auth.controllers.facade;
 
 import com.github.gribanoveu.auth.controllers.dtos.request.RegisterDto;
 import com.github.gribanoveu.auth.controllers.dtos.response.StatusResponse;
+import com.github.gribanoveu.auth.controllers.dtos.response.UsersResponse;
 import com.github.gribanoveu.auth.controllers.exeptions.CredentialEx;
 import com.github.gribanoveu.auth.entities.services.contract.PermissionService;
 import com.github.gribanoveu.auth.entities.services.contract.UserService;
@@ -27,6 +28,10 @@ public class ManagementControllerFacade {
     private final UserService userService;
     private final PermissionService permissionService;
     private final PasswordEncoder passwordEncoder;
+
+    public ResponseEntity<?> getAllUsersList(int pageNumber, int pageSize) {
+        return ResponseEntity.ok(UsersResponse.create(OK, userService.getAllUsers(pageNumber, pageSize)));
+    }
 
     public ResponseEntity<?> registerUser(RegisterDto request) {
         if (!request.password().equals(request.confirmPassword())) throw new CredentialEx(PASSWORD_NOT_EQUALS, BAD_REQUEST);

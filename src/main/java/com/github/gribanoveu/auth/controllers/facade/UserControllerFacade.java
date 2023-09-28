@@ -22,9 +22,5 @@ public class UserControllerFacade {
         var userData = userService.findUserByEmail(authentication.getName());
         return ResponseEntity.ok(userData);
     }
-
-    public ResponseEntity<?> getAllUsersList(int pageNumber, int pageSize) {
-        return ResponseEntity.ok(UsersResponse.create(OK, userService.getAllUsers(pageNumber, pageSize)));
-    }
 }
 

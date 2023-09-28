@@ -13,16 +13,21 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/manage-user")
+@RequestMapping("/v1/user-manage")
 public class ManagementController {
     private final ManagementControllerFacade managementControllerFacade;
 
-    @PostMapping("/add")
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllUsersList(@RequestParam int pageNumber, @RequestParam int pageSize) {
+        return managementControllerFacade.getAllUsersList(pageNumber, pageSize);
+    }
+
+    @PostMapping("/add") // only admin can add new users
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterDto request) {
         return managementControllerFacade.registerUser(request);
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/{userId}") // only admin can delete user
     public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
         return managementControllerFacade.deleteUser(userId);
     }
