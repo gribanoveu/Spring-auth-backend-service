@@ -2,14 +2,13 @@ package com.github.gribanoveu.auth.entities.services.implementation;
 
 import com.github.gribanoveu.auth.controllers.exeptions.CredentialEx;
 import com.github.gribanoveu.auth.entities.services.contract.RedisService;
-import com.github.gribanoveu.auth.utils.JsonUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import static com.github.gribanoveu.auth.constants.ErrorMessages.OTP_CODE_EXIST;
 import static org.springframework.http.HttpStatus.TOO_MANY_REQUESTS;
@@ -22,13 +21,13 @@ import static org.springframework.http.HttpStatus.TOO_MANY_REQUESTS;
 @RequiredArgsConstructor
 public class RedisServiceImpl implements RedisService {
     private final RedisTemplate<String, Object> redisTemplate;
-    private final JsonUtils jsonUtils;
 
     @Override
     public void saveOptCode(String email, int code, Duration codeDuration) {
         var otpCode = getOtpCode(email);
+        var codeDurationInMinutes = getOtpExpire(email, TimeUnit.MINUTES);
         if (otpCode.isPresent()) throw new CredentialEx(
-            String.format(OTP_CODE_EXIST, codeDuration.toMinutes()), TOO_MANY_REQUESTS);
+            String.format(OTP_CODE_EXIST, codeDurationInMinutes), TOO_MANY_REQUESTS);
         redisTemplate.opsForValue().set(email, code, codeDuration);
     }
 
@@ -36,5 +35,10 @@ public class RedisServiceImpl implements RedisService {
     public Optional<Integer> getOtpCode(String email) {
         var code = (Integer) redisTemplate.opsForValue().get(email);
         return Optional.ofNullable(code);
+    }
+
+    @Override
+    public Long getOtpExpire(String email, TimeUnit timeUnit) {
+        return redisTemplate.getExpire(email, timeUnit);
     }
 }
