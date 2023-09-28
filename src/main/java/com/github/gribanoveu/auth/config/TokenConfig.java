@@ -1,4 +1,4 @@
-package com.github.gribanoveu.auth.security.config;
+package com.github.gribanoveu.auth.config;
 
 import com.github.gribanoveu.auth.utils.RsaProperties;
 import com.nimbusds.jose.jwk.JWK;

@@ -1,8 +1,8 @@
-package com.github.gribanoveu.auth.security.config;
+package com.github.gribanoveu.auth.config;
 
 import com.github.gribanoveu.auth.controllers.exeptions.CustomAccessDeniedHandler;
 import com.github.gribanoveu.auth.controllers.exeptions.ServerErrorEntryPoint;
-import com.github.gribanoveu.auth.security.userdetails.CustomUserDetailsService;
+import com.github.gribanoveu.auth.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,7 +1,7 @@
 package com.github.gribanoveu.auth.entities.services.contract;
 
 import com.github.gribanoveu.auth.entities.enums.TokenType;
-import com.github.gribanoveu.auth.security.userdetails.CustomUserDetails;
+import com.github.gribanoveu.auth.security.CustomUserDetails;
 
 import java.util.Date;
 import java.util.List;

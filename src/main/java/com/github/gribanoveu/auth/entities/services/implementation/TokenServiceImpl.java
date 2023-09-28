@@ -2,7 +2,7 @@ package com.github.gribanoveu.auth.entities.services.implementation;
 
 import com.github.gribanoveu.auth.entities.enums.TokenType;
 import com.github.gribanoveu.auth.entities.services.contract.TokenService;
-import com.github.gribanoveu.auth.security.userdetails.CustomUserDetails;
+import com.github.gribanoveu.auth.security.CustomUserDetails;
 import com.nimbusds.jwt.SignedJWT;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +29,9 @@ import java.util.List;
 @RequiredArgsConstructor @Getter
 public class TokenServiceImpl implements TokenService {
 
-    @Value("${jwt.accessTokenLifetime}")
+    @Value("${time-variable.accessTokenLifetime}")
     private Duration accessTokenLifetime;
-    @Value("${jwt.refreshTokenLifetime}")
+    @Value("${time-variable.refreshTokenLifetime}")
     private Duration refreshTokenLifetime;
 
     private final JwtEncoder jwtEncoder;

@@ -4,8 +4,8 @@ import com.github.gribanoveu.auth.controllers.dtos.request.LoginDto;
 import com.github.gribanoveu.auth.controllers.dtos.response.TokenResponse;
 import com.github.gribanoveu.auth.entities.enums.TokenType;
 import com.github.gribanoveu.auth.entities.services.contract.TokenService;
-import com.github.gribanoveu.auth.security.userdetails.CustomUserDetails;
-import com.github.gribanoveu.auth.security.userdetails.CustomUserDetailsService;
+import com.github.gribanoveu.auth.security.CustomUserDetails;
+import com.github.gribanoveu.auth.security.CustomUserDetailsService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +27,7 @@ public class TokenControllerFacade {
     private final TokenService tokenService;
     private final AuthenticationManager authManager;
     private final CustomUserDetailsService usrDetailsService;
-    @Value("${jwt.accessTokenLifetime}") private Duration accessTokenLifetime;
+    @Value("${time-variable.accessTokenLifetime}") private Duration accessTokenLifetime;
 
     public ResponseEntity<TokenResponse> authenticateUser(LoginDto request) {
         var authenticationToken = new UsernamePasswordAuthenticationToken(request.email(), request.password());

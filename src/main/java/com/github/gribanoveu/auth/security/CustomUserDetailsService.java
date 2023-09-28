@@ -1,8 +1,9 @@
-package com.github.gribanoveu.auth.security.userdetails;
+package com.github.gribanoveu.auth.security;
 
 import com.github.gribanoveu.auth.constants.ErrorMessages;
 import com.github.gribanoveu.auth.entities.repositories.UserRepository;
 import com.github.gribanoveu.auth.entities.tables.User;
+import com.github.gribanoveu.auth.security.CustomUserDetails;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
