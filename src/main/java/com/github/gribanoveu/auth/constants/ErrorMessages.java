@@ -19,6 +19,9 @@ public class ErrorMessages {
     public static final String USER_DELETED = "User deleted";
     public static final String USER_UPDATED = "User updated";
     public static final String USER_NOT_UPDATED = "User not updated";
+    public static final String USER_DISABLED = "User has been disabled";
+    public static final String USER_ENABLED = "User has been enabled";
+    public static final String USER_SET_DEFAULT_PASSWORD = "A default password has been set to the user";
 
     public static final String PERMISSION_NOT_EXIST = "No permission with such name was found";
     public static final String PERMISSION_EXIST = "Permission with such name already exist";

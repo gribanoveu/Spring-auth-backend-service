@@ -33,6 +33,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findUserById(Long id) {
+        return userRepository.findUserById(id).orElseThrow(() ->
+                new CredentialEx(ErrorMessages.USER_NOT_EXIST, HttpStatus.NOT_FOUND));
+    }
+
+    @Override
     public void deleteUserById(Long userId) {
         if (userRepository.existsById(userId)) userRepository.deleteById(userId);
         else throw new CredentialEx(ErrorMessages.USER_NOT_EXIST, HttpStatus.NOT_FOUND);
@@ -50,13 +56,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean updatePassword(String email, String password) {
-       return userRepository.updateUserPassword(email, password) > 0;
+    public Boolean updatePasswordByEmail(String email, String password) {
+       return userRepository.updateUserPasswordByEmail(email, password) > 0;
+    }
+
+    @Override
+    public Boolean updateUserPasswordAndCredentialsExpiredById(Long userId, String password) {
+        return userRepository.updateUserPasswordAndCredentialsExpiredById(userId, password) > 0;
     }
 
     @Override
     public Boolean updateEmail(Long userId, String newEmail) {
         return userRepository.updateUserEmail(userId, newEmail) > 0;
+    }
+
+    @Override
+    public Boolean updateEnabled(Long userId, Boolean enabled) {
+        return userRepository.updateUserEnabled(userId, enabled) > 0;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.github.gribanoveu.auth.controllers.facade;
 
+import com.github.gribanoveu.auth.constants.Constants;
 import com.github.gribanoveu.auth.controllers.dtos.request.RegisterDto;
 import com.github.gribanoveu.auth.controllers.dtos.response.StatusResponse;
 import com.github.gribanoveu.auth.controllers.dtos.response.UsersResponse;
@@ -51,16 +52,22 @@ public class ManagementControllerFacade {
         return ResponseEntity.ok(StatusResponse.create(OK, USER_DELETED));
     }
 
-    public ResponseEntity<?> blockUser(Long userId) {
-        return null;
+    public ResponseEntity<?> disableUser(Long userId) {
+        var updated = userService.updateEnabled(userId, false);
+        if (updated) return ResponseEntity.ok(StatusResponse.create(OK, USER_DISABLED));
+        throw new CredentialEx(USER_NOT_UPDATED, BAD_REQUEST);
     }
 
-    public ResponseEntity<?> unlockUser(Long userId) {
-        return null;
+    public ResponseEntity<?> enabledUser(Long userId) {
+        var updated = userService.updateEnabled(userId, true);
+        if (updated) return ResponseEntity.ok(StatusResponse.create(OK, USER_ENABLED));
+        throw new CredentialEx(USER_NOT_UPDATED, BAD_REQUEST);
     }
-
 
     public ResponseEntity<?> resetUserPasswordToDefault(Long userId) {
-        return null;
+        var updated = userService.updateUserPasswordAndCredentialsExpiredById(userId,
+                passwordEncoder.encode(Constants.DEFAULT_PASSWORD));
+        if (updated) return ResponseEntity.ok(StatusResponse.create(OK, USER_SET_DEFAULT_PASSWORD));
+        throw new CredentialEx(USER_NOT_UPDATED, BAD_REQUEST);
     }
 }

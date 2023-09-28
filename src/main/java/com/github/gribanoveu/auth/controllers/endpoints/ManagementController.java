@@ -32,14 +32,14 @@ public class ManagementController {
         return managementControllerFacade.deleteUser(userId);
     }
 
-    @PatchMapping("/{userId}/block")
-    public ResponseEntity<?> blockUser(@PathVariable Long userId) {
-        return managementControllerFacade.blockUser(userId);
+    @PatchMapping("/{userId}/disable")
+    public ResponseEntity<?> disableUser(@PathVariable Long userId) {
+        return managementControllerFacade.disableUser(userId);
     }
 
-    @PatchMapping("/{userId}/unlock")
-    public ResponseEntity<?> unblockUser(@PathVariable Long userId) {
-        return managementControllerFacade.unlockUser(userId);
+    @PatchMapping("/{userId}/enable")
+    public ResponseEntity<?> enableUser(@PathVariable Long userId) {
+        return managementControllerFacade.enabledUser(userId);
     }
 
     @PatchMapping("/{userId}/reset-password")

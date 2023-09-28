@@ -6,4 +6,5 @@ package com.github.gribanoveu.auth.constants;
  */
 public class Constants {
     public static final String DEFAULT_USER_POSITION = "USER";
+    public static final String DEFAULT_PASSWORD = "Qwerty123";
 }

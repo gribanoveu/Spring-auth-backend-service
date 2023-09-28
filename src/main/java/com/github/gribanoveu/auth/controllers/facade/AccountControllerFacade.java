@@ -49,7 +49,7 @@ public class AccountControllerFacade {
         var user = userService.findUserByEmail(authentication.getName());
         if (passwordEncoder.matches(request.oldPassword(), user.getPassword()))
             if (!passwordEncoder.matches(request.password(), user.getPassword())) {
-                var updated = userService.updatePassword(
+                var updated = userService.updatePasswordByEmail(
                         authentication.getName(), passwordEncoder.encode(request.password()));
 
                 if (updated) return ResponseEntity.ok(StatusResponse.create(OK, PASSWORD_UPDATED));
