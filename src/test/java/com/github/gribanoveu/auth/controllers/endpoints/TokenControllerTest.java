@@ -29,7 +29,7 @@ class TokenControllerTest extends BaseMockMvcTest {
 
     @Test
     public void testCreateAuthToken_validData_createToken() throws Exception {
-        LoginDto request = new LoginDto("admin@email.com", "Qwerty123");
+        var request = new LoginDto("admin@email.com", "Qwerty123");
 
         this.mockMvc.perform(post("/v1/token/issue")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -42,7 +42,7 @@ class TokenControllerTest extends BaseMockMvcTest {
 
     @Test
     public void testCreateAuthToken_adminData_extractRolesAndPermissions() throws Exception {
-        LoginDto request = new LoginDto("admin@email.com", "Qwerty123");
+        var request = new LoginDto("admin@email.com", "Qwerty123");
 
         var result = this.mockMvc.perform(post("/v1/token/issue")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -54,17 +54,17 @@ class TokenControllerTest extends BaseMockMvcTest {
                 .andReturn();
 
         var accessToken = testJsonUtils.getJsonValueFromMvcResult(result, "accessToken");
-        var role = tokenService.extractClaim(accessToken,"role");
+        var position = tokenService.extractClaim(accessToken,"position");
         var permissions = tokenService.extractClaimsAsList(accessToken, "scope");
 
-        Assertions.assertThat(role).isEqualTo("ADMIN");
+        Assertions.assertThat(position).isEqualTo("ADMIN");
         Assertions.assertThat(permissions).isEqualTo(
-                List.of("PROJECTS_DELETE", "PROJECTS_VIEW", "PROJECTS_CREATE", "PROJECTS_EDIT"));
+                List.of("AU_USERS_MANAGEMENT", "AU_MAIN_INFO_VIEW", "AU_PERMISSIONS_MANAGEMENT"));
     }
 
     @Test
     public void testCreateAuthToken_userData_extractRolesAndPermissions() throws Exception {
-        LoginDto request = new LoginDto("user@email.com", "Qwerty123");
+        var request = new LoginDto("user@email.com", "Qwerty123");
 
         var result = this.mockMvc.perform(post("/v1/token/issue")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -76,16 +76,16 @@ class TokenControllerTest extends BaseMockMvcTest {
                 .andReturn();
 
         var accessToken = testJsonUtils.getJsonValueFromMvcResult(result, "accessToken");
-        var role = tokenService.extractClaim(accessToken,"role");
+        var position = tokenService.extractClaim(accessToken,"position");
         var permissions = tokenService.extractClaimsAsList(accessToken, "scope");
 
-        Assertions.assertThat(permissions).isEqualTo(List.of("PROJECTS_VIEW"));
-        Assertions.assertThat(role).isEqualTo("USER");
+        Assertions.assertThat(permissions).isEqualTo(List.of("AU_MAIN_INFO_VIEW"));
+        Assertions.assertThat(position).isEqualTo("USER");
     }
 
     @Test
     void testAuthToken_credentialsBadUser_throwException() throws Exception {
-        LoginDto request = new LoginDto("some@mail.com", "password");
+        var request = new LoginDto("some@mail.com", "password");
 
         this.mockMvc.perform(post("/v1/token/issue")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -97,7 +97,6 @@ class TokenControllerTest extends BaseMockMvcTest {
 
     @Test
     public void testCreateRefreshToken_adminData_extractRolesAndPermissions() throws Exception {
-        LoginDto request = new LoginDto("admin@email.com", "Qwerty123");
         var user = (CustomUserDetails) usrDetailsService.loadUserByUsername("admin@email.com");
         var refreshToken = tokenService.generateToken(user, TokenType.REFRESH);
 
@@ -111,17 +110,16 @@ class TokenControllerTest extends BaseMockMvcTest {
                 .andReturn();
 
         var accessToken = testJsonUtils.getJsonValueFromMvcResult(result, "accessToken");
-        var role = tokenService.extractClaim(accessToken,"role");
+        var position = tokenService.extractClaim(accessToken,"position");
         var permissions = tokenService.extractClaimsAsList(accessToken, "scope");
 
-        Assertions.assertThat(role).isEqualTo("ADMIN");
+        Assertions.assertThat(position).isEqualTo("ADMIN");
         Assertions.assertThat(permissions).isEqualTo(
-                List.of("PROJECTS_DELETE", "PROJECTS_VIEW", "PROJECTS_CREATE", "PROJECTS_EDIT"));
+                List.of("AU_USERS_MANAGEMENT", "AU_MAIN_INFO_VIEW", "AU_PERMISSIONS_MANAGEMENT"));
     }
 
     @Test
     public void testCreateRefreshToken_adminData_extractRefreshTokenTime() throws Exception {
-        LoginDto request = new LoginDto("admin@email.com", "Qwerty123");
         var user = (CustomUserDetails) usrDetailsService.loadUserByUsername("admin@email.com");
         var refreshToken = tokenService.generateToken(user, TokenType.REFRESH);
 
