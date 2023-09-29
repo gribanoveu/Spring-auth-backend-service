@@ -23,12 +23,13 @@ public class RedisServiceImpl implements RedisService {
     private final RedisTemplate<String, Object> redisTemplate;
 
     @Override
-    public void saveOptCode(String email, int code, Duration codeDuration) {
+    public void saveOptCode(String email, Integer code, Duration codeDuration) {
         var otpCode = getOtpCode(email);
         var codeDurationInMinutes = getOtpExpire(email, TimeUnit.MINUTES);
         if (otpCode.isPresent()) throw new CredentialEx(
             String.format(OTP_CODE_EXIST, codeDurationInMinutes), TOO_MANY_REQUESTS);
         redisTemplate.opsForValue().set(email, code, codeDuration);
+
     }
 
     @Override
@@ -41,4 +42,16 @@ public class RedisServiceImpl implements RedisService {
     public Long getOtpExpire(String email, TimeUnit timeUnit) {
         return redisTemplate.getExpire(email, timeUnit);
     }
+
+    @Override
+    public Boolean deleteOtpCode(String email) {
+       return redisTemplate.delete(email);
+    }
+
+    @Override
+    public Boolean otpCodeValid(String email, Integer code) {
+        Optional<Integer> otpCode = getOtpCode(email);
+        return otpCode.isPresent() && otpCode.orElse(-1).equals(code);
+    }
+
 }

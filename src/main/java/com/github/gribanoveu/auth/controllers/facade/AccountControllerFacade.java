@@ -87,7 +87,17 @@ public class AccountControllerFacade {
     // service check that code exist and have valid lifetime
     // service find userId by otp code and change password in db
     // send successful email
-    public ResponseEntity<?> restorePasswordByOtp(RestorePasswordDto request) { // todo implement
-        return null;
+    public ResponseEntity<?> restorePasswordByOtp(RestorePasswordDto request) {
+        if (!request.password().equals(request.confirmPassword())) throw new CredentialEx(PASSWORD_NOT_EQUALS, BAD_REQUEST);
+        if (!redisService.otpCodeValid(request.email(), request.otpCode()))
+            throw new CredentialEx(OTP_CODE_NOT_FOUND, NOT_FOUND);
+
+        var user = userService.findUserByEmail(request.email());
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
+            var updated = userService.updatePasswordByEmail(request.email(), passwordEncoder.encode(request.password()));
+            redisService.deleteOtpCode(request.email());
+            if (updated) return ResponseEntity.ok(StatusResponse.create(OK, PASSWORD_UPDATED));
+        }
+        throw new CredentialEx(PASSWORD_EQUALS, BAD_REQUEST);
     }
 }

@@ -26,10 +26,10 @@ public class JsonUtils {
         return "";
     }
 
-    public int generateRandomOtpCode() {
+    public Integer generateRandomOtpCode() {
         String NUMBERS = "0123456789";
         var sb = new StringBuilder();
         for (int i = 0; i < 6; i++) sb.append(NUMBERS.charAt(ThreadLocalRandom.current().nextInt(NUMBERS.length())));
-        return Integer.parseInt(sb.toString());
+        return Integer.valueOf(sb.toString());
     }
 }

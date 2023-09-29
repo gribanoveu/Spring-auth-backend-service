@@ -32,4 +32,5 @@ public class ErrorMessages {
 
     public static final String OTP_CODE_CREATED = "OTP code created";
     public static final String OTP_CODE_EXIST = "The OTP code has been sent to the email. Wait %s minutes and try again";
+    public static final String OTP_CODE_NOT_FOUND = "OTP code not exist";
 }
