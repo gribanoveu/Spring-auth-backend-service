@@ -78,7 +78,7 @@ public class AccountControllerFacade {
     public ResponseEntity<?> generateOtpCode(GenerateOtpDto request) {
         var userExist = userService.userExistByEmail(request.email());
         if (!userExist) throw new CredentialEx(USER_NOT_EXIST, BAD_REQUEST);
-        var otpCode = jsonUtils.generateRandomOtpCode();
+        var otpCode = jsonUtils.generateRandomOtpCode().toString();
         redisOtpService.saveOptCode(request.email(), otpCode, otpCodeLifeTime);
         return ResponseEntity.ok(StatusResponse.create(OK, OTP_CODE_CREATED));
     }

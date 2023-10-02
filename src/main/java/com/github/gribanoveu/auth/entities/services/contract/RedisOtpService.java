@@ -9,9 +9,9 @@ import java.util.concurrent.TimeUnit;
  * @version 28.09.2023
  */
 public interface RedisOtpService {
-    void saveOptCode(String email, Integer code, Duration codeDuration);
-    Optional<Integer> getOtpCode(String email);
+    void saveOptCode(String email, String code, Duration codeDuration);
+    Optional<String> getOtpCode(String email);
     Long getOtpExpire(String email, TimeUnit timeUnit);
     Boolean deleteOtpCode(String email);
-    Boolean otpCodeValid(String email, Integer code);
+    Boolean otpCodeValid(String email, String code);
 }

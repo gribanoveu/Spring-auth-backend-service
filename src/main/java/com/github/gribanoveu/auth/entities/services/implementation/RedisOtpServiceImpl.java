@@ -23,7 +23,7 @@ public class RedisOtpServiceImpl implements RedisOtpService {
     private final RedisTemplate<String, Object> redisTemplate;
 
     @Override
-    public void saveOptCode(String email, Integer code, Duration codeDuration) {
+    public void saveOptCode(String email, String code, Duration codeDuration) {
         var otpCode = getOtpCode(email);
         if (otpCode.isPresent()) {
             var codeDurationInMinutes = getOtpExpire(email, TimeUnit.MINUTES);
@@ -33,8 +33,8 @@ public class RedisOtpServiceImpl implements RedisOtpService {
     }
 
     @Override
-    public Optional<Integer> getOtpCode(String email) {
-        var code = (Integer) redisTemplate.opsForValue().get(email);
+    public Optional<String> getOtpCode(String email) {
+        var code = (String) redisTemplate.opsForValue().get(email);
         return Optional.ofNullable(code);
     }
 
@@ -48,6 +48,7 @@ public class RedisOtpServiceImpl implements RedisOtpService {
        return redisTemplate.delete(email);
     }
 
+
     /**
      * Checks if the provided OTP code is valid for the given email.
      *
@@ -56,10 +57,9 @@ public class RedisOtpServiceImpl implements RedisOtpService {
      * @return        true if the OTP code is valid, false otherwise
      */
     @Override
-    public Boolean otpCodeValid(String email, Integer code) {
-        return getOtpCode(email)
-                .map(otpCode -> otpCode.equals(code))
-                .orElse(false);
+    public Boolean otpCodeValid(String email, String code) {
+        var otpCode = getOtpCode(email);
+        return otpCode.isPresent() && otpCode.get().equals(code);
     }
 
 }
