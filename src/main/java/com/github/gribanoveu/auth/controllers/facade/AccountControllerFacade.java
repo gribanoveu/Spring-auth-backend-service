@@ -7,7 +7,7 @@ import com.github.gribanoveu.auth.controllers.dtos.request.GenerateOtpDto;
 import com.github.gribanoveu.auth.controllers.dtos.request.RestorePasswordDto;
 import com.github.gribanoveu.auth.controllers.dtos.response.StatusResponse;
 import com.github.gribanoveu.auth.controllers.exeptions.CredentialEx;
-import com.github.gribanoveu.auth.entities.services.contract.RedisService;
+import com.github.gribanoveu.auth.entities.services.contract.RedisOtpService;
 import com.github.gribanoveu.auth.entities.services.contract.UserService;
 import com.github.gribanoveu.auth.utils.JsonUtils;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class AccountControllerFacade {
     @Value("${time-variable.otpCodeLifetime}")
     private Duration otpCodeLifeTime;
     private final UserService userService;
-    private final RedisService redisService;
+    private final RedisOtpService redisOtpService;
     private final PasswordEncoder passwordEncoder;
     private final JsonUtils jsonUtils;
 
@@ -79,7 +79,7 @@ public class AccountControllerFacade {
         var userExist = userService.userExistByEmail(request.email());
         if (!userExist) throw new CredentialEx(USER_NOT_EXIST, BAD_REQUEST);
         var otpCode = jsonUtils.generateRandomOtpCode();
-        redisService.saveOptCode(request.email(), otpCode, otpCodeLifeTime);
+        redisOtpService.saveOptCode(request.email(), otpCode, otpCodeLifeTime);
         return ResponseEntity.ok(StatusResponse.create(OK, OTP_CODE_CREATED));
     }
 
@@ -89,13 +89,13 @@ public class AccountControllerFacade {
     // send successful email
     public ResponseEntity<?> restorePasswordByOtp(RestorePasswordDto request) {
         if (!request.password().equals(request.confirmPassword())) throw new CredentialEx(PASSWORD_NOT_EQUALS, BAD_REQUEST);
-        if (!redisService.otpCodeValid(request.email(), request.otpCode()))
+        if (!redisOtpService.otpCodeValid(request.email(), request.otpCode()))
             throw new CredentialEx(OTP_CODE_NOT_FOUND, NOT_FOUND);
 
         var user = userService.findUserByEmail(request.email());
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
             var updated = userService.updatePasswordByEmail(request.email(), passwordEncoder.encode(request.password()));
-            redisService.deleteOtpCode(request.email());
+            redisOtpService.deleteOtpCode(request.email());
             if (updated) return ResponseEntity.ok(StatusResponse.create(OK, PASSWORD_UPDATED));
         }
         throw new CredentialEx(PASSWORD_EQUALS, BAD_REQUEST);

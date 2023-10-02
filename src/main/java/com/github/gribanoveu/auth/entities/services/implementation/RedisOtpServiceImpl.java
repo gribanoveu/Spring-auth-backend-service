@@ -1,7 +1,7 @@
 package com.github.gribanoveu.auth.entities.services.implementation;
 
 import com.github.gribanoveu.auth.controllers.exeptions.CredentialEx;
-import com.github.gribanoveu.auth.entities.services.contract.RedisService;
+import com.github.gribanoveu.auth.entities.services.contract.RedisOtpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -19,17 +19,17 @@ import static org.springframework.http.HttpStatus.TOO_MANY_REQUESTS;
  */
 @Service
 @RequiredArgsConstructor
-public class RedisServiceImpl implements RedisService {
+public class RedisOtpServiceImpl implements RedisOtpService {
     private final RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public void saveOptCode(String email, Integer code, Duration codeDuration) {
         var otpCode = getOtpCode(email);
-        var codeDurationInMinutes = getOtpExpire(email, TimeUnit.MINUTES);
-        if (otpCode.isPresent()) throw new CredentialEx(
-            String.format(OTP_CODE_EXIST, codeDurationInMinutes), TOO_MANY_REQUESTS);
+        if (otpCode.isPresent()) {
+            var codeDurationInMinutes = getOtpExpire(email, TimeUnit.MINUTES);
+            throw new CredentialEx(String.format(OTP_CODE_EXIST, codeDurationInMinutes), TOO_MANY_REQUESTS);
+        }
         redisTemplate.opsForValue().set(email, code, codeDuration);
-
     }
 
     @Override
@@ -48,10 +48,18 @@ public class RedisServiceImpl implements RedisService {
        return redisTemplate.delete(email);
     }
 
+    /**
+     * Checks if the provided OTP code is valid for the given email.
+     *
+     * @param  email  the email for which the OTP code is being checked
+     * @param  code   the OTP code to be validated
+     * @return        true if the OTP code is valid, false otherwise
+     */
     @Override
     public Boolean otpCodeValid(String email, Integer code) {
-        Optional<Integer> otpCode = getOtpCode(email);
-        return otpCode.isPresent() && otpCode.orElse(-1).equals(code);
+        return getOtpCode(email)
+                .map(otpCode -> otpCode.equals(code))
+                .orElse(false);
     }
 
 }
