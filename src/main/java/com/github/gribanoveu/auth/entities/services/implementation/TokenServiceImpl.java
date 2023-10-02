@@ -1,13 +1,17 @@
 package com.github.gribanoveu.auth.entities.services.implementation;
 
+import com.github.gribanoveu.auth.constants.ErrorMessages;
+import com.github.gribanoveu.auth.controllers.exeptions.CredentialEx;
 import com.github.gribanoveu.auth.entities.enums.TokenType;
 import com.github.gribanoveu.auth.entities.services.contract.TokenService;
 import com.github.gribanoveu.auth.security.CustomUserDetails;
+import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -42,7 +46,7 @@ public class TokenServiceImpl implements TokenService {
         var permissions = usrDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority).toList();
 
-        JwtClaimsSet.Builder builder = JwtClaimsSet.builder()
+        var builder = JwtClaimsSet.builder()
                 .issuedAt(now)
                 .subject(usrDetails.getUsername())
                 .claim("position", usrDetails.getUserPosition())
@@ -62,44 +66,51 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public String extractSubject(String token) {
         try {
-            SignedJWT decodedJWT = SignedJWT.parse(token);
-            return decodedJWT.getJWTClaimsSet().getSubject();
+            var claimsSet = getJwtClaimsSetFromToken(token);
+            return claimsSet.getSubject();
         } catch (ParseException e) {
             log.error(e.getLocalizedMessage());
         }
-        return null;
+        throw new CredentialEx(ErrorMessages.TOKEN_NOT_VALID, HttpStatus.UNAUTHORIZED);
     }
 
     @Override
     public List<String> extractClaimsAsList(String token, String claim) {
         try {
-            SignedJWT decodedJWT = SignedJWT.parse(token);
-            return decodedJWT.getJWTClaimsSet().getStringListClaim(claim);
+            var claimsSet = getJwtClaimsSetFromToken(token);
+            return claimsSet.getStringListClaim(claim);
         } catch (ParseException e) {
             log.error(e.getLocalizedMessage());
+            throw new CredentialEx(ErrorMessages.TOKEN_NOT_VALID, HttpStatus.UNAUTHORIZED);
         }
-        return null;
     }
 
     @Override
     public String extractClaim(String token, String claim) {
         try {
-            SignedJWT decodedJWT = SignedJWT.parse(token);
-            return decodedJWT.getJWTClaimsSet().getStringClaim(claim);
+            var claimsSet = getJwtClaimsSetFromToken(token);
+            return claimsSet.getStringClaim(claim);
         } catch (ParseException e) {
             log.error(e.getLocalizedMessage());
+            throw new CredentialEx(ErrorMessages.TOKEN_NOT_VALID, HttpStatus.UNAUTHORIZED);
         }
-        return null;
     }
 
     @Override
     public Date extractExpire(String token) {
         try {
-            SignedJWT decodedJWT = SignedJWT.parse(token);
-            return decodedJWT.getJWTClaimsSet().getExpirationTime();
+            var claimsSet = getJwtClaimsSetFromToken(token);
+            return claimsSet.getExpirationTime();
         } catch (ParseException e) {
             log.error(e.getLocalizedMessage());
+            throw new CredentialEx(ErrorMessages.TOKEN_NOT_VALID, HttpStatus.UNAUTHORIZED);
         }
-        return null;
+
+    }
+
+    private JWTClaimsSet getJwtClaimsSetFromToken(String token) throws ParseException {
+        if (token == null) throw new CredentialEx(ErrorMessages.TOKEN_NOT_VALID, HttpStatus.UNAUTHORIZED);
+        var decodedJWT = SignedJWT.parse(token);
+        return decodedJWT.getJWTClaimsSet();
     }
 }

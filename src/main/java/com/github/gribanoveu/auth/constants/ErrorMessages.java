@@ -6,6 +6,7 @@ package com.github.gribanoveu.auth.constants;
  */
 public class ErrorMessages {
     public static final String FORBIDDEN = "Action forbidden";
+    public static final String TOKEN_NOT_VALID = "Token is not valid";
 
     public static final String PASSWORD_NOT_EQUALS = "Passwords don't match";
     public static final String PASSWORD_EQUALS = "Password cannot be the same as the old password";
