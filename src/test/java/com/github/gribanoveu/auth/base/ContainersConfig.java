@@ -1,4 +1,4 @@
-package com.github.gribanoveu.auth.utils;
+package com.github.gribanoveu.auth.base;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;

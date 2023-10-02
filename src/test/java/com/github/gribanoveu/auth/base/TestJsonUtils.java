@@ -1,4 +1,4 @@
-package com.github.gribanoveu.auth.utils;
+package com.github.gribanoveu.auth.base;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

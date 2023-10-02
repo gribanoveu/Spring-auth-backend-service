@@ -1,6 +1,6 @@
 package com.github.gribanoveu.auth.controllers.endpoints;
 
-import com.github.gribanoveu.auth.BaseMockMvcTest;
+import com.github.gribanoveu.auth.base.BaseMockMvcTest;
 import com.github.gribanoveu.auth.controllers.dtos.request.LoginDto;
 import com.github.gribanoveu.auth.entities.enums.TokenType;
 import com.github.gribanoveu.auth.entities.services.implementation.TokenServiceImpl;

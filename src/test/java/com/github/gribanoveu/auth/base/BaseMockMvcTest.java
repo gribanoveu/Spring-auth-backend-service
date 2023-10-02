@@ -1,6 +1,5 @@
-package com.github.gribanoveu.auth;
+package com.github.gribanoveu.auth.base;
 
-import com.github.gribanoveu.auth.utils.TestJsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +22,7 @@ public abstract class BaseMockMvcTest {
 
     @Container
     @ServiceConnection
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.4-alpine");
+    static PostgreSQLContainer<?> postgres =
+            new PostgreSQLContainer<>("postgres:15.4-alpine");
 
 }
