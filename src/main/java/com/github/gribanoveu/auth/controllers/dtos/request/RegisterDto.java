@@ -16,11 +16,11 @@ public record RegisterDto(
         @Size(max = 30, message = EMAIL_SIZE_MESSAGE)
         String email,
 
-        @NotBlank(message = PASSWORD_CANT_BE_EMPTY)
         @Size(max = 80)
+        @NotBlank(message = PASSWORD_CANT_BE_EMPTY)
         String password,
 
-        @NotBlank(message = PASSWORD_CANT_BE_EMPTY)
         @Size(max = 80)
+        @NotBlank(message = PASSWORD_CANT_BE_EMPTY)
         String confirmPassword
 ) {}

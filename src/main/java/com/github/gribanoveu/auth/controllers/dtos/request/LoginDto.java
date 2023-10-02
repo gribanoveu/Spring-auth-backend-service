@@ -16,6 +16,7 @@ public record LoginDto(
         @Size(max = 30, message = EMAIL_SIZE_MESSAGE)
         String email,
 
+        @Size(max = 80)
         @NotBlank(message = PASSWORD_CANT_BE_EMPTY)
         String password
 ) {}
