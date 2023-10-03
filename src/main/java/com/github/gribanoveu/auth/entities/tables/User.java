@@ -22,7 +22,7 @@ public class User {
     private Long id;
 
     @Version
-    private int version;
+    private Long version;
 
     @Column(name = "email")
     private String email;

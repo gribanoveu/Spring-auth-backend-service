@@ -1,7 +1,7 @@
 CREATE TABLE users
 (
     id                BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    version           INTEGER      NOT NULL,
+    version           BIGINT      NOT NULL,
     email             VARCHAR(30)  NOT NULL UNIQUE,
     password          VARCHAR(80)  NOT NULL,
     position          VARCHAR(30)  NOT NULL,

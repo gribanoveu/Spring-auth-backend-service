@@ -12,10 +12,10 @@ import java.util.List;
 public interface UserService {
     @Transactional void saveUser(User user);
     @Transactional void deleteUserById(Long userId);
-    @Transactional Boolean updatePasswordByEmail(String email, String password);
-    @Transactional Boolean updateUserPasswordAndCredentialsExpiredById(Long userId, String password);
-    @Transactional Boolean updateEmail(Long userId, String newEmail);
-    @Transactional Boolean updateEnabled(Long userId, Boolean enabled);
+    @Transactional void updatePasswordByEmail(User user, String password);
+    @Transactional void updateUserPasswordAndCredentialsExpiredById(User user, String password);
+    @Transactional void updateEmail(User user, String newEmail);
+    @Transactional void updateEnabled(User user, Boolean enabled);
     User findUserByEmail(String email);
     User findUserById(Long id);
     Boolean userExistByEmail(String email);

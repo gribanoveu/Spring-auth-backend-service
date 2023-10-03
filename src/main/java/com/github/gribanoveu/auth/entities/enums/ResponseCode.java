@@ -33,12 +33,10 @@ public enum ResponseCode {
     USER_SET_DEFAULT_PASSWORD("AUT-405","Default password has been set to the user", HttpStatus.OK, StatusLevel.SUCCESS),
     USER_UPDATED("AUT-406","User updated successfully", HttpStatus.OK, StatusLevel.SUCCESS),
     USER_ALREADY_EXIST("AUT-407","User already exists", HttpStatus.CONFLICT, StatusLevel.WARNING),
-    USER_NOT_UPDATED("AUT-408","User not updated", HttpStatus.BAD_REQUEST, StatusLevel.WARNING),
 
     PERMISSION_CREATED("AUT-500","Permission created successfully", HttpStatus.CREATED, StatusLevel.SUCCESS),
     PERMISSION_DELETED("AUT-501","Permission deleted successfully", HttpStatus.OK, StatusLevel.SUCCESS),
     PERMISSION_UPDATED("AUT-502","Permission updated successfully", HttpStatus.OK, StatusLevel.SUCCESS),
-    PERMISSION_NOT_UPDATED("AUT-503","Permission not updated", HttpStatus.BAD_REQUEST, StatusLevel.WARNING),
     PERMISSION_EXIST("AUT-504","Permission already exists", HttpStatus.CONFLICT, StatusLevel.WARNING),
     PERMISSION_NOT_EXIST("AUT-505","Permission not found", HttpStatus.NOT_FOUND, StatusLevel.WARNING);
 

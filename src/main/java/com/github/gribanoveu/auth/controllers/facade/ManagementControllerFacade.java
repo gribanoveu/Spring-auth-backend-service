@@ -52,21 +52,21 @@ public class ManagementControllerFacade {
     }
 
     public ResponseEntity<?> disableUser(Long userId) {
-        var updated = userService.updateEnabled(userId, false);
-        if (updated) return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_DISABLED));
-        throw new CredentialEx(ResponseCode.USER_NOT_UPDATED);
+        var user = userService.findUserById(userId);
+        userService.updateEnabled(user, false);
+        return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_DISABLED));
     }
 
     public ResponseEntity<?> enabledUser(Long userId) {
-        var updated = userService.updateEnabled(userId, true);
-        if (updated) return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_ENABLED));
-        throw new CredentialEx(ResponseCode.USER_NOT_UPDATED);
+        var user = userService.findUserById(userId);
+        userService.updateEnabled(user, true);
+        return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_ENABLED));
     }
 
     public ResponseEntity<?> resetUserPasswordToDefault(Long userId) {
-        var updated = userService.updateUserPasswordAndCredentialsExpiredById(userId,
+        var user = userService.findUserById(userId);
+        userService.updateUserPasswordAndCredentialsExpiredById(user,
                 passwordEncoder.encode(Constants.DEFAULT_PASSWORD));
-        if (updated) return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_SET_DEFAULT_PASSWORD));
-        throw new CredentialEx(ResponseCode.USER_NOT_UPDATED);
+        return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_SET_DEFAULT_PASSWORD));
     }
 }

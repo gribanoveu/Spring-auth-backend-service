@@ -21,20 +21,4 @@ public interface UserRepository extends CrudRepository<User, Long> {
     Optional<User> findByEmail(String email);
     Optional<User> findUserById(Long id);
     List<User> findAll(Pageable pageable);
-
-    @Modifying
-    @Query("UPDATE User u SET u.password = :password, u.credentialsNonExpired = true WHERE u.email = :email")
-    Integer updateUserPasswordByEmail(@Param("email") String email, @Param("password") String password);
-
-    @Modifying
-    @Query("UPDATE User u SET u.password = :password, u.credentialsNonExpired = false WHERE u.id = :userId")
-    Integer updateUserPasswordAndCredentialsExpiredById(@Param("userId") Long userId, @Param("password") String password);
-
-    @Modifying
-    @Query("UPDATE User u SET u.email = :email WHERE u.id = :id")
-    Integer updateUserEmail(@Param("id") Long id, @Param("email") String email);
-
-    @Modifying
-    @Query("UPDATE User u SET u.enabled = :enabled WHERE u.id = :id")
-    Integer updateUserEnabled(@Param("id") Long id, @Param("enabled") Boolean enabled);
 }

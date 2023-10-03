@@ -35,11 +35,9 @@ public class AccountControllerFacade {
 
     // user change email from app, authenticated
     public ResponseEntity<?> changeEmail(ChangeEmailDto request, Authentication authentication) {
-        var userId = userService.findUserByEmail(authentication.getName()).getId();
-        var updated = userService.updateEmail(userId, request.email());
-        if (updated) return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_UPDATED));
-
-        throw new CredentialEx(ResponseCode.USER_NOT_UPDATED);
+        var user = userService.findUserByEmail(authentication.getName());
+        userService.updateEmail(user, request.email());
+        return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_UPDATED));
     }
 
     // check that password and confirm password match
@@ -53,10 +51,8 @@ public class AccountControllerFacade {
         var user = userService.findUserByEmail(authentication.getName());
         if (passwordEncoder.matches(request.oldPassword(), user.getPassword()))
             if (!passwordEncoder.matches(request.password(), user.getPassword())) {
-                var updated = userService.updatePasswordByEmail(
-                        authentication.getName(), passwordEncoder.encode(request.password()));
-
-                if (updated) return ResponseEntity.ok(StatusResponse.create(ResponseCode.PASSWORD_UPDATED));
+                userService.updatePasswordByEmail(user, passwordEncoder.encode(request.password()));
+                return ResponseEntity.ok(StatusResponse.create(ResponseCode.PASSWORD_UPDATED));
             } else throw new CredentialEx(ResponseCode.PASSWORD_EQUALS);
 
         throw new CredentialEx(ResponseCode.OLD_PASSWORD_NOT_MATCH);
@@ -84,14 +80,13 @@ public class AccountControllerFacade {
     // send successful email
     public ResponseEntity<?> restorePasswordByOtp(RestorePasswordDto request) {
         if (!request.password().equals(request.confirmPassword())) throw new CredentialEx(ResponseCode.PASSWORD_NOT_EQUALS);
-        if (!redisOtpService.otpCodeValid(request.email(), request.otpCode()))
-            throw new CredentialEx(ResponseCode.OTP_CODE_NOT_FOUND);
+        if (!redisOtpService.otpCodeValid(request.email(), request.otpCode())) throw new CredentialEx(ResponseCode.OTP_CODE_NOT_FOUND);
 
         var user = userService.findUserByEmail(request.email());
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
-            var updated = userService.updatePasswordByEmail(request.email(), passwordEncoder.encode(request.password()));
+            userService.updatePasswordByEmail(user, passwordEncoder.encode(request.password()));
             redisOtpService.deleteOtpCode(request.email());
-            if (updated) return ResponseEntity.ok(StatusResponse.create(ResponseCode.PASSWORD_UPDATED));
+            return ResponseEntity.ok(StatusResponse.create(ResponseCode.PASSWORD_UPDATED));
         }
         throw new CredentialEx(ResponseCode.PASSWORD_EQUALS);
     }

@@ -55,23 +55,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean updatePasswordByEmail(String email, String password) {
-       return userRepository.updateUserPasswordByEmail(email, password) > 0;
+    public void updatePasswordByEmail(User user, String password) {
+        user.setPassword(password);
+        userRepository.save(user);
     }
 
     @Override
-    public Boolean updateUserPasswordAndCredentialsExpiredById(Long userId, String password) {
-        return userRepository.updateUserPasswordAndCredentialsExpiredById(userId, password) > 0;
+    public void updateUserPasswordAndCredentialsExpiredById(User user, String password) {
+        user.setPassword(password);
+        user.setCredentialsNonExpired(false);
+        userRepository.save(user);
     }
 
     @Override
-    public Boolean updateEmail(Long userId, String newEmail) {
-        return userRepository.updateUserEmail(userId, newEmail) > 0;
+    public void updateEmail(User user, String newEmail) {
+        user.setEmail(newEmail);
+        userRepository.save(user);
     }
 
     @Override
-    public Boolean updateEnabled(Long userId, Boolean enabled) {
-        return userRepository.updateUserEnabled(userId, enabled) > 0;
+    public void updateEnabled(User user, Boolean enabled) {
+        user.setEnabled(enabled);
+        userRepository.save(user);
     }
 
 }
