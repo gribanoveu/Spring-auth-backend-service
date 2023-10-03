@@ -18,7 +18,7 @@ import java.io.IOException;
  */
 @Component
 @RequiredArgsConstructor
-public class ServerErrorEntryPoint implements AuthenticationEntryPoint {
+public class AuthErrorEntryPoint implements AuthenticationEntryPoint {
     private final JsonUtils jsonUtils;
 
     @Override
@@ -27,11 +27,12 @@ public class ServerErrorEntryPoint implements AuthenticationEntryPoint {
             HttpServletResponse response,
             AuthenticationException authException
     ) throws IOException {
-        var error = StatusResponse.create(ResponseCode.SERVER_ERROR);
+        var error = StatusResponse.create(
+                ResponseCode.UNAUTHORIZED, authException.getLocalizedMessage());
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.getWriter().write(jsonUtils.convertDtoToJson(error));
         response.getWriter().flush();
         response.getWriter().close();

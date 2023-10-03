@@ -1,6 +1,7 @@
 package com.github.gribanoveu.auth.config;
 
 import com.github.gribanoveu.auth.controllers.exeptions.CustomAccessDeniedHandler;
+import com.github.gribanoveu.auth.controllers.exeptions.AuthErrorEntryPoint;
 import com.github.gribanoveu.auth.controllers.exeptions.ServerErrorEntryPoint;
 import com.github.gribanoveu.auth.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ import static com.github.gribanoveu.auth.entities.enums.Permissions.AU_USERS_MAN
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final CustomUserDetailsService userDetails;
+    private final AuthErrorEntryPoint authErrorEntryPoint;
     private final ServerErrorEntryPoint serverErrorEntryPoint;
     private final CustomAccessDeniedHandler accessDeniedHandler;
 
@@ -55,7 +57,7 @@ public class SecurityConfig {
                         .authenticationEntryPoint(serverErrorEntryPoint))
                 .oauth2ResourceServer((oauth2) -> oauth2
                         .jwt(Customizer.withDefaults())
-                        .authenticationEntryPoint(serverErrorEntryPoint));
+                        .authenticationEntryPoint(authErrorEntryPoint));
 
         return http.build();
     }
