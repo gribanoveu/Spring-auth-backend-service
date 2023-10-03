@@ -1,7 +1,10 @@
 package com.github.gribanoveu.auth.entities.repositories;
 
 import com.github.gribanoveu.auth.entities.tables.Permission;
+import jakarta.persistence.LockModeType;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

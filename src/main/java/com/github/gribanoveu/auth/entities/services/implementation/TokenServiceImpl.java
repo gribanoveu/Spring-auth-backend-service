@@ -1,7 +1,7 @@
 package com.github.gribanoveu.auth.entities.services.implementation;
 
-import com.github.gribanoveu.auth.constants.ErrorMessages;
 import com.github.gribanoveu.auth.controllers.exeptions.CredentialEx;
+import com.github.gribanoveu.auth.entities.enums.ResponseCode;
 import com.github.gribanoveu.auth.entities.enums.TokenType;
 import com.github.gribanoveu.auth.entities.services.contract.TokenService;
 import com.github.gribanoveu.auth.security.CustomUserDetails;
@@ -11,7 +11,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -71,7 +70,7 @@ public class TokenServiceImpl implements TokenService {
         } catch (ParseException e) {
             log.error(e.getLocalizedMessage());
         }
-        throw new CredentialEx(ErrorMessages.TOKEN_NOT_VALID, HttpStatus.UNAUTHORIZED);
+        throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
     }
 
     @Override
@@ -81,7 +80,7 @@ public class TokenServiceImpl implements TokenService {
             return claimsSet.getStringListClaim(claim);
         } catch (ParseException e) {
             log.error(e.getLocalizedMessage());
-            throw new CredentialEx(ErrorMessages.TOKEN_NOT_VALID, HttpStatus.UNAUTHORIZED);
+            throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
         }
     }
 
@@ -92,7 +91,7 @@ public class TokenServiceImpl implements TokenService {
             return claimsSet.getStringClaim(claim);
         } catch (ParseException e) {
             log.error(e.getLocalizedMessage());
-            throw new CredentialEx(ErrorMessages.TOKEN_NOT_VALID, HttpStatus.UNAUTHORIZED);
+            throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
         }
     }
 
@@ -103,13 +102,13 @@ public class TokenServiceImpl implements TokenService {
             return claimsSet.getExpirationTime();
         } catch (ParseException e) {
             log.error(e.getLocalizedMessage());
-            throw new CredentialEx(ErrorMessages.TOKEN_NOT_VALID, HttpStatus.UNAUTHORIZED);
+            throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
         }
 
     }
 
     private JWTClaimsSet getJwtClaimsSetFromToken(String token) throws ParseException {
-        if (token == null) throw new CredentialEx(ErrorMessages.TOKEN_NOT_VALID, HttpStatus.UNAUTHORIZED);
+        if (token == null) throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
         var decodedJWT = SignedJWT.parse(token);
         return decodedJWT.getJWTClaimsSet();
     }

@@ -1,18 +1,13 @@
 package com.github.gribanoveu.auth.entities.services.implementation;
 
-import com.github.gribanoveu.auth.constants.ErrorMessages;
 import com.github.gribanoveu.auth.controllers.exeptions.CredentialEx;
 import com.github.gribanoveu.auth.entities.services.contract.TokenService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 
-import java.time.Instant;
-import java.util.Date;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Evgeny Gribanov

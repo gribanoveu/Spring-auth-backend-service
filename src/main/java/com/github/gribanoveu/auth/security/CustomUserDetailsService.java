@@ -1,9 +1,7 @@
 package com.github.gribanoveu.auth.security;
 
-import com.github.gribanoveu.auth.constants.ErrorMessages;
 import com.github.gribanoveu.auth.entities.repositories.UserRepository;
 import com.github.gribanoveu.auth.entities.tables.User;
-import com.github.gribanoveu.auth.security.CustomUserDetails;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,13 +16,14 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
+    private static final String USER_NOT_FOUND = "User '%s' not found";
     private final UserRepository userRepository;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(() ->
-                new UsernameNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, email)));
+                new UsernameNotFoundException(String.format(USER_NOT_FOUND, email)));
 
         return new CustomUserDetails(user);
     }

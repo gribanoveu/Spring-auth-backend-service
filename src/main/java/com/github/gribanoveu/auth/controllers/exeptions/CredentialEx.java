@@ -1,8 +1,13 @@
 package com.github.gribanoveu.auth.controllers.exeptions;
 
+import com.github.gribanoveu.auth.controllers.dtos.response.ResponseDetails;
+import com.github.gribanoveu.auth.entities.enums.ResponseCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
+
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * @author Evgeny Gribanov
@@ -11,9 +16,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 @Getter
 public class CredentialEx extends BadCredentialsException {
     private final HttpStatus status;
+    private final Collection<ResponseDetails> error;
 
-    public CredentialEx(String msg, HttpStatus status) {
-        super(msg);
-        this.status = status;
+    public CredentialEx(ResponseCode responseCode) {
+        super(responseCode.getMessage());
+        this.status = responseCode.getStatus();
+        this.error = Collections.singletonList(new ResponseDetails(responseCode));
     }
 }

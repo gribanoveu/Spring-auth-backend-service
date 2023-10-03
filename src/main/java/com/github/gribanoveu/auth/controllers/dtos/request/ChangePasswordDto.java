@@ -1,6 +1,5 @@
 package com.github.gribanoveu.auth.controllers.dtos.request;
 
-import com.github.gribanoveu.auth.constants.ValidationMessages;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 

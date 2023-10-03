@@ -1,6 +1,7 @@
 package com.github.gribanoveu.auth.entities.services.implementation;
 
 import com.github.gribanoveu.auth.controllers.exeptions.CredentialEx;
+import com.github.gribanoveu.auth.entities.enums.ResponseCode;
 import com.github.gribanoveu.auth.entities.services.contract.RedisOtpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -9,9 +10,6 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-
-import static com.github.gribanoveu.auth.constants.ErrorMessages.OTP_CODE_EXIST;
-import static org.springframework.http.HttpStatus.TOO_MANY_REQUESTS;
 
 /**
  * @author Evgeny Gribanov
@@ -27,7 +25,7 @@ public class RedisOtpServiceImpl implements RedisOtpService {
         var otpCode = getOtpCode(email);
         if (otpCode.isPresent()) {
             var codeDurationInMinutes = getOtpExpire(email, TimeUnit.MINUTES);
-            throw new CredentialEx(String.format(OTP_CODE_EXIST, codeDurationInMinutes), TOO_MANY_REQUESTS);
+            throw new CredentialEx(ResponseCode.OTP_CODE_EXIST);
         }
         redisTemplate.opsForValue().set(email, code, codeDuration);
     }

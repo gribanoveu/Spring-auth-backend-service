@@ -1,9 +1,12 @@
 package com.github.gribanoveu.auth.controllers.exeptions;
 
 import com.github.gribanoveu.auth.constants.ValidationMessages;
+import com.github.gribanoveu.auth.controllers.dtos.response.ErrorResponse;
+import com.github.gribanoveu.auth.controllers.dtos.response.ResponseDetails;
 import com.github.gribanoveu.auth.controllers.dtos.response.StatusResponse;
+import com.github.gribanoveu.auth.entities.enums.ResponseCode;
+import com.github.gribanoveu.auth.entities.enums.StatusLevel;
 import jakarta.validation.ConstraintViolationException;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -12,9 +15,6 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.List;
-
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 /**
@@ -26,39 +26,42 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<StatusResponse> handleBadCredentialsException(BadCredentialsException e) {
-        return ResponseEntity.status(UNAUTHORIZED)
-                .body(StatusResponse.create(UNAUTHORIZED, e.getMessage()));
+        var details = StatusResponse.create(ResponseCode.BAD_CREDENTIAL, e.getMessage());
+        return ResponseEntity.status(UNAUTHORIZED).body(details);
     }
 
     @ExceptionHandler(CredentialEx.class)
     public ResponseEntity<StatusResponse> handleCredentialsException(CredentialEx e) {
-        return ResponseEntity.status(e.getStatus())
-                .body(StatusResponse.create(e.getStatus(), e.getMessage()));
+        var details = StatusResponse.create(ResponseCode.BAD_CREDENTIAL, e.getMessage());
+        return ResponseEntity.status(e.getStatus()).body(details);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class) // @Valid handler
-    public ResponseEntity<StatusResponse> handleValidAnnotationException(MethodArgumentNotValidException e) {
-        List<String> errors = e.getAllErrors().stream()
-                .map(DefaultMessageSourceResolvable::getDefaultMessage).toList();
+    public ResponseEntity<ErrorResponse> handleValidAnnotationException(MethodArgumentNotValidException e) {
+        String VALIDATION_ERROR = "Validation error";
+        var errors = e.getBindingResult().getFieldErrors().stream()
+                .map(fieldError -> new ResponseDetails(VALIDATION_ERROR, fieldError.getDefaultMessage(),
+                        StatusLevel.WARNING)).toList();
 
-        return ResponseEntity.status(e.getStatusCode())
-                .body(StatusResponse.create(BAD_REQUEST, String.join(", ", errors)));
+        return ResponseEntity.badRequest().body(ErrorResponse.listError(HttpStatus.BAD_REQUEST, errors));
     }
 
-    @ExceptionHandler(ConstraintViolationException.class) // database entity handler
-    public ResponseEntity<StatusResponse> handleDatabaseValidationException(ConstraintViolationException e) {
-        var errorList = e.getConstraintViolations().stream()
-                .map(violation -> String.format(ValidationMessages.EXCEPTION_VIOLATION_PATTERN,
-                        violation.getPropertyPath(), violation.getMessage())).toList();
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(StatusResponse.create(HttpStatus.BAD_REQUEST, errorList.toString()));
+    @ExceptionHandler(ConstraintViolationException.class) // database entity handler
+    public ResponseEntity<ErrorResponse> handleDatabaseValidationException(ConstraintViolationException e) {
+        var errorList = e.getConstraintViolations().stream()
+                .map(violation -> new ResponseDetails(
+                        String.format(ValidationMessages.EXCEPTION_VIOLATION_PATTERN,
+                                violation.getPropertyPath(), violation.getMessage()),
+                        violation.getMessage(), StatusLevel.WARNING)).toList();
+
+        return ResponseEntity.badRequest().body(ErrorResponse.listError(HttpStatus.BAD_REQUEST, errorList));
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class) // query param handler
     public ResponseEntity<StatusResponse> handleMissingParamException(MissingServletRequestParameterException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(StatusResponse.create(HttpStatus.BAD_REQUEST, e.getMessage()));
+        var details = StatusResponse.create(ResponseCode.MISSING_PARAM, e.getMessage());
+        return ResponseEntity.badRequest().body(details);
     }
 
 }

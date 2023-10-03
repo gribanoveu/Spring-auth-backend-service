@@ -1,13 +1,12 @@
 package com.github.gribanoveu.auth.entities.services.implementation;
 
-import com.github.gribanoveu.auth.constants.ErrorMessages;
 import com.github.gribanoveu.auth.controllers.exeptions.CredentialEx;
+import com.github.gribanoveu.auth.entities.enums.ResponseCode;
 import com.github.gribanoveu.auth.entities.repositories.UserRepository;
 import com.github.gribanoveu.auth.entities.services.contract.UserService;
 import com.github.gribanoveu.auth.entities.tables.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,19 +28,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() ->
-                new CredentialEx(ErrorMessages.USER_NOT_EXIST, HttpStatus.NOT_FOUND));
+                new CredentialEx(ResponseCode.USER_NOT_EXIST));
     }
 
     @Override
     public User findUserById(Long id) {
         return userRepository.findUserById(id).orElseThrow(() ->
-                new CredentialEx(ErrorMessages.USER_NOT_EXIST, HttpStatus.NOT_FOUND));
+                new CredentialEx(ResponseCode.USER_NOT_EXIST));
     }
 
     @Override
     public void deleteUserById(Long userId) {
         if (userRepository.existsById(userId)) userRepository.deleteById(userId);
-        else throw new CredentialEx(ErrorMessages.USER_NOT_EXIST, HttpStatus.NOT_FOUND);
+        else throw new CredentialEx(ResponseCode.USER_NOT_EXIST);
     }
 
     @Override
