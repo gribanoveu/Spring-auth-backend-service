@@ -1,5 +1,6 @@
 package com.github.gribanoveu.auth.entities.tables;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,7 @@ public class Permission  {
     private Long id;
 
     @Version
-    private int version;
+    private Long version;
 
     @Column(name = "name", unique = true)
     private String name;

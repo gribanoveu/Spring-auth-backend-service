@@ -24,8 +24,4 @@ public interface PermissionRepository extends CrudRepository<Permission, Long> {
     List<Permission> findAll(Pageable pageable);
     Boolean existsByName(String name);
     void deleteByName(String name);
-
-    @Modifying
-    @Query("UPDATE Permission p SET p.name =:name WHERE p.id = :id")
-    Integer updatePermissionName(@Param("id") Long id, @Param("name") String name);
 }

@@ -45,9 +45,7 @@ public class PermissionControllerFacade {
     }
 
     public ResponseEntity<StatusResponse> updatePermission(UpdatePermissionDto request) {
-        var permissionId = permissionService.findPermissionByName(request.permissionName()).getId();
-        var updated = permissionService.updatePermissionName(permissionId, request.newName());
-        if (updated) return ResponseEntity.ok(StatusResponse.create(ResponseCode.PERMISSION_UPDATED));
-        throw new CredentialEx(ResponseCode.PERMISSION_NOT_UPDATED);
+        permissionService.updatePermissionName(request.permissionName(), request.newName());
+        return ResponseEntity.ok(StatusResponse.create(ResponseCode.PERMISSION_UPDATED));
     }
 }

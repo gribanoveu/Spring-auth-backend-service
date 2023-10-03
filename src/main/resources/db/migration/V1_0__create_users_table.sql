@@ -15,7 +15,7 @@ CREATE TABLE users
 CREATE TABLE permission
 (
     id      BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    version INT NOT NULL,
+    version BIGINT NOT NULL,
     name    VARCHAR(30) UNIQUE
 );
 

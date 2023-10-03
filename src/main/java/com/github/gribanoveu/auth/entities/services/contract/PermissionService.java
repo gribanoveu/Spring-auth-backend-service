@@ -16,5 +16,5 @@ public interface PermissionService {
     boolean permissionExistByName(String name);
     @Transactional void save(Permission permission);
     @Transactional void deletePermissionByName(String permissionName);
-    @Transactional Boolean updatePermissionName(Long id, String permissionName);
+    @Transactional Permission updatePermissionName(String permissionName, String newName);
 }

@@ -49,8 +49,10 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public Boolean updatePermissionName(Long id, String permissionName) {
-        return permissionRepository.updatePermissionName(id, permissionName) > 0;
+    public Permission updatePermissionName(String permissionName, String newName) {
+        var permission = findPermissionByName(permissionName);
+        permission.setName(newName);
+        return permissionRepository.save(permission);
     }
 
     @Override
