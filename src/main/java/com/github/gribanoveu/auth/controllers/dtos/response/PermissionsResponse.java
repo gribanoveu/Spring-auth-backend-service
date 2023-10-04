@@ -2,6 +2,7 @@ package com.github.gribanoveu.auth.controllers.dtos.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.github.gribanoveu.auth.entities.enums.StatusLevel;
 import com.github.gribanoveu.auth.entities.tables.Permission;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,11 +21,10 @@ import java.util.Collection;
 public class PermissionsResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Europe/Moscow")
     private LocalDateTime timestamp;
-    private int status;
-    private String reason;
+    private StatusLevel status;
     private Collection<Permission> permissions;
 
     public static PermissionsResponse create(HttpStatus status, Collection<Permission> permissions) {
-        return new PermissionsResponse(LocalDateTime.now(), status.value(), status.getReasonPhrase(), permissions);
+        return new PermissionsResponse(LocalDateTime.now(), StatusLevel.SUCCESS, permissions);
     }
 }

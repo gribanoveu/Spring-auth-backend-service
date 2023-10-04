@@ -1,7 +1,8 @@
-package com.github.gribanoveu.auth.controllers.exeptions;
+package com.github.gribanoveu.auth.controllers.exeptions.entrypoint;
 
 import com.github.gribanoveu.auth.controllers.dtos.response.StatusResponse;
 import com.github.gribanoveu.auth.entities.enums.ResponseCode;
+import com.github.gribanoveu.auth.entities.enums.StatusLevel;
 import com.github.gribanoveu.auth.utils.JsonUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +20,7 @@ import java.io.IOException;
  */
 @Component
 @RequiredArgsConstructor
-public class CustomAccessDeniedHandler implements AccessDeniedHandler {
+public class AccessDeniedEntryPoint implements AccessDeniedHandler {
     private final JsonUtils jsonUtils;
 
     @Override
@@ -28,8 +29,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
             HttpServletResponse response,
             AccessDeniedException accessDeniedException
     ) throws IOException, ServletException {
-        var error = StatusResponse.create(
-                ResponseCode.UNAUTHORIZED, accessDeniedException.getMessage());
+        var error = StatusResponse.create(ResponseCode.ACCESS_DENIED, StatusLevel.ERROR);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

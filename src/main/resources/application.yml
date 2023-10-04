@@ -10,6 +10,11 @@ rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
 spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
   jpa:
     hibernate:
       ddl-auto: validate

@@ -20,7 +20,7 @@ public class CredentialEx extends BadCredentialsException {
 
     public CredentialEx(ResponseCode responseCode) {
         super(responseCode.getMessage());
-        this.status = responseCode.getStatus();
+        this.status = responseCode.getHttpCode();
         this.error = Collections.singletonList(new ResponseDetails(responseCode));
     }
 }

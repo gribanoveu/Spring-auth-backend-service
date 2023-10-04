@@ -6,6 +6,7 @@ import com.github.gribanoveu.auth.controllers.dtos.response.PermissionsResponse;
 import com.github.gribanoveu.auth.controllers.dtos.response.StatusResponse;
 import com.github.gribanoveu.auth.controllers.exeptions.CredentialEx;
 import com.github.gribanoveu.auth.entities.enums.ResponseCode;
+import com.github.gribanoveu.auth.entities.enums.StatusLevel;
 import com.github.gribanoveu.auth.entities.services.contract.PermissionService;
 import com.github.gribanoveu.auth.entities.tables.Permission;
 import lombok.RequiredArgsConstructor;
@@ -36,16 +37,16 @@ public class PermissionControllerFacade {
         permission.setName(permissionName);
 
         permissionService.save(permission);
-        return ResponseEntity.ok(StatusResponse.create(ResponseCode.PERMISSION_CREATED));
+        return ResponseEntity.ok(StatusResponse.create(ResponseCode.PERMISSION_CREATED, StatusLevel.SUCCESS));
     }
 
     public ResponseEntity<StatusResponse> deletePermission(String permissionName) {
         permissionService.deletePermissionByName(permissionName);
-        return ResponseEntity.ok(StatusResponse.create(ResponseCode.PERMISSION_DELETED));
+        return ResponseEntity.ok(StatusResponse.create(ResponseCode.PERMISSION_DELETED, StatusLevel.SUCCESS));
     }
 
     public ResponseEntity<StatusResponse> updatePermission(UpdatePermissionDto request) {
         permissionService.updatePermissionName(request.permissionName(), request.newName());
-        return ResponseEntity.ok(StatusResponse.create(ResponseCode.PERMISSION_UPDATED));
+        return ResponseEntity.ok(StatusResponse.create(ResponseCode.PERMISSION_UPDATED, StatusLevel.SUCCESS));
     }
 }

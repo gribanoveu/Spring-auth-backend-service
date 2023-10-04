@@ -1,7 +1,8 @@
-package com.github.gribanoveu.auth.controllers.exeptions;
+package com.github.gribanoveu.auth.controllers.exeptions.entrypoint;
 
 import com.github.gribanoveu.auth.controllers.dtos.response.StatusResponse;
 import com.github.gribanoveu.auth.entities.enums.ResponseCode;
+import com.github.gribanoveu.auth.entities.enums.StatusLevel;
 import com.github.gribanoveu.auth.utils.JsonUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,11 +28,12 @@ public class ServerErrorEntryPoint implements AuthenticationEntryPoint {
             HttpServletResponse response,
             AuthenticationException authException
     ) throws IOException {
-        var error = StatusResponse.create(ResponseCode.SERVER_ERROR);
+        var error = StatusResponse.create(
+                ResponseCode.ACCESS_DENIED, authException.getMessage(), StatusLevel.ERROR);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.getWriter().write(jsonUtils.convertDtoToJson(error));
         response.getWriter().flush();
         response.getWriter().close();

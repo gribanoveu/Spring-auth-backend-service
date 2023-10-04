@@ -6,6 +6,7 @@ import com.github.gribanoveu.auth.controllers.dtos.response.StatusResponse;
 import com.github.gribanoveu.auth.controllers.dtos.response.UsersResponse;
 import com.github.gribanoveu.auth.controllers.exeptions.CredentialEx;
 import com.github.gribanoveu.auth.entities.enums.ResponseCode;
+import com.github.gribanoveu.auth.entities.enums.StatusLevel;
 import com.github.gribanoveu.auth.entities.services.contract.PermissionService;
 import com.github.gribanoveu.auth.entities.services.contract.UserService;
 import com.github.gribanoveu.auth.entities.tables.User;
@@ -43,30 +44,30 @@ public class ManagementControllerFacade {
         user.setPermissionCollection(Set.of(permissionService.getDefaultUserPermission()));
 
         userService.saveUser(user);
-        return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_CREATED));
+        return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_CREATED, StatusLevel.SUCCESS));
     }
 
     public ResponseEntity<?> deleteUser(Long userId) {
         userService.deleteUserById(userId);
-        return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_DELETED));
+        return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_DELETED, StatusLevel.SUCCESS));
     }
 
     public ResponseEntity<?> disableUser(Long userId) {
         var user = userService.findUserById(userId);
         userService.updateEnabled(user, false);
-        return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_DISABLED));
+        return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_DISABLED, StatusLevel.SUCCESS));
     }
 
     public ResponseEntity<?> enabledUser(Long userId) {
         var user = userService.findUserById(userId);
         userService.updateEnabled(user, true);
-        return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_ENABLED));
+        return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_ENABLED, StatusLevel.SUCCESS));
     }
 
     public ResponseEntity<?> resetUserPasswordToDefault(Long userId) {
         var user = userService.findUserById(userId);
         userService.updateUserPasswordAndCredentialsExpiredById(user,
                 passwordEncoder.encode(Constants.DEFAULT_PASSWORD));
-        return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_SET_DEFAULT_PASSWORD));
+        return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_DEFAULT_PASSWORD, StatusLevel.SUCCESS));
     }
 }

@@ -1,6 +1,7 @@
 package com.github.gribanoveu.auth.controllers.dtos.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.github.gribanoveu.auth.entities.enums.StatusLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -16,14 +17,13 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TokenResponse {
     private LocalDateTime timestamp;
-    private int status;
-    private String reason;
+    private StatusLevel status;
     private Long tokenLifetimeMin;
     private String accessToken;
     private String refreshToken;
 
     public static TokenResponse create(HttpStatus status, Long accessTokenLifetime, String accessToken, String refreshToken) {
-        return new TokenResponse(LocalDateTime.now(), status.value(), status.getReasonPhrase(),
+        return new TokenResponse(LocalDateTime.now(), StatusLevel.SUCCESS,
                 accessTokenLifetime, accessToken, refreshToken);
     }
 }

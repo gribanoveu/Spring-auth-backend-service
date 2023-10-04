@@ -1,8 +1,8 @@
 package com.github.gribanoveu.auth.config;
 
-import com.github.gribanoveu.auth.controllers.exeptions.CustomAccessDeniedHandler;
-import com.github.gribanoveu.auth.controllers.exeptions.AuthErrorEntryPoint;
-import com.github.gribanoveu.auth.controllers.exeptions.ServerErrorEntryPoint;
+import com.github.gribanoveu.auth.controllers.exeptions.entrypoint.AccessDeniedEntryPoint;
+import com.github.gribanoveu.auth.controllers.exeptions.entrypoint.AuthErrorEntryPoint;
+import com.github.gribanoveu.auth.controllers.exeptions.entrypoint.ServerErrorEntryPoint;
 import com.github.gribanoveu.auth.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -35,7 +35,7 @@ public class SecurityConfig {
     private final CustomUserDetailsService userDetails;
     private final AuthErrorEntryPoint authErrorEntryPoint;
     private final ServerErrorEntryPoint serverErrorEntryPoint;
-    private final CustomAccessDeniedHandler accessDeniedHandler;
+    private final AccessDeniedEntryPoint accessDeniedHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

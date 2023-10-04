@@ -7,6 +7,7 @@ import com.github.gribanoveu.auth.controllers.dtos.request.RestorePasswordDto;
 import com.github.gribanoveu.auth.controllers.dtos.response.StatusResponse;
 import com.github.gribanoveu.auth.controllers.exeptions.CredentialEx;
 import com.github.gribanoveu.auth.entities.enums.ResponseCode;
+import com.github.gribanoveu.auth.entities.enums.StatusLevel;
 import com.github.gribanoveu.auth.entities.services.contract.RedisOtpService;
 import com.github.gribanoveu.auth.entities.services.contract.UserService;
 import com.github.gribanoveu.auth.utils.JsonUtils;
@@ -37,7 +38,7 @@ public class AccountControllerFacade {
     public ResponseEntity<?> changeEmail(ChangeEmailDto request, Authentication authentication) {
         var user = userService.findUserByEmail(authentication.getName());
         userService.updateEmail(user, request.email());
-        return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_UPDATED));
+        return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_UPDATED, StatusLevel.SUCCESS));
     }
 
     // check that password and confirm password match
@@ -52,7 +53,7 @@ public class AccountControllerFacade {
         if (passwordEncoder.matches(request.oldPassword(), user.getPassword()))
             if (!passwordEncoder.matches(request.password(), user.getPassword())) {
                 userService.updatePasswordByEmail(user, passwordEncoder.encode(request.password()));
-                return ResponseEntity.ok(StatusResponse.create(ResponseCode.PASSWORD_UPDATED));
+                return ResponseEntity.ok(StatusResponse.create(ResponseCode.PASSWORD_UPDATED, StatusLevel.SUCCESS));
             } else throw new CredentialEx(ResponseCode.PASSWORD_EQUALS);
 
         throw new CredentialEx(ResponseCode.OLD_PASSWORD_NOT_MATCH);
@@ -71,7 +72,7 @@ public class AccountControllerFacade {
         if (!userExist) throw new CredentialEx(ResponseCode.USER_NOT_EXIST);
         var otpCode = jsonUtils.generateRandomOtpCode().toString();
         redisOtpService.saveOptCode(request.email(), otpCode, otpCodeLifeTime);
-        return ResponseEntity.ok(StatusResponse.create(ResponseCode.OTP_CODE_CREATED));
+        return ResponseEntity.ok(StatusResponse.create(ResponseCode.OTP_CODE_CREATED, StatusLevel.ERROR));
     }
 
     // next screen user enter otp code and new password and re-enter password again
@@ -86,7 +87,7 @@ public class AccountControllerFacade {
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
             userService.updatePasswordByEmail(user, passwordEncoder.encode(request.password()));
             redisOtpService.deleteOtpCode(request.email());
-            return ResponseEntity.ok(StatusResponse.create(ResponseCode.PASSWORD_UPDATED));
+            return ResponseEntity.ok(StatusResponse.create(ResponseCode.PASSWORD_UPDATED, StatusLevel.SUCCESS));
         }
         throw new CredentialEx(ResponseCode.PASSWORD_EQUALS);
     }

@@ -5,7 +5,8 @@ package com.github.gribanoveu.auth.entities.enums;
  * @version 02.10.2023
  */
 public enum StatusLevel {
-    WARNING, // red
-    NOTICE, // blue
+    INFO, // white
+    WARNING, // blue
+    ERROR, // red
     SUCCESS // green
 }
