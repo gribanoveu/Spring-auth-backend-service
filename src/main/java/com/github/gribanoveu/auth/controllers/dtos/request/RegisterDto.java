@@ -12,6 +12,7 @@ import static com.github.gribanoveu.auth.constants.ValidationMessages.*;
  * @version 29.08.2023
  */
 public record RegisterDto(
+        @NotBlank
         @Pattern(regexp = EMAIL_PATTERN, message = EMAIL_FORMAT_MESSAGE)
         @Size(max = 30, message = EMAIL_SIZE_MESSAGE)
         String email,
