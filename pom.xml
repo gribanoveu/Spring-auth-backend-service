@@ -129,7 +129,7 @@
 				<configuration>
 					<cleanDisabled>false</cleanDisabled>
 					<driver>org.postgresql.Driver</driver>
-					<url>jdbc:postgresql://localhost:5432/auth_service_db</url>
+					<url>jdbc:postgresql://${datasource.host}:${datasource.port}/${datasource.name}</url>
 					<user>${flyway.user}</user>
 					<password>${flyway.password}</password>
 				</configuration>
