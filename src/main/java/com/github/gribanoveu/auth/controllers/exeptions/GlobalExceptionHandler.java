@@ -7,13 +7,16 @@ import com.github.gribanoveu.auth.entities.enums.ResponseCode;
 import com.github.gribanoveu.auth.entities.enums.StatusLevel;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 /**
@@ -23,17 +26,29 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    public ResponseEntity<?> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
+        var details = StatusResponse.create(ResponseCode.VALIDATION_ERROR, StatusLevel.ERROR);
+        return ResponseEntity.status(ResponseCode.VALIDATION_ERROR.getHttpCode()).body(details);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        var details = StatusResponse.create(ResponseCode.VALIDATION_ERROR, StatusLevel.ERROR);
+        return ResponseEntity.status(ResponseCode.VALIDATION_ERROR.getHttpCode()).body(details);
+    }
+
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<?> handleNoHandlerFoundException(NoHandlerFoundException e) {
         var details = StatusResponse.create(ResponseCode.RESOURCE_NOT_FOUND, StatusLevel.ERROR);
-        return ResponseEntity.status(UNAUTHORIZED).body(details);
+        return ResponseEntity.status(ResponseCode.RESOURCE_NOT_FOUND.getHttpCode()).body(details);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<StatusResponse> handleBadCredentialsException(BadCredentialsException e) {
         var details = StatusResponse.create(
                 ResponseCode.BAD_CREDENTIAL, e.getMessage(), StatusLevel.ERROR);
-        return ResponseEntity.status(UNAUTHORIZED).body(details);
+        return ResponseEntity.status(ResponseCode.BAD_CREDENTIAL.getHttpCode()).body(details);
     }
 
     @ExceptionHandler(CredentialEx.class)
