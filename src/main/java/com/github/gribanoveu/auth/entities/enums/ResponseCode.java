@@ -53,6 +53,12 @@ public enum ResponseCode {
             "Validation Error. Please check that the data is in the correct format and try again.",
             HttpStatus.BAD_REQUEST
     ),
+    VALIDATION_ERROR_DETAIL(
+            "AUT-107",
+            "Validation error",
+            "Field '%s' - %s",
+            HttpStatus.BAD_REQUEST
+    ),
     RESOURCE_NOT_FOUND(
             "AUT-107",
             "Resource not found",

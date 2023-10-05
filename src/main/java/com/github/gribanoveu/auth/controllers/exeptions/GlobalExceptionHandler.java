@@ -60,7 +60,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class) // @Valid handler
     public ResponseEntity<?> handleValidAnnotationException(MethodArgumentNotValidException e) {
         var errors = e.getBindingResult().getFieldErrors().stream()
-                .map(fieldError -> new ResponseDetails(ResponseCode.VALIDATION_ERROR)).toList();
+                .map(fieldError -> new ResponseDetails(
+                         ResponseCode.VALIDATION_ERROR_DETAIL,
+                                String.format(ResponseCode.VALIDATION_ERROR_DETAIL.getMessage(),
+                                        fieldError.getField(), fieldError.getDefaultMessage()))).toList();
 
         var details = StatusResponse.create( errors, StatusLevel.ERROR);
         return ResponseEntity.status(e.getStatusCode()).body(details);
