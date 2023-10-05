@@ -1,5 +1,6 @@
 package com.github.gribanoveu.auth.entities.services.implementation;
 
+import com.github.gribanoveu.auth.base.BaseMockMvcTest;
 import com.github.gribanoveu.auth.controllers.exeptions.CredentialEx;
 import com.github.gribanoveu.auth.entities.services.contract.TokenService;
 import org.assertj.core.api.Assertions;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @version 02.10.2023
  */
 @SpringBootTest
-class TokenServiceImplTest {
+class TokenServiceImplTest extends BaseMockMvcTest {
     @Autowired private TokenService tokenService;
 
     @Test

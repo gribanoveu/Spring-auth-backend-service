@@ -2,6 +2,7 @@ package com.github.gribanoveu.auth.controllers.endpoints;
 
 import com.github.gribanoveu.auth.base.BaseMockMvcTest;
 import com.github.gribanoveu.auth.controllers.dtos.request.LoginDto;
+import com.github.gribanoveu.auth.entities.enums.ResponseCode;
 import com.github.gribanoveu.auth.entities.enums.TokenType;
 import com.github.gribanoveu.auth.entities.services.implementation.TokenServiceImpl;
 import com.github.gribanoveu.auth.security.CustomUserDetails;
@@ -35,7 +36,6 @@ class TokenControllerTest extends BaseMockMvcTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(testJsonUtils.convertDtoToJson(request)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.reason").value("OK"))
                 .andExpect(jsonPath("$.accessToken").isNotEmpty())
                 .andExpect(jsonPath("$.refreshToken").isNotEmpty());
     }
@@ -48,7 +48,6 @@ class TokenControllerTest extends BaseMockMvcTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(testJsonUtils.convertDtoToJson(request)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.reason").value("OK"))
                 .andExpect(jsonPath("$.accessToken").isNotEmpty())
                 .andExpect(jsonPath("$.refreshToken").isNotEmpty())
                 .andReturn();
@@ -70,7 +69,6 @@ class TokenControllerTest extends BaseMockMvcTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(testJsonUtils.convertDtoToJson(request)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.reason").value("OK"))
                 .andExpect(jsonPath("$.accessToken").isNotEmpty())
                 .andExpect(jsonPath("$.refreshToken").isNotEmpty())
                 .andReturn();
@@ -90,9 +88,8 @@ class TokenControllerTest extends BaseMockMvcTest {
         this.mockMvc.perform(post("/v1/token/issue")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(testJsonUtils.convertDtoToJson(request)))
-                .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.reason").value("Unauthorized"))
-                .andExpect(jsonPath("$.message").value("Bad credentials"));
+                .andExpect(status().is(ResponseCode.BAD_CREDENTIAL.getHttpCode().value()))
+                .andExpect(jsonPath("$..details[0].message").value("Bad credentials"));
     }
 
     @Test
@@ -104,7 +101,6 @@ class TokenControllerTest extends BaseMockMvcTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Bearer " + refreshToken))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.reason").value("OK"))
                 .andExpect(jsonPath("$.accessToken").isNotEmpty())
                 .andExpect(jsonPath("$.refreshToken").isNotEmpty())
                 .andReturn();
@@ -127,7 +123,6 @@ class TokenControllerTest extends BaseMockMvcTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Bearer " + refreshToken))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.reason").value("OK"))
                 .andExpect(jsonPath("$.accessToken").isNotEmpty())
                 .andExpect(jsonPath("$.refreshToken").isNotEmpty())
                 .andReturn();

@@ -1,23 +1,18 @@
 package com.github.gribanoveu.auth.base;
 
-import com.github.gribanoveu.auth.controllers.dtos.request.LoginDto;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.TestInstance;
+import com.github.gribanoveu.auth.entities.enums.TokenType;
+import com.github.gribanoveu.auth.entities.services.contract.TokenService;
+import com.github.gribanoveu.auth.security.CustomUserDetails;
+import com.github.gribanoveu.auth.security.CustomUserDetailsService;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author Evgeny Gribanov
@@ -29,33 +24,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public abstract class BaseMockMvcTest {
     @Autowired protected MockMvc mockMvc;
     @Autowired protected TestJsonUtils testJsonUtils;
+    @Autowired private TokenService tokenService;
+    @Autowired private CustomUserDetailsService usrDetailsService;
+
+    protected String adminToken;
+    protected String userToken;
+
+    @BeforeEach
+    public void setUp() { // fixme why @WithUserDetails is not working
+        var admin = (CustomUserDetails) usrDetailsService.loadUserByUsername("admin@email.com");
+        adminToken = "Bearer " + tokenService.generateToken(admin, TokenType.ACCESS);
+
+        var user = (CustomUserDetails) usrDetailsService.loadUserByUsername("user@email.com");
+        userToken = "Bearer " + tokenService.generateToken(user, TokenType.ACCESS);
+    }
 
     @Container
     @ServiceConnection
     static PostgreSQLContainer<?> postgres =
             new PostgreSQLContainer<>("postgres:15.4-alpine");
 
-
-    // fixme why @WithUserDetails is not working
-    // fixme make create test users only for tests
-    // fixme mock rsa keys and run in ci/cd
-    protected String issueJwtTokenAsAdmin() throws Exception {
-        var result =  mockMvc.perform(post("/v1/token/issue")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(testJsonUtils.convertDtoToJson(
-                                new LoginDto("admin@email.com", "Qwerty123"))))
-                .andExpect(status().isOk()).andReturn();
-
-        return "Bearer " + testJsonUtils.getJsonValueFromMvcResult(result, "accessToken");
-    }
-
-    protected String issueTokenAsUser() throws Exception {
-        var result = mockMvc.perform(post("/v1/token/issue")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(testJsonUtils.convertDtoToJson(
-                                new LoginDto("user@email.com", "Qwerty123"))))
-                .andExpect(status().isOk()).andReturn();
-
-        return "Bearer " + testJsonUtils.getJsonValueFromMvcResult(result, "accessToken");
-    }
 }
