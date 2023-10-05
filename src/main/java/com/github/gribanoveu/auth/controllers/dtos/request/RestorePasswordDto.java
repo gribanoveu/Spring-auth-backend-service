@@ -13,21 +13,21 @@ import static com.github.gribanoveu.auth.constants.ValidationMessages.*;
  * @version 22.09.2023
  */
 public record RestorePasswordDto(
-        @NotBlank
-        @Pattern(regexp = EMAIL_PATTERN, message = EMAIL_FORMAT_MESSAGE)
-        @Size(max = 30, message = EMAIL_SIZE_MESSAGE)
+        @NotBlank(message = NOT_BLANK_EXCEPTION_MESSAGE)
+        @Pattern(regexp = EMAIL_PATTERN, message = PATTERN_EXCEPTION_MESSAGE)
+        @Size(max = 30, message = SIZE_EXCEPTION_MESSAGE)
         String email,
 
-        @NotBlank
-        @Pattern(regexp = OTP_PATTERN, message = OTP_FORMAT_MESSAGE)
+        @NotBlank(message = NOT_BLANK_EXCEPTION_MESSAGE)
+        @Pattern(regexp = OTP_PATTERN, message = PATTERN_EXCEPTION_MESSAGE)
         String otpCode,
 
-        @Size(max = 80)
-        @NotBlank(message = PASSWORD_CANT_BE_EMPTY)
+        @NotBlank(message = NOT_BLANK_EXCEPTION_MESSAGE)
+        @Size(max = 80, message = SIZE_EXCEPTION_MESSAGE)
         String password,
 
-        @Size(max = 80)
-        @NotBlank(message = PASSWORD_CANT_BE_EMPTY)
+        @NotBlank(message = NOT_BLANK_EXCEPTION_MESSAGE)
+        @Size(max = 80, message = SIZE_EXCEPTION_MESSAGE)
         String confirmPassword
 ) {
 }

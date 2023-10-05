@@ -5,16 +5,15 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import static com.github.gribanoveu.auth.constants.RegexpFormat.EMAIL_PATTERN;
-import static com.github.gribanoveu.auth.constants.ValidationMessages.EMAIL_FORMAT_MESSAGE;
-import static com.github.gribanoveu.auth.constants.ValidationMessages.EMAIL_SIZE_MESSAGE;
+import static com.github.gribanoveu.auth.constants.ValidationMessages.*;
 
 /**
  * @author Evgeny Gribanov
  * @version 08.09.2023
  */
 public record ChangeEmailDto(
-        @NotBlank
-        @Pattern(regexp = EMAIL_PATTERN, message = EMAIL_FORMAT_MESSAGE)
-        @Size(max = 30, message = EMAIL_SIZE_MESSAGE)
+        @NotBlank(message = NOT_BLANK_EXCEPTION_MESSAGE)
+        @Pattern(regexp = EMAIL_PATTERN, message = PATTERN_EXCEPTION_MESSAGE)
+        @Size(max = 30, message = SIZE_EXCEPTION_MESSAGE)
         String email
 ) { }

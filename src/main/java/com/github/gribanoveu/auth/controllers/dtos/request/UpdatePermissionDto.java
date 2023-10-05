@@ -5,31 +5,20 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import static com.github.gribanoveu.auth.constants.RegexpFormat.PERMISSION_PATTERN;
-import static com.github.gribanoveu.auth.constants.ValidationMessages.PERMISSION_FORMAT_MESSAGE;
-import static com.github.gribanoveu.auth.constants.ValidationMessages.PERMISSION_SIZE_MESSAGE;
+import static com.github.gribanoveu.auth.constants.ValidationMessages.*;
 
 /**
  * @author Evgeny Gribanov
  * @version 26.09.2023
  */
 public record UpdatePermissionDto(
-        @NotBlank
-        @Pattern(regexp = PERMISSION_PATTERN, message = PERMISSION_FORMAT_MESSAGE)
-        @Size(max = 30, message = PERMISSION_SIZE_MESSAGE)
+        @NotBlank(message = NOT_BLANK_EXCEPTION_MESSAGE)
+        @Pattern(regexp = PERMISSION_PATTERN, message = PATTERN_EXCEPTION_MESSAGE)
+        @Size(max = 30, message = SIZE_EXCEPTION_MESSAGE)
         String permissionName,
 
-        @NotBlank
-        @Pattern(regexp = PERMISSION_PATTERN, message = PERMISSION_FORMAT_MESSAGE)
-        @Size(max = 30, message = PERMISSION_SIZE_MESSAGE)
+        @NotBlank(message = NOT_BLANK_EXCEPTION_MESSAGE)
+        @Pattern(regexp = PERMISSION_PATTERN, message = PATTERN_EXCEPTION_MESSAGE)
+        @Size(max = 30, message = SIZE_EXCEPTION_MESSAGE)
         String newName
-) {
-    @Override
-    public String permissionName() {
-        return permissionName.toUpperCase();
-    }
-
-    @Override
-    public String newName() {
-        return newName.toUpperCase();
-    }
-}
+) {}
