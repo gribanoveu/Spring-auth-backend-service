@@ -1,8 +1,9 @@
 package com.github.gribanoveu.cuddly.controllers.endpoints.auth;
 
 import com.github.gribanoveu.cuddly.controllers.dtos.request.auth.LoginDto;
+import com.github.gribanoveu.cuddly.controllers.dtos.request.auth.RefreshTokenDto;
 import com.github.gribanoveu.cuddly.controllers.dtos.response.auth.TokenResponse;
-import com.github.gribanoveu.cuddly.controllers.facade.auth.TokenControllerFacade;
+import com.github.gribanoveu.cuddly.controllers.facade.auth.AuthControllerFacade;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,17 +16,17 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/token")
-public class TokenController {
-    private final TokenControllerFacade tokenControllerFacade;
+@RequestMapping("/v1/auth")
+public class AuthController {
+    private final AuthControllerFacade authControllerFacade;
 
-    @PostMapping("/issue")
+    @PostMapping
     public ResponseEntity<TokenResponse> authenticateUser(@Valid @RequestBody LoginDto request) {
-        return tokenControllerFacade.authenticateUser(request);
+        return authControllerFacade.authenticateUser(request);
     }
 
-    @GetMapping("/refresh")
-    public ResponseEntity<TokenResponse> refreshToken(HttpServletRequest request) {
-        return tokenControllerFacade.refreshToken(request);
+    @PatchMapping
+    public ResponseEntity<TokenResponse> refreshToken(@Valid @RequestBody RefreshTokenDto request) {
+        return authControllerFacade.refreshToken(request);
     }
 }

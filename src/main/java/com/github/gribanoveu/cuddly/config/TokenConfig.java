@@ -1,6 +1,5 @@
 package com.github.gribanoveu.cuddly.config;
 
-import com.github.gribanoveu.cuddly.utils.RsaProperties;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;

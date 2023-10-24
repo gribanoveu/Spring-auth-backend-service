@@ -1,7 +1,7 @@
 server:
   port: 8189
   servlet:
-    context-path: /api/secure
+    context-path: /api/private
 time-variable:
   accessTokenLifetime: 15m
   refreshTokenLifetime: 7d

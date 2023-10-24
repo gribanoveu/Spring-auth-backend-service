@@ -1,6 +1,6 @@
 package com.github.gribanoveu.cuddly;
 
-import com.github.gribanoveu.cuddly.utils.RsaProperties;
+import com.github.gribanoveu.cuddly.config.RsaProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

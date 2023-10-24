@@ -1,4 +1,4 @@
-package com.github.gribanoveu.cuddly.utils;
+package com.github.gribanoveu.cuddly.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
