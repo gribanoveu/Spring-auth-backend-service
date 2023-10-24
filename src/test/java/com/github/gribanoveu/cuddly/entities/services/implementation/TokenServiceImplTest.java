@@ -2,7 +2,7 @@ package com.github.gribanoveu.cuddly.entities.services.implementation;
 
 import com.github.gribanoveu.cuddly.base.BaseMockMvcTest;
 import com.github.gribanoveu.cuddly.controllers.exeptions.CredentialEx;
-import com.github.gribanoveu.cuddly.entities.services.contract.TokenService;
+import com.github.gribanoveu.cuddly.entities.services.token.TokenService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,10 +3,12 @@ package com.github.gribanoveu.cuddly.config;
 import com.github.gribanoveu.cuddly.controllers.exeptions.entrypoint.AccessDeniedEntryPoint;
 import com.github.gribanoveu.cuddly.controllers.exeptions.entrypoint.AuthErrorEntryPoint;
 import com.github.gribanoveu.cuddly.controllers.exeptions.entrypoint.ServerErrorEntryPoint;
+import com.github.gribanoveu.cuddly.entities.enums.Role;
 import com.github.gribanoveu.cuddly.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -20,8 +22,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static com.github.gribanoveu.cuddly.entities.enums.Permissions.AU_PERMISSIONS_MANAGEMENT;
-import static com.github.gribanoveu.cuddly.entities.enums.Permissions.AU_USERS_MANAGEMENT;
+import static com.github.gribanoveu.cuddly.entities.enums.Role.*;
 
 /**
  * @author Evgeny Gribanov
@@ -43,8 +44,9 @@ public class SecurityConfig {
                 .csrf(CsrfConfigurer::disable)
                 .cors(CorsConfigurer::disable)
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("*/permission").hasAuthority(AU_PERMISSIONS_MANAGEMENT.scope())
-                        .requestMatchers("*/user-manage/**").hasAuthority(AU_USERS_MANAGEMENT.scope())
+                        .requestMatchers(HttpMethod.POST, "*/user").anonymous() // register
+                        .requestMatchers("*/role").hasAuthority(ADMIN.scope())
+                        .requestMatchers("*/users/**").hasAuthority(MODERATOR.scope())
                         .requestMatchers("*/token/**").permitAll() // allow auth and anonymous users
                         .requestMatchers("*/account/generate-code").anonymous() // allow only anonymous
                         .requestMatchers("*/account/restore-password").anonymous()

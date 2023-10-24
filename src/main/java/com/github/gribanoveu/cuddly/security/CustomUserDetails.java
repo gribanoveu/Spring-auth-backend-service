@@ -2,14 +2,10 @@ package com.github.gribanoveu.cuddly.security;
 
 import com.github.gribanoveu.cuddly.entities.tables.User;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * @author Evgeny Gribanov
@@ -23,7 +19,7 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(User user) {
         this.user = user;
         this.authorities = new HashSet<>();
-        this.authorities.addAll(getPermissions());
+        this.authorities.addAll(getRole());
     }
 
     @Override
@@ -31,14 +27,8 @@ public class CustomUserDetails implements UserDetails {
         return authorities;
     }
 
-    public Collection<? extends GrantedAuthority> getPermissions() {
-        return this.user.getPermissionCollection().stream()
-                .map(permission -> new SimpleGrantedAuthority(permission.getName()))
-                .collect(Collectors.toSet());
-    }
-
-    public String getUserPosition() {
-        return this.user.getPosition();
+    public Collection<? extends GrantedAuthority> getRole() {
+        return Collections.singletonList(this.user.getRole());
     }
 
     @Override

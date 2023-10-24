@@ -1,7 +1,7 @@
 package com.github.gribanoveu.cuddly.base;
 
 import com.github.gribanoveu.cuddly.entities.enums.TokenType;
-import com.github.gribanoveu.cuddly.entities.services.contract.TokenService;
+import com.github.gribanoveu.cuddly.entities.services.token.TokenService;
 import com.github.gribanoveu.cuddly.security.CustomUserDetails;
 import com.github.gribanoveu.cuddly.security.CustomUserDetailsService;
 import org.junit.jupiter.api.BeforeEach;

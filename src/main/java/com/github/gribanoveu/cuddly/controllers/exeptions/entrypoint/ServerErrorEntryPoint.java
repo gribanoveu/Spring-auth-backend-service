@@ -7,11 +7,16 @@ import com.github.gribanoveu.cuddly.utils.JsonUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+
+import static com.github.gribanoveu.cuddly.entities.enums.ResponseCode.*;
 
 /**
  * @author Evgeny Gribanov
@@ -28,8 +33,15 @@ public class ServerErrorEntryPoint implements AuthenticationEntryPoint {
             HttpServletResponse response,
             AuthenticationException authException
     ) throws IOException {
-        var error = StatusResponse.create(
-                ResponseCode.ACCESS_DENIED, authException.getMessage(), StatusLevel.ERROR);
+        StatusResponse error = null;
+
+        if (authException instanceof DisabledException) {
+            error = StatusResponse.create(ACCOUNT_DISABLED, ACCOUNT_DISABLED.getMessage(), StatusLevel.ERROR);
+
+        } else if (authException instanceof LockedException) {
+            error = StatusResponse.create(ACCOUNT_BANNED, ACCOUNT_BANNED.getMessage(), StatusLevel.ERROR);
+
+        } else error = StatusResponse.create(ACCESS_DENIED, authException.getMessage(), StatusLevel.ERROR);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

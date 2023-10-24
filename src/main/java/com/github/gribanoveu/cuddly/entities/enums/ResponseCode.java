@@ -2,6 +2,7 @@ package com.github.gribanoveu.cuddly.entities.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 
 /**
@@ -60,10 +61,28 @@ public enum ResponseCode {
             HttpStatus.BAD_REQUEST
     ),
     RESOURCE_NOT_FOUND(
-            "AUT-107",
+            "AUT-108",
             "Resource not found",
             "The requested resource could not be found. Please verify that the information entered is correct and try again.",
             HttpStatus.NOT_FOUND
+    ),
+    ACCOUNT_BANNED(
+            "AUT-109",
+            "Account banned",
+            "Your account has been banned due to a violation of the Terms of Use Policy",
+            HttpStatus.UNAUTHORIZED
+    ),
+    ACCOUNT_DISABLED(
+            "AUT-110",
+            "Account disabled",
+            "Your account has been disabled contact support to find out why",
+            HttpStatus.UNAUTHORIZED
+    ),
+    AGE_NOT_VALID(
+            "AUT-111",
+            "Age not valid",
+            "Age must be at least 18 years old, or have expected format",
+            HttpStatus.BAD_REQUEST
     ),
     PASSWORD_UPDATED(
             "AUT-200",
@@ -154,6 +173,18 @@ public enum ResponseCode {
             "User already exists",
             "User already exists. Please make sure you have entered the correct email and try again.",
             HttpStatus.CONFLICT
+    ),
+    USER_BANNED(
+            "AUT-408",
+            "User banned",
+            "User has been successfully banned.",
+            HttpStatus.OK
+    ),
+    USER_UN_BANNED(
+            "AUT-409",
+            "User unbanned",
+            "User has been successfully unbanned.",
+            HttpStatus.OK
     ),
     PERMISSION_CREATED(
             "AUT-500",
