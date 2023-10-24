@@ -38,6 +38,8 @@ public class SecurityConfig {
     private final ServerErrorEntryPoint serverErrorEntryPoint;
     private final AccessDeniedEntryPoint accessDeniedHandler;
 
+    // permitAll - allow auth and anonymous users
+    // anonymous - allow only anonymous
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http // to make API available for requests from other domains - enable cors
@@ -45,9 +47,9 @@ public class SecurityConfig {
                 .cors(CorsConfigurer::disable)
                 .authorizeHttpRequests(req -> req
                         .requestMatchers(HttpMethod.POST, "*/user").anonymous() // register
-                        .requestMatchers("*/role").hasAuthority(ADMIN.scope())
+                        .requestMatchers("*/auth").anonymous()
                         .requestMatchers("*/users/**").hasAnyAuthority(ADMIN.scope(), MODERATOR.scope())
-                        .requestMatchers("*/auth").permitAll() // allow auth and anonymous users
+                        .requestMatchers("*/moderator/**").hasAnyAuthority(ADMIN.scope(), MODERATOR.scope())
                         .requestMatchers("*/account/generate-code").anonymous() // allow only anonymous
                         .requestMatchers("*/account/restore-password").anonymous()
                         .anyRequest().authenticated()

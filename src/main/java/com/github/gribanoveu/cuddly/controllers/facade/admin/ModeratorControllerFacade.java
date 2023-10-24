@@ -18,7 +18,7 @@ import static org.springframework.http.HttpStatus.OK;
  */
 @Service
 @RequiredArgsConstructor
-public class AdminControllerFacade {
+public class ModeratorControllerFacade {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
