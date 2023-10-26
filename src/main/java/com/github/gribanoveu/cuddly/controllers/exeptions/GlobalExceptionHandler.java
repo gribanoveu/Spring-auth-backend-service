@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CredentialEx.class)
     public ResponseEntity<?> handleCredentialsException(CredentialEx e) {
-        var details = StatusResponse.create(e.getError(), StatusLevel.ERROR);
+        var details = StatusResponse.create(e.getError(), StatusLevel.WARNING);
         return ResponseEntity.status(e.getStatus()).body(details);
     }
 
