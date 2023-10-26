@@ -1,5 +1,6 @@
 package com.github.gribanoveu.cuddly.controllers.facade.auth;
 
+import com.github.gribanoveu.cuddly.constants.RegexpFormat;
 import com.github.gribanoveu.cuddly.controllers.dtos.request.auth.LoginDto;
 import com.github.gribanoveu.cuddly.controllers.dtos.request.auth.RefreshTokenDto;
 import com.github.gribanoveu.cuddly.controllers.dtos.response.auth.TokenResponse;
@@ -11,6 +12,7 @@ import com.github.gribanoveu.cuddly.security.CustomUserDetails;
 import com.github.gribanoveu.cuddly.security.CustomUserDetailsService;
 import com.github.gribanoveu.cuddly.utils.RSAEncryption;
 import com.github.gribanoveu.cuddly.config.RsaProperties;
+import com.github.gribanoveu.cuddly.utils.RefreshTokenUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +24,9 @@ import org.springframework.stereotype.Service;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.time.Duration;
+import java.time.Instant;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Evgeny Gribanov
@@ -31,49 +36,33 @@ import java.time.Duration;
 @Service
 @RequiredArgsConstructor
 public class AuthControllerFacade {
+    @Value("${time-variable.accessTokenLifetime}")
+    private Duration accessTokenLifetime;
     private final TokenService tokenService;
     private final AuthenticationManager authManager;
     private final CustomUserDetailsService usrDetailsService;
-    private final RsaProperties rsaKeys;
-    private final RSAEncryption rsaEncryption;
-
-    @Value("${time-variable.accessTokenLifetime}") private Duration accessTokenLifetime;
+    private final RefreshTokenUtils refreshTokenUtils;
 
     public ResponseEntity<TokenResponse> authenticateUser(LoginDto request) {
         var authenticationToken = new UsernamePasswordAuthenticationToken(request.email(), request.password());
         var auth = authManager.authenticate(authenticationToken);
         var user = (CustomUserDetails) auth.getPrincipal();
         var accessToken = tokenService.generateToken(user, TokenType.ACCESS);
-        var refreshToken = generateRefreshToken(request.email());
+        var encryptedRefreshToken = refreshTokenUtils.generateEncryptedRefreshToken(request.email());
 
-        return ResponseEntity.ok(TokenResponse.create(accessTokenLifetime.toSeconds(), accessToken, refreshToken));
+        return ResponseEntity.ok(TokenResponse.create(accessTokenLifetime.toSeconds(),
+                accessToken, encryptedRefreshToken)); // encrypted token so that it is not used as a main token
     }
 
     public ResponseEntity<TokenResponse> refreshToken(RefreshTokenDto request) {
-        var email = encryptRefreshToken(request.refreshToken());
+        var email = refreshTokenUtils.validateRefreshTokenAndExtractEmail(request.refreshToken());
         var user = (CustomUserDetails) usrDetailsService.loadUserByUsername(email);
         var accessToken = tokenService.generateToken(user, TokenType.ACCESS);
-        var refreshToken = generateRefreshToken(email);
+        var encryptedRefreshToken = refreshTokenUtils.generateEncryptedRefreshToken(email);
 
-        return ResponseEntity.ok(TokenResponse.create(accessTokenLifetime.toSeconds(), accessToken, refreshToken));
+        return ResponseEntity.ok(TokenResponse.create(accessTokenLifetime.toSeconds(),
+                accessToken, encryptedRefreshToken));
     }
 
-    private String generateRefreshToken(String email) {
-        RSAPublicKey publicKey = rsaKeys.publicKey();
-        try {
-            return rsaEncryption.encrypt(email, publicKey);
-        } catch (Exception e) {
-            throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
-        }
-    }
-
-    private String encryptRefreshToken(String token) {
-        RSAPrivateKey privateKey = rsaKeys.privateKey();
-        try {
-            return rsaEncryption.decrypt(token, privateKey);
-        } catch (Exception e) {
-            throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
-        }
-    }
 
 }
