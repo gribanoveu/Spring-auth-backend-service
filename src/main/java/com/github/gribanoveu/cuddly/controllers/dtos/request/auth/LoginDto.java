@@ -14,7 +14,7 @@ import static com.github.gribanoveu.cuddly.constants.ValidationMessages.*;
 public record LoginDto(
         @NotBlank(message = NOT_BLANK_EXCEPTION_MESSAGE)
         @Pattern(regexp = EMAIL_PATTERN, message = PATTERN_EXCEPTION_MESSAGE)
-        @Size(max = 30, message = SIZE_EXCEPTION_MESSAGE)
+        @Size(max = 80, message = SIZE_EXCEPTION_MESSAGE)
         String email,
 
         @NotBlank(message = NOT_BLANK_EXCEPTION_MESSAGE)
