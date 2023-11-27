@@ -50,8 +50,8 @@ public class SecurityConfig {
                         .requestMatchers( HttpMethod.POST, "*/auth").anonymous() // issue token
                         .requestMatchers( HttpMethod.PATCH, "*/auth").anonymous() // refresh token
                         .requestMatchers(HttpMethod.POST, "*/user").anonymous() // register
-                        .requestMatchers(HttpMethod.POST, "*/generate-code").anonymous()
-                        .requestMatchers(HttpMethod.POST, "*/restore-password").anonymous()
+                        .requestMatchers(HttpMethod.POST, "*/account/generate-code").anonymous()
+                        .requestMatchers(HttpMethod.POST, "*/account/restore-password").anonymous()
 
                         // authenticated scope
                         .requestMatchers("*/users/**").hasAnyAuthority(ADMIN.scope(), MODERATOR.scope())
