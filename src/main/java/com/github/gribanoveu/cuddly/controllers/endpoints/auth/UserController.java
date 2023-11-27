@@ -1,7 +1,11 @@
 package com.github.gribanoveu.cuddly.controllers.endpoints.auth;
 
 import com.github.gribanoveu.cuddly.controllers.dtos.request.auth.RegisterDto;
+import com.github.gribanoveu.cuddly.controllers.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddly.controllers.facade.auth.UserControllerFacade;
+import com.github.gribanoveu.cuddly.entities.tables.User;
+import com.github.gribanoveu.cuddly.utils.aspects.LogRequest;
+import com.github.gribanoveu.cuddly.utils.aspects.LogResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,18 +25,22 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserControllerFacade userControllerFacade;
 
+    @LogRequest
+    @LogResponse
     @GetMapping
-    public ResponseEntity<?> getUserData(Authentication authentication) {
+    public ResponseEntity<User> getUserData(Authentication authentication) {
         return userControllerFacade.getUserData(authentication);
     }
 
+    @LogRequest
+    @LogResponse
     @PostMapping
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterDto request) {
+    public ResponseEntity<StatusResponse> registerUser(@Valid @RequestBody RegisterDto request) {
         return userControllerFacade.registerUser(request);
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteUser(Authentication authentication) {
+    public ResponseEntity<StatusResponse> deleteUser(Authentication authentication) {
         return userControllerFacade.deleteUser(authentication);
     }
 }

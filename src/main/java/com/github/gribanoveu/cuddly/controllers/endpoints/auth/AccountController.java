@@ -4,7 +4,10 @@ import com.github.gribanoveu.cuddly.controllers.dtos.request.auth.ChangeEmailDto
 import com.github.gribanoveu.cuddly.controllers.dtos.request.auth.ChangePasswordDto;
 import com.github.gribanoveu.cuddly.controllers.dtos.request.auth.GenerateOtpDto;
 import com.github.gribanoveu.cuddly.controllers.dtos.request.auth.RestorePasswordDto;
+import com.github.gribanoveu.cuddly.controllers.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddly.controllers.facade.auth.AccountControllerFacade;
+import com.github.gribanoveu.cuddly.utils.aspects.LogRequest;
+import com.github.gribanoveu.cuddly.utils.aspects.LogResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,23 +24,25 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
     private final AccountControllerFacade userControllerFacade;
 
+    @LogRequest
+    @LogResponse
     @PatchMapping("/change-email")
-    public ResponseEntity<?> changeEmail(@Valid @RequestBody ChangeEmailDto request, Authentication authentication) {
-        return userControllerFacade.changeEmail(request, authentication);
+    public ResponseEntity<StatusResponse> changeEmail(@Valid @RequestBody ChangeEmailDto request, Authentication auth) {
+        return userControllerFacade.changeEmail(request, auth);
     }
 
     @PatchMapping("/change-password")
-    public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordDto request, Authentication authentication) {
-        return userControllerFacade.changePassword(request, authentication);
+    public ResponseEntity<StatusResponse> changePassword(@Valid @RequestBody ChangePasswordDto request, Authentication auth) {
+        return userControllerFacade.changePassword(request, auth);
     }
 
     @PostMapping("/generate-code") // anonymous access
-    public ResponseEntity<?> generateOtpCode(@Valid @RequestBody GenerateOtpDto request) {
+    public ResponseEntity<StatusResponse> generateOtpCode(@Valid @RequestBody GenerateOtpDto request) {
         return userControllerFacade.generateOtpCode(request);
     }
 
     @PostMapping("/restore-password") // anonymous access
-    public ResponseEntity<?> restorePassword(@Valid @RequestBody RestorePasswordDto request) {
+    public ResponseEntity<StatusResponse> restorePassword(@Valid @RequestBody RestorePasswordDto request) {
         return userControllerFacade.restorePasswordByOtp(request);
     }
 }

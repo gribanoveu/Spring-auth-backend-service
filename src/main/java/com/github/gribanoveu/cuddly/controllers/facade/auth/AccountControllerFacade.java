@@ -35,7 +35,7 @@ public class AccountControllerFacade {
     private final JsonUtils jsonUtils;
 
     // user change email from app, authenticated
-    public ResponseEntity<?> changeEmail(ChangeEmailDto request, Authentication authentication) {
+    public ResponseEntity<StatusResponse> changeEmail(ChangeEmailDto request, Authentication authentication) {
         var user = userService.findUserByEmail(authentication.getName());
         userService.updateEmail(user, request.email());
         return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_UPDATED, StatusLevel.SUCCESS));
@@ -46,7 +46,7 @@ public class AccountControllerFacade {
     // verify that the old password matches, if not -> error
     // check that old password not equals new password, else -> error
     // change password
-    public ResponseEntity<?> changePassword(ChangePasswordDto request, Authentication authentication) {
+    public ResponseEntity<StatusResponse> changePassword(ChangePasswordDto request, Authentication authentication) {
         if (!request.password().equals(request.confirmPassword())) throw new CredentialEx(ResponseCode.PASSWORD_NOT_EQUALS);
 
         var user = userService.findUserByEmail(authentication.getName());
@@ -67,7 +67,7 @@ public class AccountControllerFacade {
     // else create new code
     // save otp code to db (with lifetime)
     // todo send email with code
-    public ResponseEntity<?> generateOtpCode(GenerateOtpDto request) {
+    public ResponseEntity<StatusResponse> generateOtpCode(GenerateOtpDto request) {
         var userExist = userService.userExistByEmail(request.email());
         if (!userExist) throw new CredentialEx(ResponseCode.USER_NOT_EXIST);
         var otpCode = jsonUtils.generateRandomOtpCode().toString();
@@ -79,7 +79,7 @@ public class AccountControllerFacade {
     // service check that code exist and have valid lifetime
     // service find userId by otp code and change password in db
     // send successful email
-    public ResponseEntity<?> restorePasswordByOtp(RestorePasswordDto request) {
+    public ResponseEntity<StatusResponse> restorePasswordByOtp(RestorePasswordDto request) {
         if (!request.password().equals(request.confirmPassword())) throw new CredentialEx(ResponseCode.PASSWORD_NOT_EQUALS);
         if (!redisOtpService.otpCodeValid(request.email(), request.otpCode())) throw new CredentialEx(ResponseCode.OTP_CODE_NOT_FOUND);
 

@@ -46,12 +46,16 @@ public class SecurityConfig {
                 .csrf(CsrfConfigurer::disable)
                 .cors(CorsConfigurer::disable)
                 .authorizeHttpRequests(req -> req
+                        // anonymous scope
+                        .requestMatchers( HttpMethod.POST, "*/auth").anonymous() // issue token
+                        .requestMatchers( HttpMethod.PATCH, "*/auth").anonymous() // refresh token
                         .requestMatchers(HttpMethod.POST, "*/user").anonymous() // register
-                        .requestMatchers("*/auth").anonymous()
+                        .requestMatchers(HttpMethod.POST, "*/generate-code").anonymous()
+                        .requestMatchers(HttpMethod.POST, "*/restore-password").anonymous()
+
+                        // authenticated scope
                         .requestMatchers("*/users/**").hasAnyAuthority(ADMIN.scope(), MODERATOR.scope())
                         .requestMatchers("*/moderator/**").hasAnyAuthority(ADMIN.scope(), MODERATOR.scope())
-                        .requestMatchers("*/account/generate-code").anonymous() // allow only anonymous
-                        .requestMatchers("*/account/restore-password").anonymous()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager

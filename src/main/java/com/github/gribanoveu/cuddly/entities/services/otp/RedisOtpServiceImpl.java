@@ -23,10 +23,7 @@ public class RedisOtpServiceImpl implements RedisOtpService {
     @Override
     public void saveOptCode(String email, String code, Duration codeDuration) {
         var otpCode = getOtpCode(email);
-        if (otpCode.isPresent()) {
-            var codeDurationInMinutes = getOtpExpire(email, TimeUnit.MINUTES); // fixme
-            throw new CredentialEx(ResponseCode.OTP_CODE_EXIST);
-        }
+        if (otpCode.isPresent()) throw new CredentialEx(ResponseCode.OTP_CODE_EXIST);
         redisTemplate.opsForValue().set(email, code, codeDuration);
     }
 

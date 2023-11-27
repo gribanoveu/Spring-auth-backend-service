@@ -11,6 +11,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -27,11 +28,10 @@ public class RequestLoggingAspect {
 
     @Around("@annotation(LogRequest)")
     public Object logRequest(ProceedingJoinPoint joinPoint) throws Throwable {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-
+        var attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        var request = attributes.getRequest();
         log.info("""
-                Incoming request to server:
+                [REQUEST] Incoming request to server:
                 {
                     "Method":"%1$s",
                     "URI":"%3$s",
@@ -46,12 +46,11 @@ public class RequestLoggingAspect {
     }
 
     @AfterReturning(pointcut = "@annotation(LogResponse)", returning = "result")
-    public void logResponse(Object result) {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-
-        log.info("""
-                Outgoing server response:
+    public void logResponse(JoinPoint joinPoint, Object result) {
+        var attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        var annotation = ((MethodSignature) joinPoint.getSignature()).getMethod().getAnnotation(LogResponse.class);
+        var request = attributes.getRequest();
+        var message = ("""
                 {
                     "Method":"%1$s",
                     "URI":"%3$s",
@@ -60,5 +59,8 @@ public class RequestLoggingAspect {
                 }
                 """.formatted(request.getMethod(), request.getRequestId(),request.getRequestURI(),
                 jsonUtils.convertDtoToJson(result)));
+
+        if (annotation.message().isBlank()) log.info("[RESPONSE] Outgoing server response:\n {}", message);
+        else log.info("[RESPONSE] {}\n {}", annotation.message(), message);
     }
 }

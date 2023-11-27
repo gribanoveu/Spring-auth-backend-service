@@ -30,12 +30,12 @@ public class UserControllerFacade {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    public ResponseEntity<?> getUserData(Authentication authentication) {
+    public ResponseEntity<User> getUserData(Authentication authentication) {
         var userData = userService.findUserByEmail(authentication.getName());
         return ResponseEntity.ok(userData);
     }
 
-    public ResponseEntity<?> registerUser(RegisterDto request) {
+    public ResponseEntity<StatusResponse> registerUser(RegisterDto request) {
         if (!request.password().equals(request.confirmPassword())) throw new CredentialEx(ResponseCode.PASSWORD_NOT_EQUALS);
         if (userService.userExistByEmail(request.email())) throw new CredentialEx(ResponseCode.USER_ALREADY_EXIST);
 
@@ -54,7 +54,7 @@ public class UserControllerFacade {
                 ResponseCode.USER_CREATED, StatusLevel.SUCCESS));
     }
 
-    public ResponseEntity<?> deleteUser(Authentication authentication) {
+    public ResponseEntity<StatusResponse> deleteUser(Authentication authentication) {
         userService.deleteUserByEmail(authentication.getName());
         return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_DELETED, StatusLevel.SUCCESS));
     }
