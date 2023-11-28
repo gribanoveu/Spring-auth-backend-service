@@ -8,6 +8,7 @@ import com.github.gribanoveu.cuddly.controllers.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddly.controllers.facade.auth.AccountControllerFacade;
 import com.github.gribanoveu.cuddly.utils.aspects.LogRequest;
 import com.github.gribanoveu.cuddly.utils.aspects.LogResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +38,8 @@ public class AccountController {
     }
 
     @PostMapping("/generate-code") // anonymous access
-    public ResponseEntity<StatusResponse> generateOtpCode(@Valid @RequestBody GenerateOtpDto request) {
-        return userControllerFacade.generateOtpCode(request);
+    public ResponseEntity<StatusResponse> generateOtpCode(@Valid @RequestBody GenerateOtpDto request, HttpServletRequest http) {
+        return userControllerFacade.generateOtpCode(request, http);
     }
 
     @PostMapping("/restore-password") // anonymous access

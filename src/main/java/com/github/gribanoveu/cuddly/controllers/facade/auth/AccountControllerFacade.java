@@ -1,5 +1,8 @@
 package com.github.gribanoveu.cuddly.controllers.facade.auth;
 
+import com.github.gribanoveu.cuddly.constants.EmailMessages;
+import com.github.gribanoveu.cuddly.controllers.dtos.data.AbstractEmailContext;
+import com.github.gribanoveu.cuddly.controllers.dtos.data.OtpCodeEmail;
 import com.github.gribanoveu.cuddly.controllers.dtos.request.auth.ChangeEmailDto;
 import com.github.gribanoveu.cuddly.controllers.dtos.request.auth.ChangePasswordDto;
 import com.github.gribanoveu.cuddly.controllers.dtos.request.auth.GenerateOtpDto;
@@ -8,10 +11,13 @@ import com.github.gribanoveu.cuddly.controllers.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddly.controllers.exeptions.CredentialEx;
 import com.github.gribanoveu.cuddly.entities.enums.ResponseCode;
 import com.github.gribanoveu.cuddly.entities.enums.StatusLevel;
+import com.github.gribanoveu.cuddly.entities.services.email.EmailService;
 import com.github.gribanoveu.cuddly.entities.services.otp.RedisOtpService;
 import com.github.gribanoveu.cuddly.entities.services.user.UserService;
 import com.github.gribanoveu.cuddly.utils.JsonUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -19,11 +25,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  * @author Evgeny Gribanov
  * @version 22.09.2023
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountControllerFacade {
@@ -32,6 +41,7 @@ public class AccountControllerFacade {
     private final UserService userService;
     private final RedisOtpService redisOtpService;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
     private final JsonUtils jsonUtils;
 
     // user change email from app, authenticated
@@ -60,18 +70,23 @@ public class AccountControllerFacade {
     }
 
     // user open restore form and enter email
-    // service find user by email,
-    // if user not found -> error
-    // service find otp code
-    // if exist -> error
+    // service find user by email, if user not found -> error
+    // service find otp code, if exist -> error
     // else create new code
+    // send email, if not -> error
     // save otp code to db (with lifetime)
-    // todo send email with code
-    public ResponseEntity<StatusResponse> generateOtpCode(GenerateOtpDto request) {
+    public ResponseEntity<StatusResponse> generateOtpCode(GenerateOtpDto request, HttpServletRequest http) {
         var userExist = userService.userExistByEmail(request.email());
         if (!userExist) throw new CredentialEx(ResponseCode.USER_NOT_EXIST);
         var otpCode = jsonUtils.generateRandomOtpCode().toString();
+        log.info("RequestId: {}. Generate OTP code. Email {}, Code {}", http.getRequestId(), request.email(), otpCode);
+
+        emailService.sendMail(generateOtpEmailTemplate(request.email(), otpCode));
+        log.info("RequestId: {}. Email with code send to: {}", http.getRequestId(), request.email());
+
         redisOtpService.saveOptCode(request.email(), otpCode, otpCodeLifeTime);
+        log.info("RequestId: {}. OTP code to email: {} saved", http.getRequestId(), request.email());
+
         return ResponseEntity.ok(StatusResponse.create(ResponseCode.OTP_CODE_CREATED, StatusLevel.SUCCESS));
     }
 
@@ -90,5 +105,20 @@ public class AccountControllerFacade {
             return ResponseEntity.ok(StatusResponse.create(ResponseCode.PASSWORD_UPDATED, StatusLevel.SUCCESS));
         }
         throw new CredentialEx(ResponseCode.PASSWORD_EQUALS);
+    }
+
+    private OtpCodeEmail generateOtpEmailTemplate(String sendToEmail, String otpCode) {
+        var email = new OtpCodeEmail();
+        email.setTo(sendToEmail);
+        email.setFrom(EmailMessages.sendFrom);
+        email.setSubject(EmailMessages.emailSubjectRestorePassword);
+        email.setTemplateLocation(EmailMessages.restorePasswordTemplateName);
+        email.setContext(Map.of(
+                "otpCode", otpCode,
+                "otpCodeLifetime", otpCodeLifeTime.toMinutes(),
+                "loginTime", LocalDateTime.now(),
+                "email", sendToEmail
+        ));
+        return email;
     }
 }

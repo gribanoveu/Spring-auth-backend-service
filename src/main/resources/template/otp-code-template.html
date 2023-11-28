@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:v="urn:schemas-microsoft-com:vml"
+        xmlns:o="urn:schemas-microsoft-com:office:office"
+>
+    <head>
+        <title>OTP Code</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>
+            .bodyTemplate {
+                font-family: Arial, sans-serif;
+                margin: 0 auto;
+                max-width: 600px;
+                padding: 20px;
+                line-height: 130%;
+            }
+            .tableStyle {
+                width: 600px;
+                border-collapse: collapse;
+                border-style: none;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <table class="tableStyle">
+            <tbody>
+                <tr>
+                    <td style="width: 100%">
+                        <div class="bodyTemplate">
+                            <div>Здравствуйте!</div>
+                            <div>&nbsp;</div>
+                            <div>Для вашего аккаунта запрошено восстановление пароля.</div>
+                            <div>
+                                Если это сделали не вы, проверьте безопасность своего аккаунта или проигнорируйте это письмо.
+                            </div>
+                            <hr />
+                            <div>
+                                Чтобы продолжить процедуру восстановления пароля, введите следующий код:
+                            </div>
+                            <div style="text-align: center">
+                                <h1 th:text="${#numbers.formatDecimal(otpCode, 3, 'WHITESPACE', 0, 'NONE')}">123456</h1>
+                            </div>
+                            <div style="text-align: center" th:text="'Время действия данного кода ' + ${otpCodeLifetime} + ' минут'"></div>
+                            <hr />
+                            <div>Детали входа:</div>
+                            <div th:text="'Дата: ' + ${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}" th:remove="tag"></div>
+                            <div th:text="'Email ' + ${email}"></div>
+                            <div>&nbsp;</div>
+                            <div>
+                                Внимание! Отвечать на это письмо не нужно, оно создано автоматически.
+                            </div>
+                            <div>По всем вопросам обращайтесь в support@cuddly.pw</div>
+                            <div>---</div>
+                            <div>С уважением, администрация Cuddle</div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div>&nbsp;</div>
+        <div style="font-size: small; text-align: center; color: #969696;">2023 © Codecow.pw</div>
+    </body>
+
+</html>

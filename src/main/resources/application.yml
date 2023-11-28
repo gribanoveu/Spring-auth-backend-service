@@ -10,6 +10,17 @@ rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${SPRING_EMAIL_USER}
+    password: ${SPRING_EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   mvc:
     throw-exception-if-no-handler-found: true
   web:
@@ -38,4 +49,4 @@ spring:
       host: localhost
       port: 6379
   application:
-    name: auth-service
+    name: cuddle-backend
