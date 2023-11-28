@@ -41,7 +41,7 @@ public class ServerErrorEntryPoint implements AuthenticationEntryPoint {
         } else if (authException instanceof LockedException) {
             error = StatusResponse.create(ACCOUNT_BANNED, ACCOUNT_BANNED.getMessage(), StatusLevel.ERROR);
 
-        } else error = StatusResponse.create(ACCESS_DENIED, authException.getMessage(), StatusLevel.ERROR);
+        } else error = StatusResponse.create(SERVER_ERROR, StatusLevel.ERROR);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
