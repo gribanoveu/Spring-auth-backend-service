@@ -1,7 +1,6 @@
 package com.github.gribanoveu.cuddly.entities.services.email;
 
-import com.github.gribanoveu.cuddly.controllers.dtos.data.AbstractEmailContext;
-import jakarta.mail.MessagingException;
+import com.github.gribanoveu.cuddly.controllers.dtos.data.SimpleEmailObject;
 
 /**
  * @author Evgeny Gribanov
@@ -9,5 +8,5 @@ import jakarta.mail.MessagingException;
  */
 public interface EmailService {
     void sendEmail(String toEmail, String subject, String message);
-    void sendMail(AbstractEmailContext email);
+    void sendMail(SimpleEmailObject email);
 }

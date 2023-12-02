@@ -1,8 +1,5 @@
 package com.github.gribanoveu.cuddly.controllers.facade.auth;
 
-import com.github.gribanoveu.cuddly.constants.EmailMessages;
-import com.github.gribanoveu.cuddly.controllers.dtos.data.AbstractEmailContext;
-import com.github.gribanoveu.cuddly.controllers.dtos.data.OtpCodeEmail;
 import com.github.gribanoveu.cuddly.controllers.dtos.request.auth.ChangeEmailDto;
 import com.github.gribanoveu.cuddly.controllers.dtos.request.auth.ChangePasswordDto;
 import com.github.gribanoveu.cuddly.controllers.dtos.request.auth.GenerateOtpDto;
@@ -15,18 +12,21 @@ import com.github.gribanoveu.cuddly.entities.services.email.EmailService;
 import com.github.gribanoveu.cuddly.entities.services.otp.RedisOtpService;
 import com.github.gribanoveu.cuddly.entities.services.user.UserService;
 import com.github.gribanoveu.cuddly.utils.JsonUtils;
+import com.github.gribanoveu.cuddly.utils.emails.RestorePasswordEmailTemplates;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.Map;
 
 /**
  * @author Evgeny Gribanov
@@ -81,7 +81,7 @@ public class AccountControllerFacade {
         var otpCode = jsonUtils.generateRandomOtpCode().toString();
         log.info("RequestId: {}. Generate OTP code. Email {}, Code {}", http.getRequestId(), request.email(), otpCode);
 
-        emailService.sendMail(generateOtpEmailTemplate(request.email(), otpCode));
+        emailService.sendMail(RestorePasswordEmailTemplates.generateOtpEmail(request.email(), otpCode, otpCodeLifeTime));
         log.info("RequestId: {}. Email with code send to: {}", http.getRequestId(), request.email());
 
         redisOtpService.saveOptCode(request.email(), otpCode, otpCodeLifeTime);
@@ -102,23 +102,10 @@ public class AccountControllerFacade {
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
             userService.updatePasswordByEmail(user, passwordEncoder.encode(request.password()));
             redisOtpService.deleteOtpCode(request.email());
+            emailService.sendMail(RestorePasswordEmailTemplates.passwordChangedEmail(request.email()));
+            log.info("Password change message sent to: {}", request.email());
             return ResponseEntity.ok(StatusResponse.create(ResponseCode.PASSWORD_UPDATED, StatusLevel.SUCCESS));
         }
         throw new CredentialEx(ResponseCode.PASSWORD_EQUALS);
-    }
-
-    private OtpCodeEmail generateOtpEmailTemplate(String sendToEmail, String otpCode) {
-        var email = new OtpCodeEmail();
-        email.setTo(sendToEmail);
-        email.setFrom(EmailMessages.sendFrom);
-        email.setSubject(EmailMessages.emailSubjectRestorePassword);
-        email.setTemplateLocation(EmailMessages.restorePasswordTemplateName);
-        email.setContext(Map.of(
-                "otpCode", otpCode,
-                "otpCodeLifetime", otpCodeLifeTime.toMinutes(),
-                "loginTime", LocalDateTime.now(),
-                "email", sendToEmail
-        ));
-        return email;
     }
 }

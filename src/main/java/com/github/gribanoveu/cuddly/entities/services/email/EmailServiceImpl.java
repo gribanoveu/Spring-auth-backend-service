@@ -1,6 +1,6 @@
 package com.github.gribanoveu.cuddly.entities.services.email;
 
-import com.github.gribanoveu.cuddly.controllers.dtos.data.AbstractEmailContext;
+import com.github.gribanoveu.cuddly.controllers.dtos.data.SimpleEmailObject;
 import com.github.gribanoveu.cuddly.controllers.exeptions.CredentialEx;
 import com.github.gribanoveu.cuddly.entities.enums.ResponseCode;
 import jakarta.mail.MessagingException;
@@ -42,19 +42,19 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendMail(AbstractEmailContext email) {
+    public void sendMail(SimpleEmailObject email) {
         try {
             var message = mailSender.createMimeMessage();
             var mimeMessageHelper = new MimeMessageHelper(message,
                     MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                     StandardCharsets.UTF_8.name());
             var context = new Context();
-            context.setVariables(email.getContext());
-            var emailContent = templateEngine.process(email.getTemplateLocation(), context);
+            context.setVariables(email.context());
+            var emailContent = templateEngine.process(email.templateLocation(), context);
 
-            mimeMessageHelper.setTo(email.getTo());
-            mimeMessageHelper.setSubject(email.getSubject());
-            mimeMessageHelper.setFrom(email.getFrom());
+            mimeMessageHelper.setTo(email.to());
+            mimeMessageHelper.setSubject(email.subject());
+            mimeMessageHelper.setFrom(email.from());
             mimeMessageHelper.setText(emailContent, true);
 
             mailSender.send(message);

@@ -37,6 +37,8 @@ public class AccountController {
         return userControllerFacade.changePassword(request, auth);
     }
 
+    @LogRequest
+    @LogResponse
     @PostMapping("/generate-code") // anonymous access
     public ResponseEntity<StatusResponse> generateOtpCode(@Valid @RequestBody GenerateOtpDto request, HttpServletRequest http) {
         return userControllerFacade.generateOtpCode(request, http);
