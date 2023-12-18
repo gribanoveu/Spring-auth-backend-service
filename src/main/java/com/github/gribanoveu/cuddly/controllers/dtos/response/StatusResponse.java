@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.gribanoveu.cuddly.entities.enums.ResponseCode;
 import com.github.gribanoveu.cuddly.entities.enums.StatusLevel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -18,10 +19,16 @@ import java.util.Collections;
 @Data
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(description = "Сущность для возврата статуса операции")
 public class StatusResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Europe/Moscow")
+    @Schema(description = "Время выполнения запроса")
     private LocalDateTime timestamp;
+
+    @Schema(description = "Уровень статуса запроса", defaultValue = "INFO")
     private StatusLevel status;
+
+    @Schema(description = "Детали запроса")
     private Collection<ResponseDetails> details;
 
     public static StatusResponse create(Collection<ResponseDetails> responseDetails, StatusLevel status) {

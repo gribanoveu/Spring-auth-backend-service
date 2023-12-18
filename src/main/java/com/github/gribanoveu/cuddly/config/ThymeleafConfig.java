@@ -5,7 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Evgeny Gribanov
@@ -20,8 +23,8 @@ public class ThymeleafConfig {
         templateResolver.setPrefix("templates/");
         templateResolver.setCacheable(false);
         templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode("HTML");
-        templateResolver.setCharacterEncoding("UTF-8");
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        templateResolver.setCharacterEncoding(StandardCharsets.UTF_8.name());
         return templateResolver;
     }
 
@@ -36,7 +39,7 @@ public class ThymeleafConfig {
     public ViewResolver viewResolver() {
         var viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
-        viewResolver.setCharacterEncoding("UTF-8");
+        viewResolver.setCharacterEncoding(StandardCharsets.UTF_8.name());
         return viewResolver;
     }
 

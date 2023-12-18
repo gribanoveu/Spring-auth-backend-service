@@ -1,6 +1,7 @@
 package com.github.gribanoveu.cuddly.controllers.endpoints.admin;
 
 import com.github.gribanoveu.cuddly.controllers.facade.admin.ModeratorControllerFacade;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/moderator")
+@Tag(name="Контороллер для модерации", description="Управляет ограничениями пользователя")
 public class ModeratorController {
     private final ModeratorControllerFacade moderatorControllerFacade;
 

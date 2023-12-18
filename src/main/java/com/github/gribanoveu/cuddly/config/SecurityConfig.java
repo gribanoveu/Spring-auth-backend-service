@@ -3,7 +3,6 @@ package com.github.gribanoveu.cuddly.config;
 import com.github.gribanoveu.cuddly.controllers.exeptions.entrypoint.AccessDeniedEntryPoint;
 import com.github.gribanoveu.cuddly.controllers.exeptions.entrypoint.AuthErrorEntryPoint;
 import com.github.gribanoveu.cuddly.controllers.exeptions.entrypoint.ServerErrorEntryPoint;
-import com.github.gribanoveu.cuddly.entities.enums.Role;
 import com.github.gribanoveu.cuddly.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -52,6 +51,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "*/user").anonymous() // register
                         .requestMatchers(HttpMethod.POST, "*/account/generate-code").anonymous()
                         .requestMatchers(HttpMethod.POST, "*/account/restore-password").anonymous()
+
+                        // anonymous scope (swagger)
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
 
                         // authenticated scope
                         .requestMatchers("*/users/**").hasAnyAuthority(ADMIN.scope(), MODERATOR.scope())
