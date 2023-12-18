@@ -6,10 +6,18 @@ package com.github.gribanoveu.cuddly.constants;
  */
 public class EmailMessages {
     public static final String sendFrom = "noreply@codecow.pw";
-    public static final String restorePasswordEmailSubject = "Восстановление пароля";
-    public static final String restorePasswordTemplateName = "otp-code-template";
+    public static final String restorePasswordSubject = "Восстановление пароля";
+    public static final String restorePasswordTemplate = "otp-code-template";
 
-    public static final String passwordChangedEmailSubject = "Пароль успешно изменен";
-    public static final String passwordChangedTemplateName = "password-changed";
+    public static final String passwordChangedSubject = "Пароль успешно изменен";
+    public static final String passwordChangedTemplate = "password-changed";
 
+    public static final String userRegisteredSubject = "Успешная регистрация";
+    public static final String userRegisteredTemplate = "successfully-registration";
+
+    public static final String loginSubject = "В ваш аккаунт выполнен вход";
+    public static final String loginTemplate = "successfully-login";
+
+    public static final String changeEmailSubject = "Электронная почта изменена";
+    public static final String changeEmailTemplate = "email-changed";
 }

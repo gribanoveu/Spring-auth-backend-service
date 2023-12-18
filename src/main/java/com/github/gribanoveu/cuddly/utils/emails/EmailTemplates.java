@@ -4,20 +4,19 @@ import com.github.gribanoveu.cuddly.constants.EmailMessages;
 import com.github.gribanoveu.cuddly.controllers.dtos.data.SimpleEmailObject;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
  * @author Evgeny Gribanov
  * @version 28.11.2023
  */
-public abstract class RestorePasswordEmailTemplates {
+public abstract class EmailTemplates {
     public static SimpleEmailObject generateOtpEmail(String sendToEmail, String otpCode, Duration otpCodeLifeTime) {
         return new SimpleEmailObject(
                 EmailMessages.sendFrom,
                 sendToEmail,
-                EmailMessages.restorePasswordEmailSubject,
-                EmailMessages.restorePasswordTemplateName,
+                EmailMessages.restorePasswordSubject,
+                EmailMessages.restorePasswordTemplate,
                 Map.of(
                         "otpCode", otpCode,
                         "otpCodeLifetime", otpCodeLifeTime.toMinutes(),
@@ -26,14 +25,18 @@ public abstract class RestorePasswordEmailTemplates {
         );
     }
 
-    public static SimpleEmailObject passwordChangedEmail(String sendToEmail) {
-        return new SimpleEmailObject(
-                EmailMessages.sendFrom,
-                sendToEmail,
-                EmailMessages.passwordChangedEmailSubject,
-                EmailMessages.passwordChangedTemplateName,
+    public static SimpleEmailObject simpleEmail(String sendToEmail, String subject, String templateName) {
+        return new SimpleEmailObject(EmailMessages.sendFrom,sendToEmail,subject,templateName,
+                Map.of("email", sendToEmail)
+        );
+    }
+
+    public static SimpleEmailObject emailChanged(String oldEmail, String newEmail) {
+        return new SimpleEmailObject(EmailMessages.sendFrom, oldEmail, EmailMessages.changeEmailSubject,
+                EmailMessages.changeEmailTemplate,
                 Map.of(
-                        "email", sendToEmail
+                        "oldEmail", oldEmail,
+                        "newEmail", newEmail
                 )
         );
     }

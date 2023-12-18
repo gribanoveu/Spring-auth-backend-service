@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<body>
+<div th:fragment="footer">
+    <div style="font-size: small; text-align: center; color: #969696"
+         th:text="${#dates.format(#dates.createNow(), 'yyyy')} + ' © Codecow.pw'"></div>
+</div>
+</body>
+</html>

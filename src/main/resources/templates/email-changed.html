@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="ru">
 <head>
-    <title>Запрошена смена пароля</title>
+    <title>Электронная почта изменена</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <style>
@@ -36,28 +36,18 @@
             <tr>
                 <td style="width: 100%">
                     <div class="bodyTemplate">
-                        <h1>Запрошена смена пароля</h1>
+                        <h1>Электронная почта изменена</h1>
                         <div>&nbsp;</div>
+                        <div>Электронная почта на вашем аккаунте успешно изменена.</div>
                         <div>
-                            Для вашего аккаунта запрошено восстановление пароля.
+                            Если это были вы, то нет причин для беспокойства, но если это не так, то проверьте безопасность своего аккаунта или обратитесь в службу поддержки.
+                            Для последующего входа в свой аккаунт используйте новый адрес электронной почты.
                         </div>
-                        <div>
-                            Если это сделали не вы, проверьте безопасность своего аккаунта или проигнорируйте это письмо, тогда ничего не изменится.
-                            Чтобы избежать неправомерного доступа к вашим данным, рекомендуем использовать разные пароли для электронной почты и на данном аккаунте.
-                        </div>
-                        <div>&nbsp;</div>
-                        <div>
-                            Чтобы продолжить процедуру восстановления пароля, введите следующий код:
-                        </div>
-                        <div style="text-align: center">
-                            <h1 th:text="${#numbers.formatDecimal(otpCode, 3, 'WHITESPACE', 0, 'NONE')}">000 000</h1>
-                        </div>
-                        <div style="text-align: center"
-                             th:text="'Время действия данного кода ' + ${otpCodeLifetime} + ' минут'"></div>
                         <div>&nbsp;</div>
                         <div>Детали запроса:</div>
                         <div th:text="'Дата: ' + ${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm z')}"></div>
-                        <div th:text="'Аккаунт: ' + ${email}"></div>
+                        <div th:text="'Прежняя элекронная почта: ' + ${oldEmail}"></div>
+                        <div th:text="'Новая элекронная почта: ' + ${newEmail}"></div>
                         <div th:replace="~{fragment/about :: about}"></div>
                     </div>
                 </td>

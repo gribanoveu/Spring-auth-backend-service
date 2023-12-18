@@ -1,14 +1,18 @@
 package com.github.gribanoveu.cuddly.controllers.facade.auth;
 
+import com.github.gribanoveu.cuddly.constants.EmailMessages;
 import com.github.gribanoveu.cuddly.controllers.dtos.request.auth.RegisterDto;
 import com.github.gribanoveu.cuddly.controllers.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddly.controllers.exeptions.CredentialEx;
 import com.github.gribanoveu.cuddly.entities.enums.Role;
 import com.github.gribanoveu.cuddly.entities.enums.ResponseCode;
 import com.github.gribanoveu.cuddly.entities.enums.StatusLevel;
+import com.github.gribanoveu.cuddly.entities.services.email.EmailService;
 import com.github.gribanoveu.cuddly.entities.services.user.UserService;
 import com.github.gribanoveu.cuddly.entities.tables.User;
+import com.github.gribanoveu.cuddly.utils.emails.EmailTemplates;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,19 +20,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import java.util.Set;
 
 /**
  * @author Evgeny Gribanov
  * @version 29.08.2023
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserControllerFacade {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     public ResponseEntity<User> getUserData(Authentication authentication) {
         var userData = userService.findUserByEmail(authentication.getName());
@@ -45,10 +49,15 @@ public class UserControllerFacade {
         user.setPassword(passwordEncoder.encode(request.password()));
         user.setRole(Role.USER);
         userService.saveUser(user);
+        log.info("User saved: {}", user.getEmail());
 
         var location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/v1/user/{id}")
                 .buildAndExpand(user.getId()).toUri();
+
+        emailService.sendMail(EmailTemplates.simpleEmail(request.email(),
+                EmailMessages.userRegisteredSubject, EmailMessages.userRegisteredTemplate));
+        log.info("Register confirm send to email: {}", request.email());
 
         return ResponseEntity.created (location).body(StatusResponse.create(
                 ResponseCode.USER_CREATED, StatusLevel.SUCCESS));
