@@ -11,16 +11,16 @@ rsa:
   public-key: classpath:certs/public.pem
 spring:
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: ${SPRING_EMAIL_USER}
-    password: ${SPRING_EMAIL_PASSWORD}
+    host: localhost
+    port: 1025
+    username:
+    password:
     properties:
       mail:
         smtp:
-          auth: true
+          auth: false
           starttls:
-            enable: true
+            enable: false
   mvc:
     throw-exception-if-no-handler-found: true
   web:

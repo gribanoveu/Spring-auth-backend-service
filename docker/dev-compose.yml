@@ -1,0 +1,58 @@
+name: cuddle
+version: '3.7'
+
+services:
+  postgres-db:
+    image: postgres:15.4-alpine
+    container_name: cuddle_db_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: auth_postgres
+      POSTGRES_PASSWORD: auth#7533245
+      POSTGRES_DB: auth_service_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    command: >
+      postgres
+      -c max_connections=100
+      -c shared_buffers=256MB
+      -c effective_cache_size=512MB
+      -c maintenance_work_mem=128MB
+      -c checkpoint_completion_target=0.7
+      -c wal_buffers=8MB
+      -c random_page_cost=2
+      -c effective_io_concurrency=1
+      -c work_mem=8192kB
+
+  redis-db:
+    image: redis:7.2.1-alpine
+    container_name: cuddle_db_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - cache:/data
+
+# dev only stuff
+  mailcatcher:
+    container_name: cuddle_dev_mailcatcher
+    image: sj26/mailcatcher
+    restart: unless-stopped
+    ports:
+      - "1080:1080" # smtp
+      - "1025:1025" # http (ui)
+
+  it-tools:
+    container_name: cuddle_dev_it-tools
+    image: 'corentinth/it-tools:latest'
+    ports:
+      - '8888:80'
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  cache:
+    driver: local
