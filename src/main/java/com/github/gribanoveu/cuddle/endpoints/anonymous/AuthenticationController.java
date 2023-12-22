@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/auth")
+@RequestMapping("/open/v1/auth")
 @Tag(name="Аутентификация пользователя", description="Позволяет получить и обновить токен")
 public class AuthenticationController {
     private final AuthenticationControllerImpl authenticationControllerImpl;

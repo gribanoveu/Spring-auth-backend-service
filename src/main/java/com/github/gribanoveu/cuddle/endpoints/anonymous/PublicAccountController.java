@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/account")
+@RequestMapping("/open/v1/account")
 @Tag(name="Управление аккаунтом без авторизации", description="Позволяет управлять данными учетной записи")
 public class PublicAccountController {
     private final PublicAccountControllerImpl publicAccountControllerImpl;

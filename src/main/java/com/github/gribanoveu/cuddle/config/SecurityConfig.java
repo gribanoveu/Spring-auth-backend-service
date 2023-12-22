@@ -47,11 +47,7 @@ public class SecurityConfig {
                 .cors(CorsConfigurer::disable)
                 .authorizeHttpRequests(req -> req
                         // anonymous scope
-                        .requestMatchers( HttpMethod.POST, "*/auth").anonymous() // issue token
-                        .requestMatchers( HttpMethod.PATCH, "*/auth").anonymous() // refresh token
-                        .requestMatchers(HttpMethod.POST, "*/account/create").anonymous() // register
-                        .requestMatchers(HttpMethod.POST, "*/account/generate-code").anonymous()
-                        .requestMatchers(HttpMethod.POST, "*/account/restore-password").anonymous()
+                        .requestMatchers("/open/**").anonymous()
 
                         // anonymous scope (swagger)
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
