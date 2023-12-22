@@ -31,4 +31,10 @@ public class ResponseDetails {
         this.message = message;
         this.type = responseCode.getType();
     }
+
+    public ResponseDetails(String message) {
+        this.code = ResponseCode.SEND_MESSAGE.getCode();
+        this.type = ResponseCode.SEND_MESSAGE.getType();
+        this.message = message;
+    }
 }

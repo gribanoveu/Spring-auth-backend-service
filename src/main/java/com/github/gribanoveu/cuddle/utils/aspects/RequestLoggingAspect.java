@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.util.Objects;
+
 @Aspect
 @Component
 @Slf4j
@@ -23,7 +25,7 @@ public class RequestLoggingAspect {
     @Around("@annotation(LogRequest)")
     public Object logRequest(ProceedingJoinPoint joinPoint) throws Throwable {
         var attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        var request = attributes.getRequest();
+        var request = Objects.requireNonNull(attributes).getRequest();
         log.info("""
                 [REQUEST] Incoming request to server:
                 {
@@ -43,7 +45,7 @@ public class RequestLoggingAspect {
     public void logResponse(JoinPoint joinPoint, Object result) {
         var attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         var annotation = ((MethodSignature) joinPoint.getSignature()).getMethod().getAnnotation(LogResponse.class);
-        var request = attributes.getRequest();
+        var request = Objects.requireNonNull(attributes).getRequest();
         var message = ("""
                 {
                     "Method":"%1$s",

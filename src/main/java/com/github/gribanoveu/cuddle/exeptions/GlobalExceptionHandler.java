@@ -7,6 +7,7 @@ import com.github.gribanoveu.cuddle.dtos.response.ResponseDetails;
 import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddle.utils.aspects.LogResponse;
 import jakarta.validation.ConstraintViolationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,12 +22,14 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  * @author Evgeny Gribanov
  * @version 07.07.2023
  */
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @LogResponse
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public ResponseEntity<?> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
+        log.error(e.getMessage());
         var details = StatusResponse.create(ResponseCode.VALIDATION_ERROR, StatusLevel.ERROR);
         return ResponseEntity.status(ResponseCode.VALIDATION_ERROR.getHttpCode()).body(details);
     }
@@ -34,6 +37,7 @@ public class GlobalExceptionHandler {
     @LogResponse
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        log.error(e.getMessage());
         var details = StatusResponse.create(ResponseCode.VALIDATION_ERROR, StatusLevel.ERROR);
         return ResponseEntity.status(ResponseCode.VALIDATION_ERROR.getHttpCode()).body(details);
     }
@@ -41,6 +45,7 @@ public class GlobalExceptionHandler {
     @LogResponse
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<?> handleNoHandlerFoundException(NoHandlerFoundException e) {
+        log.error(e.getMessage());
         var details = StatusResponse.create(ResponseCode.RESOURCE_NOT_FOUND, StatusLevel.ERROR);
         return ResponseEntity.status(ResponseCode.RESOURCE_NOT_FOUND.getHttpCode()).body(details);
     }
@@ -48,6 +53,7 @@ public class GlobalExceptionHandler {
     @LogResponse
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<StatusResponse> handleBadCredentialsException(BadCredentialsException e) {
+        log.error(e.getMessage());
         var details = StatusResponse.create(
                 ResponseCode.BAD_CREDENTIAL, e.getMessage(), StatusLevel.ERROR);
         return ResponseEntity.status(ResponseCode.BAD_CREDENTIAL.getHttpCode()).body(details);
@@ -56,6 +62,7 @@ public class GlobalExceptionHandler {
     @LogResponse
     @ExceptionHandler(CredentialEx.class)
     public ResponseEntity<?> handleCredentialsException(CredentialEx e) {
+        log.error(e.getMessage());
         var details = StatusResponse.create(e.getError(), StatusLevel.WARNING);
         return ResponseEntity.status(e.getStatus()).body(details);
     }
@@ -63,6 +70,7 @@ public class GlobalExceptionHandler {
     @LogResponse(message = "Validation error")
     @ExceptionHandler(MethodArgumentNotValidException.class) // @Valid handler
     public ResponseEntity<?> handleValidAnnotationException(MethodArgumentNotValidException e) {
+        log.error(e.getMessage());
         var errors = e.getBindingResult().getFieldErrors().stream()
                 .map(fieldError -> new ResponseDetails(
                          ResponseCode.VALIDATION_ERROR_DETAIL,
@@ -76,6 +84,7 @@ public class GlobalExceptionHandler {
     @LogResponse
     @ExceptionHandler(ConstraintViolationException.class) // database entity handler
     public ResponseEntity<?> handleDatabaseValidationException(ConstraintViolationException e) {
+        log.error(e.getMessage());
         var errors = e.getConstraintViolations().stream()
                 .map(violation -> new ResponseDetails(ResponseCode.VALIDATION_ERROR,
                         String.format(ValidationMessages.EXCEPTION_VIOLATION_PATTERN, violation.getPropertyPath(), violation.getMessage())))
@@ -88,6 +97,7 @@ public class GlobalExceptionHandler {
     @LogResponse
     @ExceptionHandler(MissingServletRequestParameterException.class) // query param handler
     public ResponseEntity<StatusResponse> handleMissingParamException(MissingServletRequestParameterException e) {
+        log.error(e.getMessage());
         var details = StatusResponse.create(ResponseCode.MISSING_PARAM, StatusLevel.ERROR);
         return ResponseEntity.badRequest().body(details);
     }

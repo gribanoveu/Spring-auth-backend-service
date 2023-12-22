@@ -4,7 +4,7 @@ import com.github.gribanoveu.cuddle.constants.EmailMessages;
 import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import com.github.gribanoveu.cuddle.dtos.enums.Role;
 import com.github.gribanoveu.cuddle.dtos.enums.StatusLevel;
-import com.github.gribanoveu.cuddle.dtos.request.auth.*;
+import com.github.gribanoveu.cuddle.dtos.request.*;
 import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddle.entities.services.email.EmailService;
 import com.github.gribanoveu.cuddle.entities.services.otp.RedisOtpService;
@@ -34,7 +34,7 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class PublicAccountControllerFacade {
+public class PublicAccountControllerImpl {
     @Value("${time-variable.otpCodeLifetime}")
     private Duration otpCodeLifeTime;
     private final UserService userService;

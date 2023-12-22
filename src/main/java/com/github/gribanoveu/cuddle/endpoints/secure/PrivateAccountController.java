@@ -1,8 +1,8 @@
 package com.github.gribanoveu.cuddle.endpoints.secure;
 
-import com.github.gribanoveu.cuddle.controllers.anonymous.PublicAccountControllerFacade;
-import com.github.gribanoveu.cuddle.dtos.request.auth.ChangeEmailDto;
-import com.github.gribanoveu.cuddle.dtos.request.auth.ChangePasswordDto;
+import com.github.gribanoveu.cuddle.controllers.anonymous.PublicAccountControllerImpl;
+import com.github.gribanoveu.cuddle.dtos.request.ChangeEmailDto;
+import com.github.gribanoveu.cuddle.dtos.request.ChangePasswordDto;
 import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/account")
 @Tag(name="Управление аккаунтом с авторизацией", description="Позволяет управлять данными учетной записи")
 public class PrivateAccountController {
-    private final PublicAccountControllerFacade userControllerFacade;
+    private final PublicAccountControllerImpl userControllerFacade;
 
     @Operation(summary = "Сменить Email")
     @SecurityRequirement(name = "JWT")

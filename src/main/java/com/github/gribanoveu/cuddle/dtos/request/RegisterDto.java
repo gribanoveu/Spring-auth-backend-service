@@ -1,4 +1,4 @@
-package com.github.gribanoveu.cuddle.dtos.request.auth;
+package com.github.gribanoveu.cuddle.dtos.request;
 
 import com.github.gribanoveu.cuddle.utils.validators.MinimalAge;
 import io.swagger.v3.oas.annotations.media.Schema;

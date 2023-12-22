@@ -7,7 +7,6 @@ import com.github.gribanoveu.cuddle.dtos.response.auth.UsersResponse;
 import com.github.gribanoveu.cuddle.entities.services.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -18,9 +17,8 @@ import static org.springframework.http.HttpStatus.OK;
  */
 @Service
 @RequiredArgsConstructor
-public class ModeratorControllerFacade {
+public class ModeratorControllerImpl {
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
 
     public ResponseEntity<?> getAllUsersList(int pageNumber, int pageSize) {
         return ResponseEntity.ok(UsersResponse.create(OK, userService.getAllUsers(pageNumber, pageSize)));

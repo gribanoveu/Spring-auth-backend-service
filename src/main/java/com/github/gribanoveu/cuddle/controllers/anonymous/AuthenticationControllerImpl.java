@@ -2,8 +2,8 @@ package com.github.gribanoveu.cuddle.controllers.anonymous;
 
 import com.github.gribanoveu.cuddle.constants.EmailMessages;
 import com.github.gribanoveu.cuddle.dtos.enums.TokenType;
-import com.github.gribanoveu.cuddle.dtos.request.auth.LoginDto;
-import com.github.gribanoveu.cuddle.dtos.request.auth.RefreshTokenDto;
+import com.github.gribanoveu.cuddle.dtos.request.LoginDto;
+import com.github.gribanoveu.cuddle.dtos.request.RefreshTokenDto;
 import com.github.gribanoveu.cuddle.dtos.response.auth.TokenResponse;
 import com.github.gribanoveu.cuddle.entities.services.email.EmailService;
 import com.github.gribanoveu.cuddle.entities.services.token.TokenService;
@@ -28,7 +28,7 @@ import java.time.Duration;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AuthenticationControllerFacade {
+public class AuthenticationControllerImpl {
     @Value("${time-variable.accessTokenLifetime}")
     private Duration accessTokenLifetime;
     private final TokenService tokenService;

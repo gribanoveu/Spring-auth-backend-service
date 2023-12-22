@@ -31,7 +31,7 @@ public class ServerErrorEntryPoint implements AuthenticationEntryPoint {
             HttpServletResponse response,
             AuthenticationException authException
     ) throws IOException {
-        StatusResponse error = null;
+        StatusResponse error;
 
         if (authException instanceof DisabledException) {
             error = StatusResponse.create(ACCOUNT_DISABLED, ACCOUNT_DISABLED.getMessage(), StatusLevel.ERROR);

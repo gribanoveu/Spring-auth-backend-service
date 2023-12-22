@@ -8,13 +8,18 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 
 /**
- * @author Evgeny Gribanov
- * @version 24.10.2023
- * For gen serts:
- * openssl genrsa  -out keypair.pem 2048
+ * Генерация ключевой пары и сертификатов с помощью OpenSSL.
+ * <p>
+ * Для генерации ключевой пары выполните следующие команды:
+ * <pre>{@code
+ * openssl genrsa -out keypair.pem 2048
  * openssl rsa -in keypair.pem -pubout -out public.pem
  * openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in keypair.pem -out private.pem
- * place serts in resources/certs
+ * }</pre>
+ * Затем поместите сертификаты в папку resources/certs.
+ *
+ * @author Evgeny Gribanov
+ * @version 24.10.2023
  */
 @Component
 @RequiredArgsConstructor

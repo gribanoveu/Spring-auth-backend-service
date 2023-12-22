@@ -49,7 +49,7 @@ public class SecurityConfig {
                         // anonymous scope
                         .requestMatchers( HttpMethod.POST, "*/auth").anonymous() // issue token
                         .requestMatchers( HttpMethod.PATCH, "*/auth").anonymous() // refresh token
-                        .requestMatchers(HttpMethod.POST, "*/user").anonymous() // register
+                        .requestMatchers(HttpMethod.POST, "*/account/create").anonymous() // register
                         .requestMatchers(HttpMethod.POST, "*/account/generate-code").anonymous()
                         .requestMatchers(HttpMethod.POST, "*/account/restore-password").anonymous()
 
@@ -59,6 +59,8 @@ public class SecurityConfig {
                         // authenticated scope
                         .requestMatchers("*/users/**").hasAnyAuthority(ADMIN.scope(), MODERATOR.scope())
                         .requestMatchers("*/moderator/**").hasAnyAuthority(ADMIN.scope(), MODERATOR.scope())
+                        .requestMatchers("*/role/**").hasAnyAuthority(ADMIN.scope())
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager

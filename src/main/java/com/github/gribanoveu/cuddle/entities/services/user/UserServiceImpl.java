@@ -1,6 +1,7 @@
 package com.github.gribanoveu.cuddle.entities.services.user;
 
 import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
+import com.github.gribanoveu.cuddle.dtos.enums.Role;
 import com.github.gribanoveu.cuddle.entities.repositories.UserRepository;
 import com.github.gribanoveu.cuddle.entities.tables.User;
 import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
@@ -66,13 +67,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUserPasswordAndCredentialsExpiredById(User user, String password) {
-        user.setPassword(password);
-        user.setCredentialsNonExpired(false);
-        userRepository.save(user);
-    }
-
-    @Override
     public void updateEmail(User user, String newEmail) {
         user.setEmail(newEmail);
         userRepository.save(user);
@@ -90,4 +84,9 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Override
+    public void updateRole(User user, Role role) {
+        user.setRole(role);
+        userRepository.save(user);
+    }
 }

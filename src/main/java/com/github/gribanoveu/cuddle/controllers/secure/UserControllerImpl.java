@@ -3,14 +3,12 @@ package com.github.gribanoveu.cuddle.controllers.secure;
 import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import com.github.gribanoveu.cuddle.dtos.enums.StatusLevel;
 import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
-import com.github.gribanoveu.cuddle.entities.services.email.EmailService;
 import com.github.gribanoveu.cuddle.entities.services.user.UserService;
 import com.github.gribanoveu.cuddle.entities.tables.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,10 +18,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserControllerFacade {
+public class UserControllerImpl {
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
-    private final EmailService emailService;
 
     public ResponseEntity<User> getUserData(Authentication authentication) {
         var userData = userService.findUserByEmail(authentication.getName());

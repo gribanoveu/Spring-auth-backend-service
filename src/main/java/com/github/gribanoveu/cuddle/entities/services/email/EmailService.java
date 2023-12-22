@@ -7,6 +7,5 @@ import com.github.gribanoveu.cuddle.dtos.data.SimpleEmailObject;
  * @version 27.11.2023
  */
 public interface EmailService {
-    void sendEmail(String toEmail, String subject, String message);
     void sendMail(SimpleEmailObject email);
 }

@@ -1,6 +1,6 @@
 package com.github.gribanoveu.cuddle.endpoints.secure;
 
-import com.github.gribanoveu.cuddle.controllers.secure.UserControllerFacade;
+import com.github.gribanoveu.cuddle.controllers.secure.UserControllerImpl;
 import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddle.entities.tables.User;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,19 +26,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/user")
 @Tag(name="Контроллер пользователя", description="Юзер управляет своим аккаунтом")
 public class UserController {
-    private final UserControllerFacade userControllerFacade;
+    private final UserControllerImpl userControllerImpl;
 
     @Operation(summary = "Получить данные текущего пользователя")
     @SecurityRequirement(name = "JWT")
     @GetMapping
     public ResponseEntity<User> getUserData(Authentication authentication) {
-        return userControllerFacade.getUserData(authentication);
+        return userControllerImpl.getUserData(authentication);
     }
 
     @Operation(summary = "Удалить текущего авторизованного пользователя")
     @SecurityRequirement(name = "JWT")
     @DeleteMapping
     public ResponseEntity<StatusResponse> deleteUser(Authentication authentication) {
-        return userControllerFacade.deleteUser(authentication);
+        return userControllerImpl.deleteUser(authentication);
     }
 }

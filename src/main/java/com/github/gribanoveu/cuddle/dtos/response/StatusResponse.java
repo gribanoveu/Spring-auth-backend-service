@@ -35,6 +35,10 @@ public class StatusResponse {
         return new StatusResponse(LocalDateTime.now(), status, responseDetails);
     }
 
+    public static StatusResponse create(ResponseDetails responseDetails, StatusLevel status) {
+        return new StatusResponse(LocalDateTime.now(), status, Collections.singletonList(responseDetails));
+    }
+
     public static StatusResponse create(ResponseCode responseCode, StatusLevel status) {
         return new StatusResponse(LocalDateTime.now(), status,
                 Collections.singletonList(new ResponseDetails(responseCode)));

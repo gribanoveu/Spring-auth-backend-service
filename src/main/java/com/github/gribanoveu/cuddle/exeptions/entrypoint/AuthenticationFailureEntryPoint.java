@@ -1,6 +1,5 @@
 package com.github.gribanoveu.cuddle.exeptions.entrypoint;
 
-import com.github.gribanoveu.cuddle.utils.JsonUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,8 +18,8 @@ import java.io.IOException;
  */
 @Component
 @RequiredArgsConstructor
+@SuppressWarnings("RedundantThrows")
 public class AuthenticationFailureEntryPoint implements AuthenticationFailureHandler {
-    private final JsonUtils jsonUtils;
 
     @Override
     public void onAuthenticationFailure(

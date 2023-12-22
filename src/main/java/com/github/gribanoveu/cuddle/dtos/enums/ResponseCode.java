@@ -20,7 +20,7 @@ public enum ResponseCode {
     ACCESS_DENIED(
             "AUT-101",
             "Access denied",
-            "Access denied. Please check your credentials and make sure you have the required access rights",
+            "Please check your credentials and make sure you have the required access rights",
             HttpStatus.FORBIDDEN
     ),
     UNAUTHORIZED(
@@ -32,7 +32,7 @@ public enum ResponseCode {
     BAD_CREDENTIAL(
             "AUT-103",
             "Invalid credentials",
-            "Incorrect credentials. Please verify that the information entered is correct and try again. If you have forgotten your credentials, please use the password recovery feature",
+            "Please verify that the information entered is correct and try again. If you have forgotten your credentials, please use the password recovery feature",
             HttpStatus.BAD_REQUEST
     ),
     MISSING_PARAM(
@@ -44,13 +44,13 @@ public enum ResponseCode {
     TOKEN_NOT_VALID(
             "AUT-105",
             "Invalid token",
-            "Invalid token. Please make sure you are using a valid token and try again",
+            "Please make sure you are using a valid token and try again",
             HttpStatus.UNAUTHORIZED
     ),
     VALIDATION_ERROR(
             "AUT-106",
             "Validation error",
-            "Validation Error. Please check that the data is in the correct format and try again",
+            "Please check that the data is in the correct format and try again",
             HttpStatus.BAD_REQUEST
     ),
     VALIDATION_ERROR_DETAIL(
@@ -76,12 +76,6 @@ public enum ResponseCode {
             "Account disabled",
             "Your account has been disabled contact support to find out why",
             HttpStatus.UNAUTHORIZED
-    ),
-    AGE_NOT_VALID(
-            "AUT-111",
-            "Age not valid",
-            "Age must be at least 18 years old, or have expected format",
-            HttpStatus.BAD_REQUEST
     ),
     PASSWORD_UPDATED(
             "AUT-200",
@@ -161,65 +155,47 @@ public enum ResponseCode {
             "User not found. Please make sure you have entered the correct email and try again",
             HttpStatus.NOT_FOUND
     ),
-    USER_DEFAULT_PASSWORD(
-            "AUT-405",
-            "Set default password",
-            "Default password has been successfully set for the user",
-            HttpStatus.OK
-    ),
     USER_UPDATED(
-            "AUT-406",
+            "AUT-405",
             "User updated successfully",
             "User has been successfully updated",
             HttpStatus.OK
     ),
     USER_ALREADY_EXIST(
-            "AUT-407",
+            "AUT-406",
             "User already exists",
             "User already exists. Please make sure you have entered the correct email and try again",
             HttpStatus.CONFLICT
     ),
     USER_BANNED(
-            "AUT-408",
+            "AUT-407",
             "User banned",
             "User has been successfully banned",
             HttpStatus.OK
     ),
     USER_UN_BANNED(
-            "AUT-409",
+            "AUT-408",
             "User unbanned",
             "User has been successfully unbanned",
             HttpStatus.OK
     ),
-    PERMISSION_CREATED(
+    PERMISSION_UPDATED_MODERATOR(
             "AUT-500",
-            "Permission created",
-            "Permission has been successfully created",
-            HttpStatus.OK
-    ),
-    PERMISSION_DELETED(
-            "AUT-501",
-            "Permission deleted",
-            "Permission has been successfully deleted",
-            HttpStatus.OK
-    ),
-    PERMISSION_UPDATED(
-            "AUT-502",
             "Permission updated",
-            "Permission has been successfully updated",
+            "The user is now a moderator",
             HttpStatus.OK
     ),
-    PERMISSION_EXIST(
-            "AUT-504",
-            "Permission already exists",
-            "Permission already exists. Please make sure you have entered the correct permission name and try again",
-            HttpStatus.CONFLICT
+    PERMISSION_UPDATED_USER(
+            "AUT-501",
+            "Permission updated",
+            "The user is now a user",
+            HttpStatus.OK
     ),
-    PERMISSION_NOT_EXIST(
-            "AUT-505",
-            "Permission not found",
-            "Permission not found. Please make sure you have entered the correct permission name and try again",
-            HttpStatus.NOT_FOUND
+    SEND_MESSAGE(
+            "INF-100",
+            "Information message",
+            "%s",
+            HttpStatus.OK
     );
 
     private final String code;
