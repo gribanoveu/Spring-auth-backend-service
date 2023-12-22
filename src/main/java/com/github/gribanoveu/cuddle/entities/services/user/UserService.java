@@ -2,6 +2,7 @@ package com.github.gribanoveu.cuddle.entities.services.user;
 
 import com.github.gribanoveu.cuddle.dtos.enums.Role;
 import com.github.gribanoveu.cuddle.entities.tables.User;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -22,5 +23,5 @@ public interface UserService {
     User findUserByEmail(String email);
     User findUserById(Long id);
     Boolean userExistByEmail(String email);
-    List<User> getAllUsers(int pageNumber, int pageSize);
+    List<User> getAllUsers(Pageable pageable);
 }

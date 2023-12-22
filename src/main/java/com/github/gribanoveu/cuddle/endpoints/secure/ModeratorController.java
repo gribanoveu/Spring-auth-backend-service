@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +24,8 @@ public class ModeratorController {
     @Operation(summary = "Получить список всех пользователей")
     @SecurityRequirement(name = "JWT")
     @GetMapping("/users-list")
-    public ResponseEntity<?> getAllUsersList(@RequestParam int pageNumber, @RequestParam int pageSize) {
-        return moderatorControllerImpl.getAllUsersList(pageNumber, pageSize);
+    public ResponseEntity<?> getAllUsersList(@PageableDefault(size = 10, page = 0) Pageable pageable) {
+        return moderatorControllerImpl.getAllUsersList(pageable);
     }
 
     @Operation(summary = "Удалить пользователя")

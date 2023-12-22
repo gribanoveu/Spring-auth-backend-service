@@ -7,6 +7,7 @@ import com.github.gribanoveu.cuddle.entities.tables.User;
 import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,8 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers(int pageNumber, int pageSize) {
-        var pageable = PageRequest.of(pageNumber, pageSize);
+    public List<User> getAllUsers(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
 

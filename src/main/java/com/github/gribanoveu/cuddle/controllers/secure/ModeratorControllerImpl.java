@@ -6,6 +6,7 @@ import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddle.dtos.response.auth.UsersResponse;
 import com.github.gribanoveu.cuddle.entities.services.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,8 @@ import static org.springframework.http.HttpStatus.OK;
 public class ModeratorControllerImpl {
     private final UserService userService;
 
-    public ResponseEntity<?> getAllUsersList(int pageNumber, int pageSize) {
-        return ResponseEntity.ok(UsersResponse.create(OK, userService.getAllUsers(pageNumber, pageSize)));
+    public ResponseEntity<?> getAllUsersList(Pageable pageable) {
+        return ResponseEntity.ok(UsersResponse.create(OK, userService.getAllUsers(pageable)));
     }
 
     public ResponseEntity<?> deleteUser(Long userId) {
