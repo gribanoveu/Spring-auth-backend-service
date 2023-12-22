@@ -1,8 +1,8 @@
 package com.github.gribanoveu.cuddle.config;
 
-import com.github.gribanoveu.cuddle.controllers.exeptions.entrypoint.AccessDeniedEntryPoint;
-import com.github.gribanoveu.cuddle.controllers.exeptions.entrypoint.AuthErrorEntryPoint;
-import com.github.gribanoveu.cuddle.controllers.exeptions.entrypoint.ServerErrorEntryPoint;
+import com.github.gribanoveu.cuddle.exeptions.entrypoint.AccessDeniedEntryPoint;
+import com.github.gribanoveu.cuddle.exeptions.entrypoint.AuthErrorEntryPoint;
+import com.github.gribanoveu.cuddle.exeptions.entrypoint.ServerErrorEntryPoint;
 import com.github.gribanoveu.cuddle.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -20,8 +20,6 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import static com.github.gribanoveu.cuddle.entities.enums.Role.*;
 
 /**
  * @author Evgeny Gribanov

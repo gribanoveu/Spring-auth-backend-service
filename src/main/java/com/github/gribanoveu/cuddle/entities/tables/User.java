@@ -3,7 +3,7 @@ package com.github.gribanoveu.cuddle.entities.tables;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.gribanoveu.cuddle.entities.enums.Role;
+import com.github.gribanoveu.cuddle.dtos.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,7 +45,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
-
 
     @Column(name = "account_non_expired")
     private Boolean accountNonExpired = true;

@@ -1,6 +1,6 @@
 package com.github.gribanoveu.cuddle.base;
 
-import com.github.gribanoveu.cuddle.entities.enums.TokenType;
+import com.github.gribanoveu.cuddle.dtos.enums.TokenType;
 import com.github.gribanoveu.cuddle.entities.services.token.TokenService;
 import com.github.gribanoveu.cuddle.security.CustomUserDetails;
 import com.github.gribanoveu.cuddle.security.CustomUserDetailsService;

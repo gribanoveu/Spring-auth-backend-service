@@ -1,7 +1,7 @@
 package com.github.gribanoveu.cuddle.entities.services.implementation;
 
 import com.github.gribanoveu.cuddle.base.BaseMockMvcTest;
-import com.github.gribanoveu.cuddle.controllers.exeptions.CredentialEx;
+import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
 import com.github.gribanoveu.cuddle.entities.services.token.TokenService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

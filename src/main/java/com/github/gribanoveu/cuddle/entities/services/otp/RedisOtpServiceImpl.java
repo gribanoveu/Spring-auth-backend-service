@@ -1,7 +1,7 @@
 package com.github.gribanoveu.cuddle.entities.services.otp;
 
-import com.github.gribanoveu.cuddle.controllers.exeptions.CredentialEx;
-import com.github.gribanoveu.cuddle.entities.enums.ResponseCode;
+import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
+import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;

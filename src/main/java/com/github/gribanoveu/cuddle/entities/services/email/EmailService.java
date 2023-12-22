@@ -1,6 +1,6 @@
 package com.github.gribanoveu.cuddle.entities.services.email;
 
-import com.github.gribanoveu.cuddle.controllers.dtos.data.SimpleEmailObject;
+import com.github.gribanoveu.cuddle.dtos.data.SimpleEmailObject;
 
 /**
  * @author Evgeny Gribanov

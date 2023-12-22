@@ -1,6 +1,6 @@
 package com.github.gribanoveu.cuddle.entities.services.permission;
 
-import com.github.gribanoveu.cuddle.entities.enums.Role;
+import com.github.gribanoveu.cuddle.dtos.enums.Role;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

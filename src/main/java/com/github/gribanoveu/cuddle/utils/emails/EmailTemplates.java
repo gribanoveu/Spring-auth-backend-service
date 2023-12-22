@@ -1,7 +1,7 @@
 package com.github.gribanoveu.cuddle.utils.emails;
 
 import com.github.gribanoveu.cuddle.constants.EmailMessages;
-import com.github.gribanoveu.cuddle.controllers.dtos.data.SimpleEmailObject;
+import com.github.gribanoveu.cuddle.dtos.data.SimpleEmailObject;
 
 import java.time.Duration;
 import java.util.Map;

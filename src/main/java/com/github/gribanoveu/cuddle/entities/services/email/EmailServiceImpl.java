@@ -1,8 +1,8 @@
 package com.github.gribanoveu.cuddle.entities.services.email;
 
-import com.github.gribanoveu.cuddle.controllers.dtos.data.SimpleEmailObject;
-import com.github.gribanoveu.cuddle.controllers.exeptions.CredentialEx;
-import com.github.gribanoveu.cuddle.entities.enums.ResponseCode;
+import com.github.gribanoveu.cuddle.dtos.data.SimpleEmailObject;
+import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
+import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

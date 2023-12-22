@@ -1,6 +1,6 @@
 package com.github.gribanoveu.cuddle.entities.services.token;
 
-import com.github.gribanoveu.cuddle.entities.enums.TokenType;
+import com.github.gribanoveu.cuddle.dtos.enums.TokenType;
 import com.github.gribanoveu.cuddle.security.CustomUserDetails;
 
 import java.util.Date;

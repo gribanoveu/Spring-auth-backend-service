@@ -1,6 +1,6 @@
 package com.github.gribanoveu.cuddle.entities.repositories;
 
-import com.github.gribanoveu.cuddle.entities.enums.Role;
+import com.github.gribanoveu.cuddle.dtos.enums.Role;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

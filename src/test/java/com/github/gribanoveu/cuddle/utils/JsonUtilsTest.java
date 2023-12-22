@@ -1,6 +1,6 @@
 package com.github.gribanoveu.cuddle.utils;
 
-import com.github.gribanoveu.cuddle.controllers.dtos.request.auth.LoginDto;
+import com.github.gribanoveu.cuddle.dtos.request.auth.LoginDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

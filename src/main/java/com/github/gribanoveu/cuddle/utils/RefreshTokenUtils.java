@@ -2,8 +2,8 @@ package com.github.gribanoveu.cuddle.utils;
 
 import com.github.gribanoveu.cuddle.config.RsaProperties;
 import com.github.gribanoveu.cuddle.constants.RegexpFormat;
-import com.github.gribanoveu.cuddle.controllers.exeptions.CredentialEx;
-import com.github.gribanoveu.cuddle.entities.enums.ResponseCode;
+import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
+import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,10 +13,6 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,7 +27,7 @@ public class RefreshTokenUtils {
     @Value("${time-variable.refreshTokenLifetime}")
     private Duration refreshTokenLifetime;
     private final RsaProperties rsaKeys;
-    private final RSAEncryption rsaEncryption;
+    private final RSAEncryptionUtils rsaEncryptionUtils;
 
     public String generateEncryptedRefreshToken(String email) {
         RSAPublicKey publicKey = rsaKeys.publicKey();
@@ -39,7 +35,7 @@ public class RefreshTokenUtils {
             final String TOKEN_SEPARATOR = "|"; // admin@email.com|1698159942361
             var refreshTokenExpire = Instant.now().plus(refreshTokenLifetime).toEpochMilli();
             var refreshToken = email + TOKEN_SEPARATOR + refreshTokenExpire;
-            return rsaEncryption.encrypt(refreshToken, publicKey);
+            return rsaEncryptionUtils.encrypt(refreshToken, publicKey);
         } catch (Exception e) {
             throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
         }
@@ -48,7 +44,7 @@ public class RefreshTokenUtils {
     public String validateRefreshTokenAndExtractEmail(String token) {
         RSAPrivateKey privateKey = rsaKeys.privateKey();
         try {
-            var tokenValue = rsaEncryption.decrypt(token, privateKey);
+            var tokenValue = rsaEncryptionUtils.decrypt(token, privateKey);
             checkTokenValidity(tokenValue);
             return extractEmailFromToken(tokenValue);
         } catch (Exception e) {
