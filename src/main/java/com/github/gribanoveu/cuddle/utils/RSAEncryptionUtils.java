@@ -4,7 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
-import java.security.*;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 
 /**
  * @author Evgeny Gribanov

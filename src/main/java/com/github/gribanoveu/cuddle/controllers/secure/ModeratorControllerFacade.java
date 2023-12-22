@@ -1,9 +1,9 @@
 package com.github.gribanoveu.cuddle.controllers.secure;
 
-import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
-import com.github.gribanoveu.cuddle.dtos.response.auth.UsersResponse;
 import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import com.github.gribanoveu.cuddle.dtos.enums.StatusLevel;
+import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
+import com.github.gribanoveu.cuddle.dtos.response.auth.UsersResponse;
 import com.github.gribanoveu.cuddle.entities.services.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

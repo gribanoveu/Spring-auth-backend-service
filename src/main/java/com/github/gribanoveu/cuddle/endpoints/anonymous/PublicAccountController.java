@@ -1,17 +1,20 @@
 package com.github.gribanoveu.cuddle.endpoints.anonymous;
 
+import com.github.gribanoveu.cuddle.controllers.anonymous.PublicAccountControllerFacade;
 import com.github.gribanoveu.cuddle.dtos.request.auth.GenerateOtpDto;
 import com.github.gribanoveu.cuddle.dtos.request.auth.RegisterDto;
 import com.github.gribanoveu.cuddle.dtos.request.auth.RestorePasswordDto;
 import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
-import com.github.gribanoveu.cuddle.controllers.anonymous.PublicAccountControllerFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Evgeny Gribanov

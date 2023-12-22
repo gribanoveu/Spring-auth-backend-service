@@ -1,9 +1,9 @@
 package com.github.gribanoveu.cuddle.entities.services.user;
 
-import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
 import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import com.github.gribanoveu.cuddle.entities.repositories.UserRepository;
 import com.github.gribanoveu.cuddle.entities.tables.User;
+import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;

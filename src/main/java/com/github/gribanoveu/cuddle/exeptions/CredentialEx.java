@@ -1,7 +1,7 @@
 package com.github.gribanoveu.cuddle.exeptions;
 
-import com.github.gribanoveu.cuddle.dtos.response.ResponseDetails;
 import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
+import com.github.gribanoveu.cuddle.dtos.response.ResponseDetails;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;

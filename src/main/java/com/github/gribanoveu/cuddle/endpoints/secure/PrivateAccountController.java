@@ -1,9 +1,9 @@
 package com.github.gribanoveu.cuddle.endpoints.secure;
 
+import com.github.gribanoveu.cuddle.controllers.anonymous.PublicAccountControllerFacade;
 import com.github.gribanoveu.cuddle.dtos.request.auth.ChangeEmailDto;
 import com.github.gribanoveu.cuddle.dtos.request.auth.ChangePasswordDto;
 import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
-import com.github.gribanoveu.cuddle.controllers.anonymous.PublicAccountControllerFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;

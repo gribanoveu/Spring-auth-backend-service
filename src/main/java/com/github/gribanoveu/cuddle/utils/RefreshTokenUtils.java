@@ -2,8 +2,8 @@ package com.github.gribanoveu.cuddle.utils;
 
 import com.github.gribanoveu.cuddle.config.RsaProperties;
 import com.github.gribanoveu.cuddle.constants.RegexpFormat;
-import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
 import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
+import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,7 +1,7 @@
 package com.github.gribanoveu.cuddle.exeptions.entrypoint;
 
-import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddle.dtos.enums.StatusLevel;
+import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddle.utils.JsonUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,6 +13,8 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+
+import static com.github.gribanoveu.cuddle.dtos.enums.ResponseCode.*;
 
 /**
  * @author Evgeny Gribanov

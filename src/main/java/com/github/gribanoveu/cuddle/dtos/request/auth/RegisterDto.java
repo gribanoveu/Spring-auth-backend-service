@@ -2,7 +2,9 @@ package com.github.gribanoveu.cuddle.dtos.request.auth;
 
 import com.github.gribanoveu.cuddle.utils.validators.MinimalAge;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import static com.github.gribanoveu.cuddle.constants.RegexpFormat.EMAIL_PATTERN;
 import static com.github.gribanoveu.cuddle.constants.ValidationMessages.*;

@@ -1,10 +1,10 @@
 package com.github.gribanoveu.cuddle.controllers.anonymous;
 
 import com.github.gribanoveu.cuddle.constants.EmailMessages;
+import com.github.gribanoveu.cuddle.dtos.enums.TokenType;
 import com.github.gribanoveu.cuddle.dtos.request.auth.LoginDto;
 import com.github.gribanoveu.cuddle.dtos.request.auth.RefreshTokenDto;
 import com.github.gribanoveu.cuddle.dtos.response.auth.TokenResponse;
-import com.github.gribanoveu.cuddle.dtos.enums.TokenType;
 import com.github.gribanoveu.cuddle.entities.services.email.EmailService;
 import com.github.gribanoveu.cuddle.entities.services.token.TokenService;
 import com.github.gribanoveu.cuddle.security.CustomUserDetails;

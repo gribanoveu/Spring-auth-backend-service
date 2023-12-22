@@ -1,9 +1,9 @@
 package com.github.gribanoveu.cuddle.endpoints.anonymous;
 
+import com.github.gribanoveu.cuddle.controllers.anonymous.AuthenticationControllerFacade;
 import com.github.gribanoveu.cuddle.dtos.request.auth.LoginDto;
 import com.github.gribanoveu.cuddle.dtos.request.auth.RefreshTokenDto;
 import com.github.gribanoveu.cuddle.dtos.response.auth.TokenResponse;
-import com.github.gribanoveu.cuddle.controllers.anonymous.AuthenticationControllerFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

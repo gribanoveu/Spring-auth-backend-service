@@ -4,7 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-import static com.github.gribanoveu.cuddle.constants.ValidationMessages.*;
+import static com.github.gribanoveu.cuddle.constants.ValidationMessages.NOT_BLANK_EXCEPTION_MESSAGE;
+import static com.github.gribanoveu.cuddle.constants.ValidationMessages.SIZE_EXCEPTION_MESSAGE;
 
 /**
  * @author Evgeny Gribanov

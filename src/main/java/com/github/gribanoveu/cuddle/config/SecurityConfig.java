@@ -21,6 +21,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static com.github.gribanoveu.cuddle.dtos.enums.Role.ADMIN;
+import static com.github.gribanoveu.cuddle.dtos.enums.Role.MODERATOR;
+
 /**
  * @author Evgeny Gribanov
  * @version 28.08.2023

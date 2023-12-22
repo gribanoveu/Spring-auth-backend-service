@@ -1,7 +1,7 @@
 package com.github.gribanoveu.cuddle.endpoints.secure;
 
-import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddle.controllers.secure.UserControllerFacade;
+import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddle.entities.tables.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -9,7 +9,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Evgeny Gribanov

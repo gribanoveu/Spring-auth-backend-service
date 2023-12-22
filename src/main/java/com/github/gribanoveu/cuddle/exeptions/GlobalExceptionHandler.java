@@ -1,10 +1,10 @@
 package com.github.gribanoveu.cuddle.exeptions;
 
 import com.github.gribanoveu.cuddle.constants.ValidationMessages;
-import com.github.gribanoveu.cuddle.dtos.response.ResponseDetails;
-import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import com.github.gribanoveu.cuddle.dtos.enums.StatusLevel;
+import com.github.gribanoveu.cuddle.dtos.response.ResponseDetails;
+import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddle.utils.aspects.LogResponse;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;
