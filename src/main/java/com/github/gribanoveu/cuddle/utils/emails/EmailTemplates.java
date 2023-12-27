@@ -40,4 +40,16 @@ public abstract class EmailTemplates {
                 )
         );
     }
+
+    public static SimpleEmailObject banUser(String sendToEmail, String banReason, String expiredDate) {
+        return new SimpleEmailObject(EmailMessages.sendFrom,sendToEmail, EmailMessages.banSubject,EmailMessages.banTemplate,
+                Map.of("email", sendToEmail, "reason", banReason, "expired", expiredDate)
+        );
+    }
+
+    public static SimpleEmailObject disableUser(String sendToEmail, String banReason) {
+        return new SimpleEmailObject(EmailMessages.sendFrom,sendToEmail, EmailMessages.disabledSubject,EmailMessages.disabledTemplate,
+                Map.of("email", sendToEmail, "reason", banReason)
+        );
+    }
 }

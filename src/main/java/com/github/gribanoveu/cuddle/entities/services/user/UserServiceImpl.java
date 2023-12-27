@@ -6,10 +6,10 @@ import com.github.gribanoveu.cuddle.entities.repositories.UserRepository;
 import com.github.gribanoveu.cuddle.entities.tables.User;
 import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -73,14 +73,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateEnabled(User user, Boolean enabled) {
-        user.setEnabled(enabled);
+    public void enabledUser(User user) {
+        user.setEnabled(true);
         userRepository.save(user);
     }
 
     @Override
-    public void updateLocked(User user, Boolean locked) {
-        user.setAccountNonLocked(locked);
+    public void disableUser(User user, String disableReasonCode) {
+        user.setEnabled(false);
+        user.setRestrictionReason(disableReasonCode);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void unlockUser(User user) {
+        user.setAccountNonLocked(true);
+        user.setBanExpiration(null);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void lockUser(User user, LocalDateTime banExpiration, String banReason) {
+        user.setAccountNonLocked(false);
+        user.setBanExpiration(banExpiration);
+        user.setRestrictionReason(banReason);
         userRepository.save(user);
     }
 
@@ -88,5 +104,22 @@ public class UserServiceImpl implements UserService {
     public void updateRole(User user, Role role) {
         user.setRole(role);
         userRepository.save(user);
+    }
+
+    @Override
+    public int removeExpiredBans() {
+        var unbannedUsers = 0;
+        var now = LocalDateTime.now();
+        var bannedUsers = userRepository.findBannedUsersWithExpiredBan(now);
+
+        for (User user : bannedUsers) {
+            if (user.getBanExpiration() != null && user.getBanExpiration().isBefore(now)) {
+                user.setAccountNonLocked(true); // Снятие бана
+                user.setBanExpiration(null); // Сброс времени истечения бана
+                userRepository.save(user);
+                unbannedUsers++;
+            }
+        }
+        return unbannedUsers;
     }
 }

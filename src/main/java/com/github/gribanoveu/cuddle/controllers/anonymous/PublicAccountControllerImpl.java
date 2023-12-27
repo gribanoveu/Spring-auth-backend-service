@@ -1,10 +1,13 @@
 package com.github.gribanoveu.cuddle.controllers.anonymous;
 
+import com.github.gribanoveu.cuddle.constants.Constants;
 import com.github.gribanoveu.cuddle.constants.EmailMessages;
+import com.github.gribanoveu.cuddle.dtos.enums.BanReason;
 import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import com.github.gribanoveu.cuddle.dtos.enums.Role;
 import com.github.gribanoveu.cuddle.dtos.enums.StatusLevel;
 import com.github.gribanoveu.cuddle.dtos.request.*;
+import com.github.gribanoveu.cuddle.dtos.response.ResponseDetails;
 import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddle.entities.services.email.EmailService;
 import com.github.gribanoveu.cuddle.entities.services.otp.RedisOtpService;
@@ -139,5 +142,17 @@ public class PublicAccountControllerImpl {
             return ResponseEntity.ok(StatusResponse.create(ResponseCode.PASSWORD_UPDATED, StatusLevel.SUCCESS));
         }
         throw new CredentialEx(ResponseCode.PASSWORD_EQUALS);
+    }
+
+    public ResponseEntity<StatusResponse> getRestrictionsReason(String email) {
+        var userExist = userService.userExistByEmail(email);
+        if (!userExist) throw new CredentialEx(ResponseCode.USER_NOT_EXIST);
+        var user = userService.findUserByEmail(email);
+        if (user.getBanExpiration() == null) throw new CredentialEx(ResponseCode.NO_RESTRICTIONS);
+        var reason = BanReason.getBanMessageByCode(user.getRestrictionReason());
+        var responseText = String.format("Ваша учетная запись заблокирована по причине: %1$s. Блокировка истекает: %2$s",
+                reason, user.getBanExpiration().format(Constants.DEFAULT_TIME_FORMAT));
+
+        return ResponseEntity.ok(StatusResponse.create(new ResponseDetails(responseText), StatusLevel.SUCCESS));
     }
 }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="ru" >
+<head>
+    <title>Действие вашего аккаунта приостановлено</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <style>
+        .bodyTemplate {
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            max-width: 600px;
+            padding-left: 20px;
+            padding-top: 5px;
+            line-height: 130%;
+        }
+        .tableStyle {
+            width: 600px;
+            border-collapse: collapse;
+            border-style: none;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: Arial, sans-serif;
+        }
+        .logoStyle {
+            padding-top: 5px;
+            padding-left: 10px;
+        }
+        h1 {
+            line-height: 1.1;
+        }
+    </style>
+</head>
+<body>
+    <table class="tableStyle">
+        <tbody>
+            <tr>
+                <td class="logoStyle" th:insert="~{fragment/logo :: logo}"></td>
+            </tr>
+            <tr>
+                <td style="width: 100%">
+                    <div class="bodyTemplate">
+                        <h1>Действие вашей учетной записи приостановлено 🥶</h1>
+                        <div>
+                            <p>Что это означает:</p>
+                            <ul>
+                                <li>Все ваши данные сохранены.</li>
+                                <li>Ваша учетная запись не отображается в глобальном поиске.</li>
+                                <li>Вы не можете выполнить вход в систему и пользоваться приложением.</li>
+                            </ul>
+                        </div>
+                        <h4 th:text="'Причина приостановки действия вашей учетной записи: ' + ${reason}"></h4>
+                        <p>Для возобновления работы потребуется написать в support@cuddle.pw. </p>
+                        <div>&nbsp;</div>
+                        <div>Детали запроса:</div>
+                        <div th:text="'Дата: ' + ${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm z')}"></div>
+                        <div th:text="'Аккаунт: ' + ${email}"></div>
+                        <div th:replace="~{fragment/about :: about}"></div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>&nbsp;</div>
+    <div th:insert="~{fragment/footer :: footer}"></div>
+</body>
+</html>

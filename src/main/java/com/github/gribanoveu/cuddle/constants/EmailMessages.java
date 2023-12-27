@@ -20,4 +20,16 @@ public class EmailMessages {
 
     public static final String changeEmailSubject = "Электронная почта изменена";
     public static final String changeEmailTemplate = "email-changed";
+
+    public static final String deleteSubject = "Ваш аккаунт удален";
+    public static final String deleteModerTemplate = "user-deleted-moder";
+
+    public static final String disabledSubject = "Действие вашего аккаунта приостановлено";
+    public static final String disabledTemplate = "account-disabled";
+
+    public static final String enabledSubject = "Действие вашего аккаунта возобновлено";
+    public static final String enabledTemplate = "account-enabled";
+
+    public static final String banSubject = "Ваш аккаунт временно заблокирован";
+    public static final String banTemplate = "account-banned";
 }

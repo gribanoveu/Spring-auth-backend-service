@@ -9,17 +9,9 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-@OpenAPIDefinition(info = @Info(
-		title = "Spring Api",
-		description = "Описание Api", version = "0.1.0",
-		contact = @Contact(
-				name = "Evgeny Gribanov",
-				email = "egribanov@yandex.com",
-				url = "https://codecow.pw"
-		)
-))
-@SecurityScheme(name = "JWT", type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer")
+@EnableScheduling
 @EnableConfigurationProperties({RsaProperties.class})
 @SpringBootApplication
 public class CuddleApplication {

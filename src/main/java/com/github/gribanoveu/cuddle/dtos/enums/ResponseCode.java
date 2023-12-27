@@ -77,6 +77,12 @@ public enum ResponseCode {
             "Your account has been disabled contact support to find out why",
             HttpStatus.UNAUTHORIZED
     ),
+    NO_RESTRICTIONS(
+            "AUT-111",
+            "No restrictions",
+            "There are no restrictions on your account",
+            HttpStatus.NOT_FOUND
+    ),
     PASSWORD_UPDATED(
             "AUT-200",
             "Password updated",
@@ -195,6 +201,12 @@ public enum ResponseCode {
             "INF-100",
             "Information message",
             "%s",
+            HttpStatus.OK
+    ),
+    BAN_REASON_NOT_FOUND(
+            "MOD-100",
+            "Warning",
+            "Restriction reason not exist or not found",
             HttpStatus.OK
     );
 

@@ -5,6 +5,7 @@ import com.github.gribanoveu.cuddle.entities.tables.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -17,9 +18,12 @@ public interface UserService {
     @Transactional void deleteUserByEmail(String userEmail);
     @Transactional void updatePasswordByEmail(User user, String password);
     @Transactional void updateEmail(User user, String newEmail);
-    @Transactional void updateEnabled(User user, Boolean enabled);
-    @Transactional void updateLocked(User user, Boolean locked);
+    @Transactional void lockUser(User user, LocalDateTime banExpiration, String banReasonCode);
+    @Transactional int removeExpiredBans();
     @Transactional void updateRole(User user, Role role);
+    @Transactional void unlockUser(User user);
+    @Transactional void enabledUser(User user);
+    @Transactional void disableUser(User user, String disableReasonCode);
     User findUserByEmail(String email);
     User findUserById(Long id);
     Boolean userExistByEmail(String email);

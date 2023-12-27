@@ -11,10 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Evgeny Gribanov
@@ -43,5 +40,11 @@ public class PublicAccountController {
     @Operation(summary = "Регистрация нового пользователя")
     public ResponseEntity<StatusResponse> registerUser(@Valid @RequestBody RegisterDto request) {
         return publicAccountControllerImpl.registerUser(request);
+    }
+
+    @GetMapping("/restrictions")
+    @Operation(summary = "Получить причину блокировки")
+    public ResponseEntity<StatusResponse> getRestrictionsReason(@RequestParam String email) {
+        return publicAccountControllerImpl.getRestrictionsReason(email);
     }
 }

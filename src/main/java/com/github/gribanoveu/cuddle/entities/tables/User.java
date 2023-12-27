@@ -16,7 +16,7 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 
 @Data
 @Entity
-@Table(name = "users")
+@Table(name = "users", indexes = @Index(name = "idx_is_banned", columnList = "ban_expiration"))
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
@@ -41,6 +41,13 @@ public class User {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "ban_expiration")
+    private LocalDateTime banExpiration;
+
+    @Column(name = "restriction_reason")
+    private String restrictionReason;
+
     @JsonIgnore
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
@@ -60,7 +67,7 @@ public class User {
 
     @PrePersist
     private void setDefaultAccountStatus() {
-        this.registrationDate = LocalDateTime.now();
+        this.registrationDate = LocalDateTime.now().withNano(0);
     }
 }
 

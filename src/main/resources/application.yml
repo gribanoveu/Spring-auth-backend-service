@@ -5,7 +5,7 @@ server:
     key-store-password: letmein
     key-password: letmein
   servlet:
-    context-path: /api/private
+    context-path: /api
 
 time-variable:
   accessTokenLifetime: 15m

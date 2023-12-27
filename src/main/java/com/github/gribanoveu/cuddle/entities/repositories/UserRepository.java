@@ -2,9 +2,11 @@ package com.github.gribanoveu.cuddle.entities.repositories;
 
 import com.github.gribanoveu.cuddle.entities.tables.User;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,4 +21,14 @@ public interface UserRepository extends CrudRepository<User, Long> {
     Optional<User> findUserById(Long id);
     List<User> findAll(Pageable pageable);
     void deleteByEmail(String email);
+
+    @Query("SELECT u FROM User u WHERE u.accountNonLocked = false AND u.banExpiration < :now")
+    List<User> findBannedUsersWithExpiredBan(LocalDateTime now);
+
+    @Query("""
+    SELECT u.banExpiration, u.accountNonLocked, u.id
+    FROM User u
+    WHERE u.accountNonLocked = false AND u.banExpiration < :now
+    """)
+    List<User> findBannedUsers(LocalDateTime now);
 }
