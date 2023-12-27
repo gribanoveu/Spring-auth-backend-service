@@ -4,6 +4,7 @@ package com.github.gribanoveu.cuddle.entities.tables;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.gribanoveu.cuddle.dtos.enums.Role;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,9 +17,10 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 
 @Data
 @Entity
-@Table(name = "users", indexes = @Index(name = "idx_is_banned", columnList = "ban_expiration"))
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "users", indexes = @Index(name = "idx_is_banned", columnList = "ban_expiration"))
+@Schema(description = "Базовая сущность пользователя")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

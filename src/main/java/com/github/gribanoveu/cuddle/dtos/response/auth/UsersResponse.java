@@ -19,6 +19,7 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(description = "Ответ со списком всех пользователей")
 public class UsersResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Europe/Moscow")
     @Schema(description = "Время выполнения запроса")

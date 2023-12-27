@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(description = "Ответ после успешной авторизации")
 public class TokenResponse {
     @Schema(description = "Время выполнения запроса")
     private LocalDateTime timestamp;
