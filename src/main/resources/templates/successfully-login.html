@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="ru" >
 <head>
-    <title>В ваш аккаунт выполнен вход</title>
+    <title>В вашу учетную запись выполнен вход</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <style>
@@ -39,16 +39,8 @@
     <tr>
         <td style="width: 100%">
             <div class="bodyTemplate">
-                <h1>В ваш аккаунт выполнен вход</h1>
-                <div>&nbsp;</div>
-                <div>
-                    Недавно кто-то вошел в ваш аккаунт.
-                </div>
-                <div>&nbsp;</div>
-                <div>
-                    Если это были вы, то нет причин для беспокойства, но если это не так, то мы рекомендуем сменить пароль.
-                </div>
-                <div>&nbsp;</div>
+                <h1>В вашу учетную запись выполнен вход</h1>
+                <p>Если это были вы, то нет причин для беспокойства, но если это не так, то мы рекомендуем сменить пароль.</p>
                 <div>Детали запроса:</div>
                 <div th:text="'Дата входа: ' + ${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm z')}"></div>
                 <div th:text="'Email для входа: ' + ${email}"></div>

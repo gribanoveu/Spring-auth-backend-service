@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="ru" >
 <head>
-    <title>Действие вашего аккаунта возобновлено</title>
+    <title>Действие учетной записи возобновлено</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <style>
@@ -39,13 +39,9 @@
             <tr>
                 <td style="width: 100%">
                     <div class="bodyTemplate">
-                        <h1>Действие вашего аккаунта возобновлено ❤️</h1>
-                        <div>Все ограничения с вашего аккаунта сняты.</div>
-                        <div>&nbsp;</div>
-                        <div>
-                            Мы рады, что Вы снова с нами.
-                        </div>
-                        <div>&nbsp;</div>
+                        <h1>Действие учетной записи возобновлено ❤️</h1>
+                        <p>Все ограничения с вашего аккаунта сняты.</p>
+                        <p>Мы рады, что Вы снова с нами.</p>
                         <div>Детали запроса:</div>
                         <div th:text="'Дата: ' + ${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm z')}"></div>
                         <div th:text="'Аккаунт: ' + ${email}"></div>
