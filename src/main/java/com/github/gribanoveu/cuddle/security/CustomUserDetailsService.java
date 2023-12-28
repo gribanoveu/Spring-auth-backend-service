@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
-    private static final String USER_NOT_FOUND = "User '%s' not found";
+    private static final String USER_NOT_FOUND = "Пользователь '%s' не найден";
     private final UserRepository userRepository;
 
     @Override

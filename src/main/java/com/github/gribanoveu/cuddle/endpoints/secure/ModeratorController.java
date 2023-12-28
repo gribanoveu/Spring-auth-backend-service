@@ -31,9 +31,9 @@ public class ModeratorController {
 
     @Operation(summary = "Удалить пользователя")
     @SecurityRequirement(name = "JWT")
-    @DeleteMapping("/{userId}") // only admin can delete user
-    public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
-        return moderatorControllerImpl.deleteUser(userId);
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteUser(@RequestParam String email) {
+        return moderatorControllerImpl.deleteUser(email);
     }
 
     @Operation(summary = "Отключить пользователя")

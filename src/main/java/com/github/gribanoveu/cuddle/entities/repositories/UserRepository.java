@@ -24,11 +24,4 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.accountNonLocked = false AND u.banExpiration < :now")
     List<User> findBannedUsersWithExpiredBan(LocalDateTime now);
-
-    @Query("""
-    SELECT u.banExpiration, u.accountNonLocked, u.id
-    FROM User u
-    WHERE u.accountNonLocked = false AND u.banExpiration < :now
-    """)
-    List<User> findBannedUsers(LocalDateTime now);
 }

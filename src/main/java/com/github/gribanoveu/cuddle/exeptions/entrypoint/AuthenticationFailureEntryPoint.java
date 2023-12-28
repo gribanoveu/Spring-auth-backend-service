@@ -1,5 +1,6 @@
 package com.github.gribanoveu.cuddle.exeptions.entrypoint;
 
+import com.github.gribanoveu.cuddle.constants.Constants;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,7 +29,7 @@ public class AuthenticationFailureEntryPoint implements AuthenticationFailureHan
             AuthenticationException exception
     ) throws IOException, ServletException {
         if (exception instanceof DisabledException) {
-            response.sendError(HttpStatus.UNAUTHORIZED.value(), "User is disabled");
+            response.sendError(HttpStatus.UNAUTHORIZED.value(), Constants.USER_DISABLED_MESSAGE);
         } else {
             response.sendError(HttpStatus.UNAUTHORIZED.value(), exception.getMessage());
         }

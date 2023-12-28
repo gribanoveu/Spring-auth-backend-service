@@ -23,6 +23,7 @@ public class EmailMessages {
 
     public static final String deleteSubject = "Ваш аккаунт удален";
     public static final String deleteModerTemplate = "user-deleted-moder";
+    public static final String deleteSelfTemplate = "user-deleted";
 
     public static final String disabledSubject = "Действие вашего аккаунта приостановлено";
     public static final String disabledTemplate = "account-disabled";

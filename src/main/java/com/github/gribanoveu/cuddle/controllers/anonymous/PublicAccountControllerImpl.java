@@ -74,6 +74,7 @@ public class PublicAccountControllerImpl {
 	public ResponseEntity<StatusResponse> changeEmail(ChangeEmailDto request, Authentication authentication) {
 		var user = userService.findUserByEmail(authentication.getName());
 		var oldEmail = user.getEmail();
+        if (request.email().equals(oldEmail)) throw new CredentialEx(ResponseCode.EMAIL_ALREADY_EXIST);
 		userService.updateEmail(user, request.email());
 		emailService.sendMail(EmailTemplates.emailChanged(oldEmail, request.email()));
 		log.info("Email change old email: {}, new email: {}", oldEmail, request.email());

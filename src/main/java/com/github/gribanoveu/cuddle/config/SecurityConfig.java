@@ -53,10 +53,8 @@ public class SecurityConfig {
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
 
                         // authenticated scope
-                        .requestMatchers("*/users/**").hasAnyAuthority(ADMIN.scope(), MODERATOR.scope())
                         .requestMatchers("*/moderator/**").hasAnyAuthority(ADMIN.scope(), MODERATOR.scope())
                         .requestMatchers("*/role/**").hasAnyAuthority(ADMIN.scope())
-
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager

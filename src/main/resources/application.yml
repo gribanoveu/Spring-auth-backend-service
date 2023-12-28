@@ -21,7 +21,7 @@ spring:
   mvc:
     throw-exception-if-no-handler-found: true
   jackson:
-    default-property-inclusion: non_null
+#    default-property-inclusion: non_null
     serialization:
       write-dates-as-timestamps: false
   datasource:

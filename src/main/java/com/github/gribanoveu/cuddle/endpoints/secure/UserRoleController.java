@@ -21,22 +21,22 @@ public class UserRoleController {
 
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Получить роль пользователя")
-    @GetMapping("/{userId}")
-    public ResponseEntity<?> getUserRole(@PathVariable Long userId) {
-        return userRoleControllerImpl.getUserRole(userId);
+    @GetMapping
+    public ResponseEntity<?> getUserRole(@RequestParam String email) {
+        return userRoleControllerImpl.getUserRole(email);
     }
 
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Обновить роль до модератора")
-    @PatchMapping("/{userId}")
-    public ResponseEntity<?> updateToModerator(@PathVariable Long userId) {
-        return userRoleControllerImpl.updateToModerator(userId);
+    @PatchMapping
+    public ResponseEntity<?> updateToModerator(@RequestParam String email) {
+        return userRoleControllerImpl.updateToModerator(email);
     }
 
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Обновить роль до пользователя")
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<?> updateToUser(@PathVariable Long userId) {
-        return userRoleControllerImpl.updateToUser(userId);
+    @DeleteMapping
+    public ResponseEntity<?> updateToUser(@RequestParam String email) {
+        return userRoleControllerImpl.updateToUser(email);
     }
 }

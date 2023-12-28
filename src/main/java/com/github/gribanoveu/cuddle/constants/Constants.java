@@ -10,4 +10,6 @@ import java.util.Locale;
 public class Constants {
     public static final DateTimeFormatter DEFAULT_TIME_FORMAT =
             DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm", Locale.forLanguageTag("ru"));
+
+    public static final String USER_DISABLED_MESSAGE = "Пользователь отключен";
 }

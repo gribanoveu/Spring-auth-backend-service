@@ -1,10 +1,13 @@
 package com.github.gribanoveu.cuddle.controllers.secure;
 
+import com.github.gribanoveu.cuddle.constants.EmailMessages;
 import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import com.github.gribanoveu.cuddle.dtos.enums.StatusLevel;
 import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
+import com.github.gribanoveu.cuddle.entities.services.email.EmailService;
 import com.github.gribanoveu.cuddle.entities.services.user.UserService;
 import com.github.gribanoveu.cuddle.entities.tables.User;
+import com.github.gribanoveu.cuddle.utils.emails.EmailTemplates;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserControllerImpl {
     private final UserService userService;
+    private final EmailService emailService;
 
     public ResponseEntity<User> getUserData(Authentication authentication) {
         var userData = userService.findUserByEmail(authentication.getName());
@@ -28,6 +32,8 @@ public class UserControllerImpl {
 
     public ResponseEntity<StatusResponse> deleteUser(Authentication authentication) {
         userService.deleteUserByEmail(authentication.getName());
+        emailService.sendMail(EmailTemplates.simpleEmail(authentication.getName(),
+                EmailMessages.deleteSubject, EmailMessages.deleteSelfTemplate));
         return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_DELETED, StatusLevel.SUCCESS));
     }
 }

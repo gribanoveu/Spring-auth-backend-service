@@ -35,9 +35,9 @@ public class ModeratorControllerImpl {
         return ResponseEntity.ok(UsersResponse.create(OK, userService.getAllUsers(pageable)));
     }
 
-    public ResponseEntity<?> deleteUser(Long userId) {
-        var user = userService.findUserById(userId);
-        userService.deleteUserById(userId);
+    public ResponseEntity<?> deleteUser(String email) {
+        var user = userService.findUserByEmail(email);
+        userService.deleteUserByEmail(email);
         emailService.sendMail(EmailTemplates.simpleEmail(user.getEmail(),
                 EmailMessages.deleteSubject, EmailMessages.deleteModerTemplate));
         return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_DELETED, StatusLevel.SUCCESS));

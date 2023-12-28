@@ -13,11 +13,11 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @OpenAPIDefinition(info = @Info(
-        title = "Spring Api",
-        description = "Описание Api", version = "0.1.0",
+        title = "Spring auth backend service",
+        description = "Сервис авторизации и управления пользователями для мобильного приложения", version = "1.0.0",
         contact = @Contact(
                 name = "Evgeny Gribanov",
-                email = "egribanov@yandex.com",
+                email = "gribanoveu@yandex.com",
                 url = "https://codecow.pw"
         )
 ))
