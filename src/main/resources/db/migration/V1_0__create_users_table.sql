@@ -1,28 +1,18 @@
 CREATE TABLE users
 (
-    id                BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    version           BIGINT      NOT NULL,
-    email             VARCHAR(30)  NOT NULL UNIQUE,
-    password          VARCHAR(80)  NOT NULL,
-    position          VARCHAR(30)  NOT NULL,
-    registration_date TIMESTAMP(6) NOT NULL,
-    account_non_expired     BOOLEAN NOT NULL,
-    account_non_locked      BOOLEAN NOT NULL,
-    credentials_non_expired BOOLEAN NOT NULL,
-    enabled                 BOOLEAN NOT NULL
+    id                      BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    version                 BIGINT      NOT NULL,
+    email                   VARCHAR(80) NOT NULL UNIQUE,
+    password                VARCHAR(80) NOT NULL,
+    birth_date              DATE        NOT NULL,
+    registration_date       TIMESTAMP   NOT NULL,
+    ban_expiration          TIMESTAMP   NULL,
+    restriction_reason      VARCHAR(15) null,
+    role                    VARCHAR(15) NOT NULL,
+    account_non_expired     BOOLEAN     NOT NULL,
+    account_non_locked      BOOLEAN     NOT NULL,
+    credentials_non_expired BOOLEAN     NOT NULL,
+    enabled                 BOOLEAN     NOT NULL
 );
 
-CREATE TABLE permission
-(
-    id      BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    version BIGINT NOT NULL,
-    name    VARCHAR(30) UNIQUE
-);
-
-create table users_permissions
-(
-    role_id BIGINT NOT NULL,
-    user_id BIGINT NOT NULL,
-    FOREIGN KEY (role_id) REFERENCES permission,
-    FOREIGN KEY (user_id) REFERENCES users
-);
+CREATE INDEX idx_is_banned on users (ban_expiration);

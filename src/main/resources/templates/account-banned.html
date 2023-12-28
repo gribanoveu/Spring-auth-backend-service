@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="ru">
+<head>
+    <title>Учетная запись заблокирована</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <style>
+        .bodyTemplate {
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            max-width: 600px;
+            padding-left: 20px;
+            padding-top: 5px;
+            line-height: 130%;
+        }
+
+        .tableStyle {
+            width: 600px;
+            border-collapse: collapse;
+            border-style: none;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: Arial, sans-serif;
+        }
+
+        .logoStyle {
+            padding-top: 5px;
+            padding-left: 10px;
+        }
+
+        h1 {
+            line-height: 1.1;
+        }
+    </style>
+</head>
+<body>
+<table class="tableStyle">
+    <tbody>
+    <tr>
+        <td class="logoStyle" th:insert="~{fragment/logo :: logo}"></td>
+    </tr>
+    <tr>
+        <td style="width: 100%">
+            <div class="bodyTemplate">
+                <h1>Учетная запись заблокирована 😶</h1>
+                <div>
+                    <h4 th:text="'Причина блокировки: ' + ${reason}"></h4>
+                    <h4 th:text="'Срок блокировки: ' + ${expired} + ' (по мск)'"></h4>
+                </div>
+                <p>
+                    Обращаем ваше внимание, что блокировка может быть снята с задержкой.
+                </p>
+                <p>
+                    Например, если время блокировки истекает в 16:50, то блокировка будет снята в 17:00.
+                    Если блокировка истекает в 17:05, то она будет снята в 18:00.
+                </p>
+                <p>Наберитесь терпения и надеемся данная ситуация не повторится вновь.</p>
+                <div>Детали запроса:</div>
+                <div th:text="'Дата: ' + ${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm z')}"></div>
+                <div th:text="'Аккаунт: ' + ${email}"></div>
+                <div th:replace="~{fragment/about :: about}"></div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div>&nbsp;</div>
+<div th:insert="~{fragment/footer :: footer}"></div>
+</body>
+</html>

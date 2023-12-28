@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="ru">
+<head>
+    <title>Успешная регистрация</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <style>
+        .bodyTemplate {
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            max-width: 600px;
+            padding-left: 20px;
+            padding-top: 5px;
+            line-height: 130%;
+        }
+
+        .tableStyle {
+            width: 600px;
+            border-collapse: collapse;
+            border-style: none;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: Arial, sans-serif;
+        }
+
+        .logoStyle {
+            padding-top: 5px;
+            padding-left: 10px;
+        }
+
+        h1 {
+            line-height: 1.1;
+        }
+    </style>
+</head>
+<body>
+<table class="tableStyle">
+    <tbody>
+    <tr>
+        <td class="logoStyle" th:insert="~{fragment/logo :: logo}"></td>
+    </tr>
+    <tr>
+        <td style="width: 100%">
+            <div class="bodyTemplate">
+                <h1>Успешная регистрация</h1>
+                <p>Добро пожаловать, мы рады вас видеть в нашем приложении. 🎉 </p>
+                <p>Для продолжения, войдите в свою учётную запись и заполните профиль.</p>
+                <h3>Внимание!</h3>
+                <h4>
+                    Продолжая регистрацию, вы подтверждаете своё совершеннолетие (18+) и осознаёте, какую информацию вы
+                    публикуете на нашем ресурсе.
+                </h4>
+                <p>Перед тем, как начать пользоваться приложением, пожалуйста, прочтите нашу <a
+                        href="https://cuddle.pw/privacy-policy">политику конфиденциальности</a> и <a
+                        href="https://cuddle.pw/terms-of-use">условия использования.</a></p>
+                <p>А так же ознакомьтесь с нашими <a href="https://cuddle.pw/faq">правилами сообщества</a>, в них вам
+                    будет рассказано, какую информацию о себе вы можете публиковать не нарушая правила.</p>
+                <div>Детали запроса:</div>
+                <div th:text="'Дата регистрации: ' + ${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm z')}"></div>
+                <div th:text="'Email для входа: ' + ${email}"></div>
+                <div th:replace="~{fragment/about :: about}"></div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div>&nbsp;</div>
+<div th:insert="~{fragment/footer :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+server:
+  port: 8190
+  servlet:
+    context-path: /api/secure
+time-variable:
+  accessTokenLifetime: 15m
+  refreshTokenLifetime: 1d
+  otpCodeLifetime: 15m
+rsa:
+  private-key: classpath:certs/test-private.pem
+  public-key: classpath:certs/test-public.pem
+spring:
+  datasource:
+    url: ${CONTAINER.URL}
+    username: ${CONTAINER.USERNAME}
+    password: ${CONTAINER.PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    driver-class-name: org.postgresql.Driver
+    url: ${CONTAINER.URL}
+    user: ${CONTAINER.USERNAME}
+    password: ${CONTAINER.PASSWORD}
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          time_zone: Europe/Moscow

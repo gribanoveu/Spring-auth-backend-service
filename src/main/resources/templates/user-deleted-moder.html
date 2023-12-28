@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="ru" >
+<head>
+    <title>Ваша учетная запись удалена</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <style>
+        .bodyTemplate {
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            max-width: 600px;
+            padding-left: 20px;
+            padding-top: 5px;
+            line-height: 130%;
+        }
+        .tableStyle {
+            width: 600px;
+            border-collapse: collapse;
+            border-style: none;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: Arial, sans-serif;
+        }
+        .logoStyle {
+            padding-top: 5px;
+            padding-left: 10px;
+        }
+        h1 {
+            line-height: 1.1;
+        }
+    </style>
+</head>
+<body>
+    <table class="tableStyle">
+        <tbody>
+            <tr>
+                <td class="logoStyle" th:insert="~{fragment/logo :: logo}"></td>
+            </tr>
+            <tr>
+                <td style="width: 100%">
+                    <div class="bodyTemplate">
+                        <h1>Ваша учетная запись удалена администрацией</h1>
+                        <p>Сожалеем, но ваша учетная запись удалена администрацией. Причиной могло послужить многократное нарушение правил сообщества или ваша личная просьба.</p>
+                        <p>Напоминаем, что удаление - это безвозвратная операция и восстановить ваши данные не получится.</p>
+                        <div>
+                            <p>Следующие функции и данные были удалены в соответствии с вашей учетной записью:</p>
+                            <ul>
+                                <li>Ваш профиль и все связанные с ним данные, включая фотографии и контактную информацию.</li>
+                                <li>Все сообщения и переписки, которые вы создали или участвовали в них.</li>
+                                <li>Ваши настройки и предпочтения, связанные с нашим сервисом.</li>
+                            </ul>
+                        </div>
+                        <p>Спасибо за использование нашего сервиса. Если вы захотите вернуться, вам потребуется зарегистрироваться снова.</p>
+                        <div>Детали запроса:</div>
+                        <div th:text="'Дата: ' + ${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm z')}"></div>
+                        <div th:text="'Аккаунт: ' + ${email}"></div>
+                        <div th:replace="~{fragment/about :: about}"></div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>&nbsp;</div>
+    <div th:insert="~{fragment/footer :: footer}"></div>
+</body>
+</html>

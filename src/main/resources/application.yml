@@ -1,7 +1,12 @@
 server:
-  port: 8189
+  port: 8443
+  ssl:
+    key-store: classpath:certs/mykeys.jks
+    key-store-password: letmein
+    key-password: letmein
   servlet:
-    context-path: /api/secure
+    context-path: /api
+
 time-variable:
   accessTokenLifetime: 15m
   refreshTokenLifetime: 7d
@@ -9,9 +14,25 @@ time-variable:
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
+
 spring:
+  application:
+    name: cuddle-backend
   mvc:
     throw-exception-if-no-handler-found: true
+  jackson:
+#    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+  datasource:
+    url: jdbc:postgresql://${AUTH_SERVICE_DB_DOMAIN}:${AUTH_SERVICE_DB_PORT}/auth_service_db
+    username: ${AUTH_SERVICE_DB_LOGIN}
+    password: ${AUTH_SERVICE_DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  data:
+    redis:
+      host: localhost
+      port: 6379
   web:
     resources:
       add-mappings: false
@@ -24,16 +45,14 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         jdbc:
           time_zone: Europe/Moscow
-  datasource:
-    url: jdbc:postgresql://${AUTH_SERVICE_DB_DOMAIN}:${AUTH_SERVICE_DB_PORT}/auth_service_db
-    username: ${AUTH_SERVICE_DB_LOGIN}
-    password: ${AUTH_SERVICE_DB_PASSWORD}
-    driver-class-name: org.postgresql.Driver
-  jackson:
-    default-property-inclusion: non_null
-    serialization:
-      write-dates-as-timestamps: false
-  data:
-    redis:
-      host: localhost
-      port: 6379
+  mail:
+    host: localhost
+    port: 1025
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
