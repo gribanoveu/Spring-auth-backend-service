@@ -1,5 +1,6 @@
 package com.github.gribanoveu.cuddle.entities.repositories;
 
+import com.github.gribanoveu.cuddle.dtos.enums.Role;
 import com.github.gribanoveu.cuddle.entities.tables.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -20,6 +21,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     Optional<User> findByEmail(String email);
     Optional<User> findUserById(Long id);
     List<User> findAll(Pageable pageable);
+    Optional<List<User>> findAllByRoleEquals(Role role, Pageable pageable);
     void deleteByEmail(String email);
 
     @Query("SELECT u FROM User u WHERE u.accountNonLocked = false AND u.banExpiration < :now")

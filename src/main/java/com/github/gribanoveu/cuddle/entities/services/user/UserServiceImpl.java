@@ -61,6 +61,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getAllModers(Pageable pageable) {
+        return userRepository.findAllByRoleEquals(Role.MODERATOR, pageable).orElseThrow(() ->
+                new CredentialEx(ResponseCode.USER_NOT_EXIST));
+    }
+
+    @Override
     public void updatePasswordByEmail(User user, String password) {
         user.setPassword(password);
         userRepository.save(user);
