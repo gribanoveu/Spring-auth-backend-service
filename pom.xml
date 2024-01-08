@@ -6,21 +6,20 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.4</version>
+		<version>3.2.1</version>
 		<relativePath/>
 	</parent>
 
 	<groupId>com.github.gribanoveu</groupId>
-	<artifactId>cuddle-backend</artifactId>
-	<version>0.1</version>
-	<name>cuddle-backend</name>
-	<description>Cuddle backend server on Spring</description>
+	<artifactId>auth-backend-service</artifactId>
+	<version>1.1.0</version>
+	<name>Spring auth backend service</name>
 
 	<properties>
 		<java.version>17</java.version>
 		<snakeyaml.version>2.0</snakeyaml.version>
 		<log-viewer-spring-boot.version>1.0.7</log-viewer-spring-boot.version>
-		<logback-gelf.version>5.0.0</logback-gelf.version>
+		<logback-gelf.version>5.0.1</logback-gelf.version>
 		<springdoc-openapi-starter-webmvc-ui.version>2.3.0</springdoc-openapi-starter-webmvc-ui.version>
 	</properties>
 
