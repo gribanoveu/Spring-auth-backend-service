@@ -28,4 +28,5 @@ public interface UserService {
     User findUserById(Long id);
     Boolean userExistByEmail(String email);
     List<User> getAllUsers(Pageable pageable);
+    List<User> getAllModers(Pageable pageable);
 }

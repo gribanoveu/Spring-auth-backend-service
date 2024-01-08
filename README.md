@@ -27,6 +27,6 @@
 
 Для локальной работы можно сгенерировать локальный сертификат
 
-`keytool -keystore mykeys.jks -genkey - alias  tomcat -keyalg RSA`
+`keytool -keystore mykeys.jks -genkey -alias  tomcat -keyalg RSA`
 
 3. Так же необходимо произвести настройку подключения к базе данных

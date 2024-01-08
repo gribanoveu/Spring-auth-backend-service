@@ -1,0 +1,998 @@
+{
+	"info": {
+		"_postman_id": "9e9a6113-1be9-49d6-95eb-014e5d2cf3f9",
+		"name": "Spring auth backend service",
+		"description": "Описание Api\n\nContact Support:\n Name: Evgeny Gribanov\n Email: egribanov@yandex.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "open/v1",
+			"item": [
+				{
+					"name": "auth",
+					"item": [
+						{
+							"name": "Получить токен - USER",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = JSON.parse(responseBody);\r",
+											"let access_token = jsonData.access_token;\r",
+											"let refresh_token = jsonData.refresh_token;\r",
+											"\r",
+											"pm.environment.set(\"bearerToken\", access_token);\r",
+											"pm.environment.set(\"refresh_token\", refresh_token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"user@email.com\",\n  \"password\": \"Qwerty1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/open/v1/auth",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"open",
+										"v1",
+										"auth"
+									]
+								},
+								"description": "Получение access token и refresh token"
+							},
+							"response": []
+						},
+						{
+							"name": "Получить токен - MODERATOR",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = JSON.parse(responseBody);\r",
+											"let access_token = jsonData.access_token;\r",
+											"let refresh_token = jsonData.refresh_token;\r",
+											"\r",
+											"pm.environment.set(\"bearerToken\", access_token);\r",
+											"pm.environment.set(\"refresh_token\", refresh_token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"moderator@email.com\",\n  \"password\": \"Qwerty123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/open/v1/auth",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"open",
+										"v1",
+										"auth"
+									]
+								},
+								"description": "Получение access token и refresh token"
+							},
+							"response": []
+						},
+						{
+							"name": "Получить токен - ADMIN",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = JSON.parse(responseBody);\r",
+											"let access_token = jsonData.access_token;\r",
+											"let refresh_token = jsonData.refresh_token;\r",
+											"\r",
+											"pm.environment.set(\"bearerToken\", access_token);\r",
+											"pm.environment.set(\"refresh_token\", refresh_token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"admin@email.com\",\n  \"password\": \"Qwerty123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/open/v1/auth",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"open",
+										"v1",
+										"auth"
+									]
+								},
+								"description": "Получение access token и refresh token"
+							},
+							"response": []
+						},
+						{
+							"name": "Обновить токен",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"refreshToken\": \"{{refresh_token}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/open/v1/auth",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"open",
+										"v1",
+										"auth"
+									]
+								},
+								"description": "Получение нового токена на основе refresh token"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "account",
+					"item": [
+						{
+							"name": "Восстановить пароль через OTP код",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"user@email.com\",\n  \"otpCode\": \"247329\",\n  \"password\": \"Qwerty1234\",\n    \"confirmPassword\": \"Qwerty1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/open/v1/account/restore-password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"open",
+										"v1",
+										"account",
+										"restore-password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Сгенерировать OTP код",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"user@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/open/v1/account/generate-code",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"open",
+										"v1",
+										"account",
+										"generate-code"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Регистрация нового пользователя",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"test-user@email.com\",\n\t\"password\": \"Qwerty123\",\n\t\"confirmPassword\": \"Qwerty123\",\n\t\"birthDate\": \"2001-12-13\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/open/v1/account/create",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"open",
+										"v1",
+										"account",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Получить причину блокировки",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/open/v1/account/restrictions?email=user@email.com",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"open",
+										"v1",
+										"account",
+										"restrictions"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "user@email.com",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "v1",
+			"item": [
+				{
+					"name": "role",
+					"item": [
+						{
+							"name": "Получить роль пользователя",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/v1/role?email=user@email.com",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"role"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "user@email.com"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Получить список пользователей",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/v1/role/users?page=0&size=10&sort=id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"role",
+										"users"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"description": "required or default 0"
+										},
+										{
+											"key": "size",
+											"value": "10",
+											"description": "required or default 10"
+										},
+										{
+											"key": "sort",
+											"value": "id",
+											"description": "optional. property in user object"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Получить список модераторов",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/v1/role/moders?page=0&size=10&sort=id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"role",
+										"moders"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"description": "required or default 0"
+										},
+										{
+											"key": "size",
+											"value": "10",
+											"description": "required or default 10"
+										},
+										{
+											"key": "sort",
+											"value": "id",
+											"description": "optional. property in user object"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Обновить роль до пользователя",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/v1/role?email=user@email.com",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"role"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "user@email.com"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Обновить роль до модератора",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/v1/role?email=user@email.com",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"role"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "user@email.com"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "moderator",
+					"item": [
+						{
+							"name": "Выдать бан пользователю",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"reasonCode\": \"CR-1.1\",\n  \"userEmail\": \"test-user@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/moderator/ban",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"moderator",
+										"ban"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Снять бан с пользователя",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/v1/moderator/mercy?email=test-user@email.com",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"moderator",
+										"mercy"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "test-user@email.com",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Включить пользователя",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/v1/moderator/enable?email=user@email.com",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"moderator",
+										"enable"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "user@email.com",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Отключить пользователя",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"reasonCode\": \"NA-1.1\",\n  \"userEmail\": \"user@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/moderator/disable",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"moderator",
+										"disable"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Удалить пользователя",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/v1/moderator/delete?email=test_user3@email.com",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"moderator",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "test_user3@email.com"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "account",
+					"item": [
+						{
+							"name": "Сменить пароль",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"oldPassword\": \"Qwerty123\",\n\t\"password\": \"Qwerty1234\",\n\t\"confirmPassword\": \"Qwerty1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/account/change-password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"account",
+										"change-password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Сменить Email",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"user@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/account/change-email",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"account",
+										"change-email"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "Получить данные текущего пользователя",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/v1/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Удалить текущего авторизованного пользователя",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/v1/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://localhost:8443/api",
+			"type": "string"
+		}
+	]
+}

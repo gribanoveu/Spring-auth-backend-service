@@ -9,6 +9,7 @@ import com.github.gribanoveu.cuddle.utils.aspects.LogResponse;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -106,6 +107,14 @@ public class GlobalExceptionHandler {
     @LogResponse
     @ExceptionHandler(InvalidDataAccessApiUsageException.class) // query param handler
     public ResponseEntity<StatusResponse> handleInvalidDataAccessApiUsageException(InvalidDataAccessApiUsageException e) {
+        log.error(e.getMessage());
+        var details = StatusResponse.create(ResponseCode.MISSING_PARAM, StatusLevel.ERROR);
+        return ResponseEntity.badRequest().body(details);
+    }
+
+    @LogResponse
+    @ExceptionHandler(PropertyReferenceException.class) // query param handler
+    public ResponseEntity<StatusResponse> handlePropertyReferenceException(PropertyReferenceException e) {
         log.error(e.getMessage());
         var details = StatusResponse.create(ResponseCode.MISSING_PARAM, StatusLevel.ERROR);
         return ResponseEntity.badRequest().body(details);
