@@ -44,7 +44,7 @@ public class EmailServiceImpl implements EmailService {
 
             mailSender.send(message);
         } catch (MailException | MessagingException e) {
-            throw new CredentialEx(ResponseCode.EMAIL_NOT_SEND);
+            log.error(ResponseCode.EMAIL_NOT_SEND.getMessage());
         }
     }
 }
