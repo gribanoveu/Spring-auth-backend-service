@@ -1,10 +1,13 @@
 package com.github.gribanoveu.cuddle.endpoints.secure;
 
 import com.github.gribanoveu.cuddle.controllers.secure.UserRoleControllerImpl;
+import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
+import com.github.gribanoveu.cuddle.dtos.response.auth.UsersResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -24,28 +27,35 @@ public class UserRoleController {
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Получить роль пользователя")
     @GetMapping
-    public ResponseEntity<?> getUserRole(@RequestParam String email) {
+    public ResponseEntity<StatusResponse> getUserRole(@RequestParam String email) {
         return userRoleControllerImpl.getUserRole(email);
     }
 
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Получить список всех модераторов")
     @GetMapping("/moders")
-    public ResponseEntity<?> getModersList(@PageableDefault Pageable pageable) {
+    public ResponseEntity<UsersResponse> getModersList(@ParameterObject @PageableDefault Pageable pageable) {
         return userRoleControllerImpl.getModerList(pageable);
+    }
+
+    @Operation(summary = "Получить список всех пользователей")
+    @SecurityRequirement(name = "JWT")
+    @GetMapping("/users")
+    public ResponseEntity<UsersResponse> getUsersList(@ParameterObject @PageableDefault Pageable pageable) {
+        return userRoleControllerImpl.getAllUsersList(pageable);
     }
 
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Обновить роль до модератора")
     @PatchMapping
-    public ResponseEntity<?> updateToModerator(@RequestParam String email) {
+    public ResponseEntity<StatusResponse> updateToModerator(@RequestParam String email) {
         return userRoleControllerImpl.updateToModerator(email);
     }
 
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Обновить роль до пользователя")
     @DeleteMapping
-    public ResponseEntity<?> updateToUser(@RequestParam String email) {
+    public ResponseEntity<StatusResponse> updateToUser(@RequestParam String email) {
         return userRoleControllerImpl.updateToUser(email);
     }
 }

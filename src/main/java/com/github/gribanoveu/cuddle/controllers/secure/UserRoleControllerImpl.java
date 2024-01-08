@@ -26,13 +26,13 @@ import static org.springframework.http.HttpStatus.OK;
 public class UserRoleControllerImpl {
     private final UserService userService;
 
-    public ResponseEntity<?> getUserRole(String email) {
+    public ResponseEntity<StatusResponse> getUserRole(String email) {
         var userRole = userService.findUserByEmail(email).getRole().getAuthority();
         return ResponseEntity.ok(StatusResponse.create(
                 new ResponseDetails(userRole), StatusLevel.SUCCESS));
     }
 
-    public ResponseEntity<?> updateToModerator(String email) {
+    public ResponseEntity<StatusResponse> updateToModerator(String email) {
         var user = userService.findUserByEmail(email);
         if (user.getRole().equals(Role.ADMIN)) throw new CredentialEx(ResponseCode.ACCESS_DENIED);
         userService.updateRole(user, Role.MODERATOR);
@@ -40,7 +40,7 @@ public class UserRoleControllerImpl {
                 ResponseCode.PERMISSION_UPDATED_MODERATOR, StatusLevel.SUCCESS));
     }
 
-    public ResponseEntity<?> updateToUser(String email) {
+    public ResponseEntity<StatusResponse> updateToUser(String email) {
         var user = userService.findUserByEmail(email);
         if (user.getRole().equals(Role.ADMIN)) throw new CredentialEx(ResponseCode.ACCESS_DENIED);
         userService.updateRole(user, Role.USER);
@@ -48,7 +48,11 @@ public class UserRoleControllerImpl {
                 ResponseCode.PERMISSION_UPDATED_USER, StatusLevel.SUCCESS));
     }
 
-    public ResponseEntity<?> getModerList(Pageable pageable) {
+    public ResponseEntity<UsersResponse> getModerList(Pageable pageable) {
         return ResponseEntity.ok(UsersResponse.create(OK, userService.getAllModers(pageable)));
+    }
+
+    public ResponseEntity<UsersResponse> getAllUsersList(Pageable pageable) {
+        return ResponseEntity.ok(UsersResponse.create(OK, userService.getAllUsers(pageable)));
     }
 }

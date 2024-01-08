@@ -2,6 +2,7 @@ package com.github.gribanoveu.cuddle.endpoints.secure;
 
 import com.github.gribanoveu.cuddle.controllers.secure.ModeratorControllerImpl;
 import com.github.gribanoveu.cuddle.dtos.request.RestrictionDto;
+import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,7 +25,7 @@ public class ModeratorController {
 
     @Operation(summary = "Получить список всех пользователей")
     @SecurityRequirement(name = "JWT")
-    @GetMapping("/users-list")
+    @GetMapping("/users")
     public ResponseEntity<?> getAllUsersList(@PageableDefault Pageable pageable) {
         return moderatorControllerImpl.getAllUsersList(pageable);
     }
@@ -32,35 +33,35 @@ public class ModeratorController {
     @Operation(summary = "Удалить пользователя")
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteUser(@RequestParam String email) {
+    public ResponseEntity<StatusResponse> deleteUser(@RequestParam String email) {
         return moderatorControllerImpl.deleteUser(email);
     }
 
     @Operation(summary = "Отключить пользователя")
     @SecurityRequirement(name = "JWT")
     @PatchMapping("/disable")
-    public ResponseEntity<?> disableUser(@RequestBody RestrictionDto request) {
+    public ResponseEntity<StatusResponse> disableUser(@RequestBody RestrictionDto request) {
         return moderatorControllerImpl.disableUser(request);
     }
 
     @Operation(summary = "Включить пользователя")
     @SecurityRequirement(name = "JWT")
     @PatchMapping("/enable")
-    public ResponseEntity<?> enableUser(@RequestParam String email) {
+    public ResponseEntity<StatusResponse> enableUser(@RequestParam String email) {
         return moderatorControllerImpl.enabledUser(email);
     }
 
     @Operation(summary = "Выдать бан пользователю")
     @SecurityRequirement(name = "JWT")
     @PatchMapping("/ban")
-    public ResponseEntity<?> banUserReq(@RequestBody RestrictionDto request) {
+    public ResponseEntity<StatusResponse> banUserReq(@RequestBody RestrictionDto request) {
         return moderatorControllerImpl.banUser(request);
     }
 
     @Operation(summary = "Снять бан с пользователя")
     @SecurityRequirement(name = "JWT")
     @PatchMapping("/mercy")
-    public ResponseEntity<?> mercyUser(@RequestParam String email) {
+    public ResponseEntity<StatusResponse> mercyUser(@RequestParam String email) {
         return moderatorControllerImpl.mercyUser(email);
     }
 }

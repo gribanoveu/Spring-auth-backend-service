@@ -57,13 +57,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers(Pageable pageable) {
-        return userRepository.findAll(pageable);
+        return userRepository.findAllByRoleEquals(Role.USER, pageable).orElseThrow(() ->
+                new CredentialEx(ResponseCode.USERS_NOT_FOUND));
     }
 
     @Override
     public List<User> getAllModers(Pageable pageable) {
         return userRepository.findAllByRoleEquals(Role.MODERATOR, pageable).orElseThrow(() ->
-                new CredentialEx(ResponseCode.USER_NOT_EXIST));
+                new CredentialEx(ResponseCode.USERS_NOT_FOUND));
     }
 
     @Override

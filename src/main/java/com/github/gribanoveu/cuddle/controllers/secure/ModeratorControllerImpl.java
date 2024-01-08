@@ -31,11 +31,11 @@ public class ModeratorControllerImpl {
     private final UserService userService;
     private final EmailService emailService;
 
-    public ResponseEntity<?> getAllUsersList(Pageable pageable) {
+    public ResponseEntity<UsersResponse> getAllUsersList(Pageable pageable) {
         return ResponseEntity.ok(UsersResponse.create(OK, userService.getAllUsers(pageable)));
     }
 
-    public ResponseEntity<?> deleteUser(String email) {
+    public ResponseEntity<StatusResponse> deleteUser(String email) {
         var user = userService.findUserByEmail(email);
         userService.deleteUserByEmail(email);
         emailService.sendMail(EmailTemplates.simpleEmail(user.getEmail(),
@@ -43,7 +43,7 @@ public class ModeratorControllerImpl {
         return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_DELETED, StatusLevel.SUCCESS));
     }
 
-    public ResponseEntity<?> disableUser(RestrictionDto request) {
+    public ResponseEntity<StatusResponse> disableUser(RestrictionDto request) {
         var user = userService.findUserByEmail(request.userEmail()); // todo
         var disableReason = DisableReason.getDisableReasonByCode(request.reasonCode());
         userService.disableUser(user, disableReason.getCode());
@@ -51,7 +51,7 @@ public class ModeratorControllerImpl {
         return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_DISABLED, StatusLevel.SUCCESS));
     }
 
-    public ResponseEntity<?> enabledUser(String email) {
+    public ResponseEntity<StatusResponse> enabledUser(String email) {
         var user = userService.findUserByEmail(email);
         userService.enabledUser(user);
         emailService.sendMail(EmailTemplates.simpleEmail(user.getEmail(),
@@ -59,7 +59,7 @@ public class ModeratorControllerImpl {
         return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_ENABLED, StatusLevel.SUCCESS));
     }
 
-    public ResponseEntity<?> banUser(RestrictionDto request) {
+    public ResponseEntity<StatusResponse> banUser(RestrictionDto request) {
         var user = userService.findUserByEmail(request.userEmail());
         var banReason = BanReason.getBanExpirationByCode(request.reasonCode());
         userService.lockUser(user, banReason.getBanExpiration().withNano(0), request.reasonCode());
@@ -68,7 +68,7 @@ public class ModeratorControllerImpl {
         return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_BANNED, StatusLevel.SUCCESS));
     }
 
-    public ResponseEntity<?> mercyUser(String email) {
+    public ResponseEntity<StatusResponse> mercyUser(String email) {
         var user = userService.findUserByEmail(email);
         userService.unlockUser(user);
         emailService.sendMail(EmailTemplates.simpleEmail(user.getEmail(),
