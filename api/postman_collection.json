@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9e9a6113-1be9-49d6-95eb-014e5d2cf3f9",
+		"_postman_id": "2040f8a6-7526-4287-b578-3c38e7a3ac74",
 		"name": "Spring auth backend service",
 		"description": "Описание Api\n\nContact Support:\n Name: Evgeny Gribanov\n Email: egribanov@yandex.com",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -60,6 +60,65 @@
 										"open",
 										"v1",
 										"auth"
+									]
+								},
+								"description": "Получение access token и refresh token"
+							},
+							"response": []
+						},
+						{
+							"name": "Get jwks",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = JSON.parse(responseBody);\r",
+											"let access_token = jsonData.access_token;\r",
+											"let refresh_token = jsonData.refresh_token;\r",
+											"\r",
+											"pm.environment.set(\"bearerToken\", access_token);\r",
+											"pm.environment.set(\"refresh_token\", refresh_token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"user@email.com\",\n  \"password\": \"Qwerty1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/open/v1/auth/.well-known/jwks.json",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"open",
+										"v1",
+										"auth",
+										".well-known",
+										"jwks.json"
 									]
 								},
 								"description": "Получение access token и refresh token"
@@ -371,7 +430,7 @@
 			"name": "v1",
 			"item": [
 				{
-					"name": "role",
+					"name": "role/{userId}",
 					"item": [
 						{
 							"name": "Получить роль пользователя",
@@ -406,108 +465,6 @@
 										{
 											"key": "email",
 											"value": "user@email.com"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Получить список пользователей",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{bearerToken}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "*/*"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/v1/role/users?page=0&size=10&sort=id",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"v1",
-										"role",
-										"users"
-									],
-									"query": [
-										{
-											"key": "page",
-											"value": "0",
-											"description": "required or default 0"
-										},
-										{
-											"key": "size",
-											"value": "10",
-											"description": "required or default 10"
-										},
-										{
-											"key": "sort",
-											"value": "id",
-											"description": "optional. property in user object"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Получить список модераторов",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{bearerToken}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "*/*"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/v1/role/moders?page=0&size=10&sort=id",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"v1",
-										"role",
-										"moders"
-									],
-									"query": [
-										{
-											"key": "page",
-											"value": "0",
-											"description": "required or default 0"
-										},
-										{
-											"key": "size",
-											"value": "10",
-											"description": "required or default 10"
-										},
-										{
-											"key": "sort",
-											"value": "id",
-											"description": "optional. property in user object"
 										}
 									]
 								}
@@ -768,6 +725,58 @@
 										"v1",
 										"moderator",
 										"disable"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Получить список всех пользователей",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/v1/moderator/users-list?page=0&size=10",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"moderator",
+										"users-list"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"description": "(Required) "
+										},
+										{
+											"key": "size",
+											"value": "10",
+											"description": "(Required) "
+										},
+										{
+											"key": "sort",
+											"value": "[\"enim dolore\",\"laborum eu lab\"]",
+											"description": "(Required) ",
+											"disabled": true
+										}
 									]
 								}
 							},
