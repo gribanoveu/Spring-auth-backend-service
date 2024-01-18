@@ -14,14 +14,12 @@ time-variable:
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
+  key-id: cuddle-key-id
 
 spring:
   application:
     name: cuddle-backend
-  mvc:
-    throw-exception-if-no-handler-found: true
   jackson:
-#    default-property-inclusion: non_null
     serialization:
       write-dates-as-timestamps: false
   datasource:

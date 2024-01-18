@@ -4,12 +4,15 @@ import com.github.gribanoveu.cuddle.controllers.anonymous.AuthenticationControll
 import com.github.gribanoveu.cuddle.dtos.request.LoginDto;
 import com.github.gribanoveu.cuddle.dtos.request.RefreshTokenDto;
 import com.github.gribanoveu.cuddle.dtos.response.auth.TokenResponse;
+import com.nimbusds.jose.jwk.JWKSet;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * @author Evgeny Gribanov
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name="Аутентификация пользователя", description="Позволяет получить и обновить токен")
 public class AuthenticationController {
     private final AuthenticationControllerImpl authenticationControllerImpl;
+    private final JWKSet jwkSet;
 
     @PostMapping
     @Operation(summary = "Получить токен", description = "Получение access token и refresh token")
@@ -32,5 +36,10 @@ public class AuthenticationController {
     @Operation(summary = "Обновить токен", description = "Получение нового токена на основе refresh token")
     public ResponseEntity<TokenResponse> refreshToken(@Valid @RequestBody RefreshTokenDto request) {
         return authenticationControllerImpl.refreshToken(request);
+    }
+
+    @GetMapping("/.well-known/jwks.json")
+    public Map<String, Object> keys() {
+        return this.jwkSet.toJSONObject();
     }
 }

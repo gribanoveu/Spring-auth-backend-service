@@ -12,5 +12,6 @@ import java.security.interfaces.RSAPublicKey;
 @ConfigurationProperties(prefix = "rsa")
 public record RsaProperties(
         RSAPrivateKey privateKey,
-        RSAPublicKey publicKey
+        RSAPublicKey publicKey,
+        String keyId
 ) {}
