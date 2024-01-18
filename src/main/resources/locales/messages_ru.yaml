@@ -1,0 +1,5 @@
+response:
+  server-error-type:
+    message: Внутренняя ошибка сервера
+  server-error-message:
+    message: Что-то пошло не так

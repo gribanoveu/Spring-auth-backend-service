@@ -13,8 +13,8 @@ import org.springframework.http.HttpStatus;
 public enum ResponseCode {
     SERVER_ERROR(
             "AUT-100",
-            "Внутренняя ошибка сервера",
-            "Что-то пошло не так",
+            "response.server-error-type",
+            "response.server-error-message",
             HttpStatus.INTERNAL_SERVER_ERROR
     ),
     ACCESS_DENIED(
