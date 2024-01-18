@@ -39,6 +39,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/.well-known/jwks.json")
+    @Operation(summary = "Получить JWK Set", description = "Получить JWK Set для проверки токена на валидность")
     public Map<String, Object> keys() {
         return this.jwkSet.toJSONObject();
     }
