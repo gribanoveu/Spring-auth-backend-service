@@ -4,6 +4,7 @@ import com.github.gribanoveu.cuddle.controllers.anonymous.AuthenticationControll
 import com.github.gribanoveu.cuddle.dtos.request.LoginDto;
 import com.github.gribanoveu.cuddle.dtos.request.RefreshTokenDto;
 import com.github.gribanoveu.cuddle.dtos.response.auth.TokenResponse;
+import com.github.gribanoveu.cuddle.utils.aspects.LogResponse;
 import com.nimbusds.jose.jwk.JWKSet;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,7 +39,7 @@ public class AuthenticationController {
         return authenticationControllerImpl.refreshToken(request);
     }
 
-    @GetMapping("/.well-known/jwks.json")
+    @GetMapping("/jwk")
     @Operation(summary = "Получить JWK Set", description = "Получить JWK Set для проверки токена на валидность")
     public Map<String, Object> keys() {
         return this.jwkSet.toJSONObject();
