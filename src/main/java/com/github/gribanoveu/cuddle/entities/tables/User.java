@@ -26,6 +26,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "ulid", unique = true)
+    private String ulid;
+
     @Version
     private Long version;
 

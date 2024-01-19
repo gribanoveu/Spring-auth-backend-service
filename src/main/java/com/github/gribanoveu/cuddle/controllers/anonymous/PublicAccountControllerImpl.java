@@ -16,6 +16,7 @@ import com.github.gribanoveu.cuddle.entities.tables.User;
 import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
 import com.github.gribanoveu.cuddle.utils.JsonUtils;
 import com.github.gribanoveu.cuddle.utils.emails.EmailTemplates;
+import io.azam.ulidj.ULID;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author Evgeny Gribanov
@@ -51,6 +53,7 @@ public class PublicAccountControllerImpl {
         if (userService.userExistByEmail(request.email())) throw new CredentialEx(ResponseCode.USER_ALREADY_EXIST);
 
         var user = new User();
+        user.setUlid(ULID.random(ThreadLocalRandom.current()));
         user.setEmail(request.email());
         user.setBirthDate(LocalDate.parse(request.birthDate(), DateTimeFormatter.ISO_LOCAL_DATE)); // yyyy-MM-dd
         user.setPassword(passwordEncoder.encode(request.password()));

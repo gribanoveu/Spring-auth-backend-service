@@ -21,6 +21,7 @@
 		<log-viewer-spring-boot.version>1.0.7</log-viewer-spring-boot.version>
 		<logback-gelf.version>5.0.1</logback-gelf.version>
 		<springdoc-openapi-starter-webmvc-ui.version>2.3.0</springdoc-openapi-starter-webmvc-ui.version>
+		<ulidj.version>1.0.4</ulidj.version>
 	</properties>
 
 	<dependencyManagement>
@@ -84,6 +85,11 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>io.azam.ulidj</groupId>
+			<artifactId>ulidj</artifactId>
+			<version>${ulidj.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
