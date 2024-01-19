@@ -2,13 +2,7 @@ server:
   port: 8190
   servlet:
     context-path: /api/secure
-time-variable:
-  accessTokenLifetime: 15m
-  refreshTokenLifetime: 1d
-  otpCodeLifetime: 15m
-rsa:
-  private-key: classpath:certs/test-private.pem
-  public-key: classpath:certs/test-public.pem
+
 spring:
   datasource:
     url: ${CONTAINER.URL}

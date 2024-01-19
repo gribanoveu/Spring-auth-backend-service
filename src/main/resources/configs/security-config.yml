@@ -1,0 +1,8 @@
+time-variable:
+  accessTokenLifetime: 15m
+  refreshTokenLifetime: 7d
+  otpCodeLifetime: 15m
+rsa:
+  private-key: classpath:certs/private.pem
+  public-key: classpath:certs/public.pem
+  key-id: cuddle-key-id

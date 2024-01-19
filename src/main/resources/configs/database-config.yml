@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${AUTH_SERVICE_DB_DOMAIN}:${AUTH_SERVICE_DB_PORT}/auth_service_db
+    username: ${AUTH_SERVICE_DB_LOGIN}
+    password: ${AUTH_SERVICE_DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          time_zone: Europe/Moscow

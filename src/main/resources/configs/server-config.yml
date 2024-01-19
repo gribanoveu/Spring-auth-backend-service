@@ -1,0 +1,9 @@
+server:
+  port: 8443
+  servlet:
+    context-path: /api
+# enable HTTPS
+#  ssl:
+#    key-store: classpath:certs/mykeys.jks
+#    key-store-password: letmein
+#    key-password: letmein

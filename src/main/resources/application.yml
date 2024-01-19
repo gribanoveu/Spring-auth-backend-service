@@ -1,56 +1,10 @@
-server:
-  port: 8443
-  ssl:
-    key-store: classpath:certs/mykeys.jks
-    key-store-password: letmein
-    key-password: letmein
-  servlet:
-    context-path: /api
-
-time-variable:
-  accessTokenLifetime: 15m
-  refreshTokenLifetime: 7d
-  otpCodeLifetime: 15m
-rsa:
-  private-key: classpath:certs/private.pem
-  public-key: classpath:certs/public.pem
-  key-id: cuddle-key-id
-
 spring:
   application:
     name: cuddle-backend
-  jackson:
-    serialization:
-      write-dates-as-timestamps: false
-  datasource:
-    url: jdbc:postgresql://${AUTH_SERVICE_DB_DOMAIN}:${AUTH_SERVICE_DB_PORT}/auth_service_db
-    username: ${AUTH_SERVICE_DB_LOGIN}
-    password: ${AUTH_SERVICE_DB_PASSWORD}
-    driver-class-name: org.postgresql.Driver
-  data:
-    redis:
-      host: localhost
-      port: 6379
-  web:
-    resources:
-      add-mappings: false
-  jpa:
-    hibernate:
-      ddl-auto: validate
-    show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        jdbc:
-          time_zone: Europe/Moscow
-  mail:
-    host: localhost
-    port: 1025
-    username:
-    password:
-    properties:
-      mail:
-        smtp:
-          auth: false
-          starttls:
-            enable: false
+  config:
+    import:
+      - classpath:configs/database-config.yml
+      - classpath:configs/mail-config.yml
+      - classpath:configs/security-config.yml
+      - classpath:configs/server-config.yml
+      - classpath:configs/other-config.yml
