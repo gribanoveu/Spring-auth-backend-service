@@ -1,4 +1,4 @@
-package com.github.gribanoveu.cuddle.entities.services.email;
+package com.github.gribanoveu.cuddle.entities.services;
 
 import com.github.gribanoveu.cuddle.dtos.data.SimpleEmailObject;
 

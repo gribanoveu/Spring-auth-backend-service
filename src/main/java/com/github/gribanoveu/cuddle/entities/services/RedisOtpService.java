@@ -1,4 +1,4 @@
-package com.github.gribanoveu.cuddle.entities.services.otp;
+package com.github.gribanoveu.cuddle.entities.services;
 
 import java.time.Duration;
 import java.util.Optional;

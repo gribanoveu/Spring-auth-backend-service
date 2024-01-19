@@ -1,8 +1,9 @@
-package com.github.gribanoveu.cuddle.entities.services.user;
+package com.github.gribanoveu.cuddle.entities.services.impl;
 
 import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import com.github.gribanoveu.cuddle.dtos.enums.Role;
 import com.github.gribanoveu.cuddle.entities.repositories.UserRepository;
+import com.github.gribanoveu.cuddle.entities.services.UserService;
 import com.github.gribanoveu.cuddle.entities.tables.User;
 import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
 import lombok.RequiredArgsConstructor;

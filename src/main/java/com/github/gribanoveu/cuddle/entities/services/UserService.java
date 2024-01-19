@@ -1,4 +1,4 @@
-package com.github.gribanoveu.cuddle.entities.services.user;
+package com.github.gribanoveu.cuddle.entities.services;
 
 import com.github.gribanoveu.cuddle.dtos.enums.Role;
 import com.github.gribanoveu.cuddle.entities.tables.User;

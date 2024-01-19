@@ -1,7 +1,8 @@
-package com.github.gribanoveu.cuddle.entities.services.token;
+package com.github.gribanoveu.cuddle.entities.services.impl;
 
 import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import com.github.gribanoveu.cuddle.dtos.enums.TokenType;
+import com.github.gribanoveu.cuddle.entities.services.TokenService;
 import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
 import com.github.gribanoveu.cuddle.security.CustomUserDetails;
 import com.nimbusds.jwt.JWTClaimsSet;

@@ -6,7 +6,7 @@ import com.github.gribanoveu.cuddle.dtos.enums.StatusLevel;
 import com.github.gribanoveu.cuddle.dtos.response.ResponseDetails;
 import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddle.dtos.response.auth.UsersResponse;
-import com.github.gribanoveu.cuddle.entities.services.user.UserService;
+import com.github.gribanoveu.cuddle.entities.services.UserService;
 import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

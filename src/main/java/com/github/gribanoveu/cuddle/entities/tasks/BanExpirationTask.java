@@ -2,7 +2,7 @@ package com.github.gribanoveu.cuddle.entities.tasks;
 
 import com.github.gribanoveu.cuddle.constants.Constants;
 import com.github.gribanoveu.cuddle.constants.CronRules;
-import com.github.gribanoveu.cuddle.entities.services.user.UserService;
+import com.github.gribanoveu.cuddle.entities.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

@@ -1,7 +1,8 @@
-package com.github.gribanoveu.cuddle.entities.services.email;
+package com.github.gribanoveu.cuddle.entities.services.impl;
 
 import com.github.gribanoveu.cuddle.dtos.data.SimpleEmailObject;
 import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
+import com.github.gribanoveu.cuddle.entities.services.EmailService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
