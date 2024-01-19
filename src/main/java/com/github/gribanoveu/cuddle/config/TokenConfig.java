@@ -16,8 +16,6 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.stereotype.Component;
 
-import java.security.interfaces.RSAPublicKey;
-
 /**
  * @author Evgeny Gribanov
  * @version 05.09.2023

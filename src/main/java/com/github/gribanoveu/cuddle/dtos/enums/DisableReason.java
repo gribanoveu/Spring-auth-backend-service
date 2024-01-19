@@ -4,8 +4,6 @@ import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-
 /**
  * @author Evgeny Gribanov
  * @version 27.12.2023

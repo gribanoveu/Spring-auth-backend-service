@@ -3,7 +3,6 @@ package com.github.gribanoveu.cuddle.dtos.enums;
 import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
