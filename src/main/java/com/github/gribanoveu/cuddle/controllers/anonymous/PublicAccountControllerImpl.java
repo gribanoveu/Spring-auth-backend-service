@@ -113,17 +113,17 @@ public class PublicAccountControllerImpl {
     // else create new code
     // send email, if not -> error
     // save otp code to db (with lifetime)
-    public ResponseEntity<StatusResponse> generateOtpCode(GenerateOtpDto request, HttpServletRequest http) {
+    public ResponseEntity<StatusResponse> generateOtpCode(GenerateOtpDto request) {
         var userExist = userService.userExistByEmail(request.email());
         if (!userExist) throw new CredentialEx(ResponseCode.USER_NOT_EXIST);
         var otpCode = jsonUtils.generateRandomOtpCode().toString();
-        log.info("RequestId: {}. Generate OTP code. Email {}, Code {}", http.getRequestId(), request.email(), otpCode);
+        log.info("Generate OTP code. Email {}, Code {}", request.email(), otpCode);
 
         redisOtpService.saveOptCode(request.email(), otpCode, otpCodeLifeTime);
-        log.info("RequestId: {}. OTP code to email: {} saved", http.getRequestId(), request.email());
+        log.info("OTP code to email: {} saved", request.email());
 
         emailService.sendMail(EmailTemplates.generateOtpEmail(request.email(), otpCode, otpCodeLifeTime));
-        log.info("RequestId: {}. Email with code send to: {}", http.getRequestId(), request.email());
+        log.info("Email with code send to: {}", request.email());
 
         return ResponseEntity.ok(StatusResponse.create(ResponseCode.OTP_CODE_CREATED, StatusLevel.SUCCESS));
     }

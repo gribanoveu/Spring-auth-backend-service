@@ -26,8 +26,8 @@ public class PublicAccountController {
 
     @PostMapping("/generate-code")
     @Operation(summary = "Сгенерировать OTP код")
-    public ResponseEntity<StatusResponse> generateOtpCode(@Valid @RequestBody GenerateOtpDto request, HttpServletRequest http) {
-        return publicAccountControllerImpl.generateOtpCode(request, http);
+    public ResponseEntity<StatusResponse> generateOtpCode(@Valid @RequestBody GenerateOtpDto request) {
+        return publicAccountControllerImpl.generateOtpCode(request);
     }
 
     @PostMapping("/restore-password")
