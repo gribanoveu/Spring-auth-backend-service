@@ -7,6 +7,7 @@ import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddle.entities.services.EmailService;
 import com.github.gribanoveu.cuddle.entities.services.UserService;
 import com.github.gribanoveu.cuddle.entities.tables.User;
+import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
 import com.github.gribanoveu.cuddle.utils.emails.EmailTemplates;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,8 @@ public class UserControllerImpl {
 
     public ResponseEntity<User> getUserData(Authentication authentication) {
         var userData = userService.findUserByEmail(authentication.getName());
-        return ResponseEntity.ok(userData);
+        if (userData.getProfileCreated()) return ResponseEntity.ok(userData);
+        throw new CredentialEx(ResponseCode.PROFILE_NOT_CREATED);
     }
 
     public ResponseEntity<StatusResponse> deleteUser(Authentication authentication) {
@@ -37,4 +39,3 @@ public class UserControllerImpl {
         return ResponseEntity.ok(StatusResponse.create(ResponseCode.USER_DELETED, StatusLevel.SUCCESS));
     }
 }
-
