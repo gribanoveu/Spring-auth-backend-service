@@ -58,6 +58,9 @@ public class User {
     @Column(name = "role")
     private Role role;
 
+    @Column(name = "profile_created")
+    private Boolean profileCreated;
+
     @Column(name = "account_non_expired")
     private Boolean accountNonExpired = true;
 
