@@ -48,6 +48,7 @@ public class TokenServiceImpl implements TokenService {
         var builder = JwtClaimsSet.builder()
                 .issuedAt(now)
                 .subject(usrDetails.getUsername())
+                .claim("ulid", usrDetails.getUlid())
                 .claim("scope", roles);
         // !! if change 'scope' to another name, authorities will be null
         // all authorities have 'SCOPE_' prefix by default
