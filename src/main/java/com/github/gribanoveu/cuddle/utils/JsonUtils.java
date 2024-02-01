@@ -2,6 +2,7 @@ package com.github.gribanoveu.cuddle.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,9 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class JsonUtils {
+    private final ObjectMapper objectMapper;
 
     /**
      * Converts the given DTO object to a JSON string.
@@ -22,8 +25,6 @@ public class JsonUtils {
      * @return      the JSON string representation of the DTO object
      */
     public String convertDtoToJson(Object dto) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.findAndRegisterModules();
         try {
             return objectMapper.writeValueAsString(dto);
         } catch (JsonProcessingException e) {

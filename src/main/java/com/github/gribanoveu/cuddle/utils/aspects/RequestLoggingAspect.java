@@ -26,7 +26,7 @@ public class RequestLoggingAspect {
     public Object logRequest(ProceedingJoinPoint joinPoint) throws Throwable {
         var attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         var request = Objects.requireNonNull(attributes).getRequest();
-        log.info("""
+        log.error("""
                 [REQUEST] Incoming request to server:
                 {
                     "Method":"%1$s",
@@ -56,7 +56,7 @@ public class RequestLoggingAspect {
                 """.formatted(request.getMethod(), request.getRequestId(),request.getRequestURI(),
                 jsonUtils.convertDtoToJson(result)));
 
-        if (annotation.message().isBlank()) log.info("[RESPONSE] Outgoing server response:\n {}", message);
-        else log.info("[RESPONSE] {}\n {}", annotation.message(), message);
+        if (annotation.message().isBlank()) log.error("[RESPONSE] Outgoing server response:\n {}", message);
+        else log.error("[RESPONSE] {}\n {}", annotation.message(), message);
     }
 }

@@ -5,7 +5,7 @@ import com.github.gribanoveu.cuddle.dtos.enums.Role;
 import com.github.gribanoveu.cuddle.dtos.enums.StatusLevel;
 import com.github.gribanoveu.cuddle.dtos.response.ResponseDetails;
 import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
-import com.github.gribanoveu.cuddle.dtos.response.auth.UsersResponse;
+import com.github.gribanoveu.cuddle.dtos.response.UsersResponse;
 import com.github.gribanoveu.cuddle.entities.services.UserService;
 import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
 import lombok.RequiredArgsConstructor;
@@ -49,10 +49,10 @@ public class UserRoleControllerImpl {
     }
 
     public ResponseEntity<UsersResponse> getModerList(Pageable pageable) {
-        return ResponseEntity.ok(UsersResponse.create(OK, userService.getAllModers(pageable)));
+        return ResponseEntity.ok(UsersResponse.create(userService.getAllModers(pageable)));
     }
 
     public ResponseEntity<UsersResponse> getAllUsersList(Pageable pageable) {
-        return ResponseEntity.ok(UsersResponse.create(OK, userService.getAllUsers(pageable)));
+        return ResponseEntity.ok(UsersResponse.create(userService.getAllUsers(pageable)));
     }
 }

@@ -1,4 +1,4 @@
-package com.github.gribanoveu.cuddle.dtos.response.auth;
+package com.github.gribanoveu.cuddle.dtos.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -31,7 +31,7 @@ public class UsersResponse {
     @Schema(description = "Информация о пользователе")
     private Collection<User> users;
 
-    public static UsersResponse create(HttpStatus status, Collection<User> users) {
+    public static UsersResponse create(Collection<User> users) {
         return new UsersResponse(LocalDateTime.now(), StatusLevel.SUCCESS,  users);
     }
 }

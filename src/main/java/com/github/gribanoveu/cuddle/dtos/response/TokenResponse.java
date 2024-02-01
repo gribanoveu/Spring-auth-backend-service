@@ -1,5 +1,6 @@
-package com.github.gribanoveu.cuddle.dtos.response.auth;
+package com.github.gribanoveu.cuddle.dtos.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @Schema(description = "Ответ после успешной авторизации")
 public class TokenResponse {
     @Schema(description = "Время выполнения запроса")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Europe/Moscow")
     private LocalDateTime timestamp;
 
     @Schema(description = "Токен доступа")

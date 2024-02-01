@@ -8,7 +8,7 @@ import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import com.github.gribanoveu.cuddle.dtos.enums.StatusLevel;
 import com.github.gribanoveu.cuddle.dtos.request.RestrictionDto;
 import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
-import com.github.gribanoveu.cuddle.dtos.response.auth.UsersResponse;
+import com.github.gribanoveu.cuddle.dtos.response.UsersResponse;
 import com.github.gribanoveu.cuddle.entities.services.EmailService;
 import com.github.gribanoveu.cuddle.entities.services.UserService;
 import com.github.gribanoveu.cuddle.utils.emails.EmailTemplates;
@@ -32,7 +32,7 @@ public class ModeratorControllerImpl {
     private final EmailService emailService;
 
     public ResponseEntity<UsersResponse> getAllUsersList(Pageable pageable) {
-        return ResponseEntity.ok(UsersResponse.create(OK, userService.getAllUsers(pageable)));
+        return ResponseEntity.ok(UsersResponse.create(userService.getAllUsers(pageable)));
     }
 
     public ResponseEntity<StatusResponse> deleteUser(String email) {

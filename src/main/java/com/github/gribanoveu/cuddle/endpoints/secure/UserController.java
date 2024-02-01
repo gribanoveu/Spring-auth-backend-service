@@ -2,24 +2,22 @@ package com.github.gribanoveu.cuddle.endpoints.secure;
 
 import com.github.gribanoveu.cuddle.controllers.secure.UserControllerImpl;
 import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
-import com.github.gribanoveu.cuddle.entities.tables.User;
+import com.github.gribanoveu.cuddle.dtos.response.UserDataResponse;
+import com.github.gribanoveu.cuddle.utils.aspects.LogRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Evgeny Gribanov
  * @version 29.08.2023
  * !! authorization service stores only user data for authentication
  * and manages his permissions, all data such as name and surname
- * are stored in other services by user's email !!
+ * are stored in other services by user's ulid !!
  */
 @RestController
 @RequiredArgsConstructor
@@ -31,7 +29,7 @@ public class UserController {
     @Operation(summary = "Получить данные текущего пользователя")
     @SecurityRequirement(name = "JWT")
     @GetMapping
-    public ResponseEntity<User> getUserData(Authentication authentication) {
+    public ResponseEntity<UserDataResponse> getUserData(Authentication authentication) {
         return userControllerImpl.getUserData(authentication);
     }
 

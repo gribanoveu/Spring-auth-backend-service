@@ -1,1 +1,0 @@
-ALTER TABLE users ADD profile_created BOOLEAN NOT NULL default false;

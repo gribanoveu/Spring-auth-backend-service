@@ -1,5 +1,6 @@
 package com.github.gribanoveu.cuddle.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.gribanoveu.cuddle.dtos.request.LoginDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @version 02.10.2023
  */
 class JsonUtilsTest {
-    private final JsonUtils jsonUtils = new JsonUtils();
+    private final JsonUtils jsonUtils = new JsonUtils(new ObjectMapper());
 
     @Test
     public void testConvertDtoToJson_WithInvalidDto() {

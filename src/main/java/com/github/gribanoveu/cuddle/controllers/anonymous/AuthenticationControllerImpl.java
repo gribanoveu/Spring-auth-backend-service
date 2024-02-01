@@ -4,7 +4,7 @@ import com.github.gribanoveu.cuddle.constants.EmailMessages;
 import com.github.gribanoveu.cuddle.dtos.enums.TokenType;
 import com.github.gribanoveu.cuddle.dtos.request.LoginDto;
 import com.github.gribanoveu.cuddle.dtos.request.RefreshTokenDto;
-import com.github.gribanoveu.cuddle.dtos.response.auth.TokenResponse;
+import com.github.gribanoveu.cuddle.dtos.response.TokenResponse;
 import com.github.gribanoveu.cuddle.entities.services.EmailService;
 import com.github.gribanoveu.cuddle.entities.services.TokenService;
 import com.github.gribanoveu.cuddle.security.CustomUserDetails;

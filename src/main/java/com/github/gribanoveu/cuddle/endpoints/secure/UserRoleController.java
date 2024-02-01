@@ -2,7 +2,7 @@ package com.github.gribanoveu.cuddle.endpoints.secure;
 
 import com.github.gribanoveu.cuddle.controllers.secure.UserRoleControllerImpl;
 import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
-import com.github.gribanoveu.cuddle.dtos.response.auth.UsersResponse;
+import com.github.gribanoveu.cuddle.dtos.response.UsersResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
