@@ -1,8 +1,8 @@
 package com.github.gribanoveu.cuddle.endpoints.secure;
 
 import com.github.gribanoveu.cuddle.controllers.secure.UserRoleControllerImpl;
-import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddle.dtos.response.UsersResponse;
+import com.github.gribanoveu.cuddle.exeptions.responses.RestResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,7 +27,7 @@ public class UserRoleController {
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Получить роль пользователя")
     @GetMapping
-    public ResponseEntity<StatusResponse> getUserRole(@RequestParam String email) {
+    public ResponseEntity<RestResponse> getUserRole(@RequestParam String email) {
         return userRoleControllerImpl.getUserRole(email);
     }
 
@@ -48,14 +48,14 @@ public class UserRoleController {
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Обновить роль до модератора")
     @PatchMapping
-    public ResponseEntity<StatusResponse> updateToModerator(@RequestParam String email) {
+    public ResponseEntity<RestResponse> updateToModerator(@RequestParam String email) {
         return userRoleControllerImpl.updateToModerator(email);
     }
 
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Обновить роль до пользователя")
     @DeleteMapping
-    public ResponseEntity<StatusResponse> updateToUser(@RequestParam String email) {
+    public ResponseEntity<RestResponse> updateToUser(@RequestParam String email) {
         return userRoleControllerImpl.updateToUser(email);
     }
 }

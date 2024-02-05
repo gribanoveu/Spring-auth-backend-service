@@ -3,7 +3,7 @@ package com.github.gribanoveu.cuddle.endpoints.secure;
 import com.github.gribanoveu.cuddle.controllers.anonymous.PublicAccountControllerImpl;
 import com.github.gribanoveu.cuddle.dtos.request.ChangeEmailDto;
 import com.github.gribanoveu.cuddle.dtos.request.ChangePasswordDto;
-import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
+import com.github.gribanoveu.cuddle.exeptions.responses.RestResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,14 +30,14 @@ public class PrivateAccountController {
     @Operation(summary = "Сменить Email")
     @SecurityRequirement(name = "JWT")
     @PatchMapping("/change-email")
-    public ResponseEntity<StatusResponse> changeEmail(@Valid @RequestBody ChangeEmailDto request, Authentication auth) {
+    public ResponseEntity<RestResponse> changeEmail(@Valid @RequestBody ChangeEmailDto request, Authentication auth) {
         return userControllerFacade.changeEmail(request, auth);
     }
 
     @Operation(summary = "Сменить пароль")
     @SecurityRequirement(name = "JWT")
     @PatchMapping("/change-password")
-    public ResponseEntity<StatusResponse> changePassword(@Valid @RequestBody ChangePasswordDto request, Authentication auth) {
+    public ResponseEntity<RestResponse> changePassword(@Valid @RequestBody ChangePasswordDto request, Authentication auth) {
         return userControllerFacade.changePassword(request, auth);
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.Cipher;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.Base64;
 
 /**
  * Генерация ключевой пары и сертификатов с помощью OpenSSL.
@@ -42,11 +43,11 @@ public class RSAEncryptionUtils {
     }
 
     private String bytesToBase64String(byte[] bytes) {
-        return java.util.Base64.getEncoder().encodeToString(bytes);
+        return Base64.getEncoder().encodeToString(bytes);
     }
 
     private byte[] base64StringToBytes(String base64String) {
-        return java.util.Base64.getDecoder().decode(base64String);
+        return Base64.getDecoder().decode(base64String);
     }
 
 }

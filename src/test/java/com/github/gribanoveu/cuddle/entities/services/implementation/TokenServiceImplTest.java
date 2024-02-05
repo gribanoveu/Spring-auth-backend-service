@@ -2,7 +2,7 @@ package com.github.gribanoveu.cuddle.entities.services.implementation;
 
 import com.github.gribanoveu.cuddle.base.BaseMockMvcTest;
 import com.github.gribanoveu.cuddle.entities.services.TokenService;
-import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
+import com.github.gribanoveu.cuddle.exeptions.responses.RestException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,42 +49,42 @@ class TokenServiceImplTest extends BaseMockMvcTest {
 
     @Test
     public void testExtractSubject_InvalidToken_ThrowsCredentialEx() {
-        assertThrows(CredentialEx.class,
+        assertThrows(RestException.class,
                 () -> tokenService.extractSubject("invalid_token"));
     }
 
     @Test
     public void testExtractSubject_NullToken_ThrowsCredentialEx() {
-        assertThrows(CredentialEx.class,
+        assertThrows(RestException.class,
                 () -> tokenService.extractSubject(null));
     }
 
     @Test
     public void testExtractClaimsAsList_InvalidToken_ThrowsCredentialEx() {
-        assertThrows(CredentialEx.class,
+        assertThrows(RestException.class,
                 () -> tokenService.extractClaimsAsList("invalid_token", "scope"));
     }
 
     @Test
     public void testExtractClaim_InvalidToken_ThrowsCredentialEx() {
-        assertThrows(CredentialEx.class,
+        assertThrows(RestException.class,
                 () -> tokenService.extractClaim("invalid_token", "scope"));
     }
     @Test
     public void testExtractExpiresAt_InvalidToken_ThrowsCredentialEx() {
-        assertThrows(CredentialEx.class,
+        assertThrows(RestException.class,
                 () -> tokenService.extractExpire("invalid_token"));
     }
 
     @Test
     public void testExtractExpiresAt_NullToken_ThrowsCredentialEx() {
-        assertThrows(CredentialEx.class,
+        assertThrows(RestException.class,
                 () -> tokenService.extractExpire(null));
     }
 
     @Test
     public void testExtractExpiresAt_EmptyToken_ThrowsCredentialEx() {
-        assertThrows(CredentialEx.class,
+        assertThrows(RestException.class,
                 () -> tokenService.extractExpire(""));
     }
 

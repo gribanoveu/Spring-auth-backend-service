@@ -2,8 +2,8 @@ package com.github.gribanoveu.cuddle.utils;
 
 import com.github.gribanoveu.cuddle.config.RsaProperties;
 import com.github.gribanoveu.cuddle.constants.RegexpFormat;
-import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
-import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
+import com.github.gribanoveu.cuddle.exeptions.errors.AuthMessage;
+import com.github.gribanoveu.cuddle.exeptions.responses.RestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +37,7 @@ public class RefreshTokenUtils {
             var refreshToken = email + TOKEN_SEPARATOR + refreshTokenExpire;
             return rsaEncryptionUtils.encrypt(refreshToken, publicKey);
         } catch (Exception e) {
-            throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
+            throw new RestException(AuthMessage.TOKEN_NOT_VALID);
         }
     }
 
@@ -48,7 +48,7 @@ public class RefreshTokenUtils {
             checkTokenValidity(tokenValue);
             return extractEmailFromToken(tokenValue);
         } catch (Exception e) {
-            throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
+            throw new RestException(AuthMessage.TOKEN_NOT_VALID);
         }
     }
 
@@ -58,7 +58,7 @@ public class RefreshTokenUtils {
         if (dateMatcher.find()) {
             var refreshTokenDateInMillis = Long.parseLong(dateMatcher.group(1));
             if (Instant.now().toEpochMilli() > refreshTokenDateInMillis) {
-                throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
+                throw new RestException(AuthMessage.TOKEN_NOT_VALID);
             }
         }
     }
@@ -69,6 +69,6 @@ public class RefreshTokenUtils {
         if (emailMatcher.find()) {
             return emailMatcher.group(1);
         }
-        throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
+        throw new RestException(AuthMessage.TOKEN_NOT_VALID);
     }
 }

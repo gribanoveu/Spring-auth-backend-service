@@ -4,10 +4,9 @@ import com.github.gribanoveu.cuddle.controllers.anonymous.PublicAccountControlle
 import com.github.gribanoveu.cuddle.dtos.request.GenerateOtpDto;
 import com.github.gribanoveu.cuddle.dtos.request.RegisterDto;
 import com.github.gribanoveu.cuddle.dtos.request.RestorePasswordDto;
-import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
+import com.github.gribanoveu.cuddle.exeptions.responses.RestResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,25 +25,25 @@ public class PublicAccountController {
 
     @PostMapping("/generate-code")
     @Operation(summary = "Сгенерировать OTP код")
-    public ResponseEntity<StatusResponse> generateOtpCode(@Valid @RequestBody GenerateOtpDto request) {
+    public ResponseEntity<RestResponse> generateOtpCode(@Valid @RequestBody GenerateOtpDto request) {
         return publicAccountControllerImpl.generateOtpCode(request);
     }
 
     @PostMapping("/restore-password")
     @Operation(summary = "Восстановить пароль через OTP код")
-    public ResponseEntity<StatusResponse> restorePassword(@Valid @RequestBody RestorePasswordDto request) {
+    public ResponseEntity<RestResponse> restorePassword(@Valid @RequestBody RestorePasswordDto request) {
         return publicAccountControllerImpl.restorePasswordByOtp(request);
     }
 
     @PostMapping("/create")
     @Operation(summary = "Регистрация нового пользователя")
-    public ResponseEntity<StatusResponse> registerUser(@Valid @RequestBody RegisterDto request) {
+    public ResponseEntity<RestResponse> registerUser(@Valid @RequestBody RegisterDto request) {
         return publicAccountControllerImpl.registerUser(request);
     }
 
     @GetMapping("/restrictions")
     @Operation(summary = "Получить причину блокировки")
-    public ResponseEntity<StatusResponse> getRestrictionsReason(@RequestParam String email) {
+    public ResponseEntity<RestResponse> getRestrictionsReason(@RequestParam String email) {
         return publicAccountControllerImpl.getRestrictionsReason(email);
     }
 }

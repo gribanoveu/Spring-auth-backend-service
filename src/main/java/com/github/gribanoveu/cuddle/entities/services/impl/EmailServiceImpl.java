@@ -1,8 +1,8 @@
 package com.github.gribanoveu.cuddle.entities.services.impl;
 
 import com.github.gribanoveu.cuddle.dtos.data.SimpleEmailObject;
-import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import com.github.gribanoveu.cuddle.entities.services.EmailService;
+import com.github.gribanoveu.cuddle.exeptions.errors.ServerMessage;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +44,7 @@ public class EmailServiceImpl implements EmailService {
 
             mailSender.send(message);
         } catch (MailException | MessagingException e) {
-            log.error(ResponseCode.EMAIL_NOT_SEND.getMessage());
+            log.error(ServerMessage.EMAIL_NOT_SEND.getMessage());
         }
     }
 }

@@ -1,9 +1,9 @@
 package com.github.gribanoveu.cuddle.entities.services.impl;
 
-import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import com.github.gribanoveu.cuddle.dtos.enums.TokenType;
 import com.github.gribanoveu.cuddle.entities.services.TokenService;
-import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
+import com.github.gribanoveu.cuddle.exeptions.errors.AuthMessage;
+import com.github.gribanoveu.cuddle.exeptions.responses.RestException;
 import com.github.gribanoveu.cuddle.security.CustomUserDetails;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
@@ -70,7 +70,7 @@ public class TokenServiceImpl implements TokenService {
         } catch (ParseException e) {
             log.error(e.getLocalizedMessage());
         }
-        throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
+        throw new RestException(AuthMessage.TOKEN_NOT_VALID);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class TokenServiceImpl implements TokenService {
             return claimsSet.getStringListClaim(claim);
         } catch (ParseException e) {
             log.error(e.getLocalizedMessage());
-            throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
+            throw new RestException(AuthMessage.TOKEN_NOT_VALID);
         }
     }
 
@@ -91,7 +91,7 @@ public class TokenServiceImpl implements TokenService {
             return claimsSet.getStringClaim(claim);
         } catch (ParseException e) {
             log.error(e.getLocalizedMessage());
-            throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
+            throw new RestException(AuthMessage.TOKEN_NOT_VALID);
         }
     }
 
@@ -102,13 +102,13 @@ public class TokenServiceImpl implements TokenService {
             return claimsSet.getExpirationTime();
         } catch (ParseException e) {
             log.error(e.getLocalizedMessage());
-            throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
+            throw new RestException(AuthMessage.TOKEN_NOT_VALID);
         }
 
     }
 
     private JWTClaimsSet getJwtClaimsSetFromToken(String token) throws ParseException {
-        if (token == null) throw new CredentialEx(ResponseCode.TOKEN_NOT_VALID);
+        if (token == null) throw new RestException(AuthMessage.TOKEN_NOT_VALID);
         var decodedJWT = SignedJWT.parse(token);
         return decodedJWT.getJWTClaimsSet();
     }

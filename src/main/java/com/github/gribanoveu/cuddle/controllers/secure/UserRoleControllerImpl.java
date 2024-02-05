@@ -1,20 +1,17 @@
 package com.github.gribanoveu.cuddle.controllers.secure;
 
-import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import com.github.gribanoveu.cuddle.dtos.enums.Role;
-import com.github.gribanoveu.cuddle.dtos.enums.StatusLevel;
-import com.github.gribanoveu.cuddle.dtos.response.ResponseDetails;
-import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddle.dtos.response.UsersResponse;
 import com.github.gribanoveu.cuddle.entities.services.UserService;
-import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
+import com.github.gribanoveu.cuddle.exeptions.errors.AuthMessage;
+import com.github.gribanoveu.cuddle.exeptions.errors.ModeratorMessage;
+import com.github.gribanoveu.cuddle.exeptions.responses.RestException;
+import com.github.gribanoveu.cuddle.exeptions.responses.RestResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import static org.springframework.http.HttpStatus.OK;
 
 /**
  * @author Evgeny Gribanov
@@ -26,26 +23,23 @@ import static org.springframework.http.HttpStatus.OK;
 public class UserRoleControllerImpl {
     private final UserService userService;
 
-    public ResponseEntity<StatusResponse> getUserRole(String email) {
+    public ResponseEntity<RestResponse> getUserRole(String email) {
         var userRole = userService.findUserByEmail(email).getRole().getAuthority();
-        return ResponseEntity.ok(StatusResponse.create(
-                new ResponseDetails(userRole), StatusLevel.SUCCESS));
+        return ResponseEntity.ok(RestResponse.create(userRole));
     }
 
-    public ResponseEntity<StatusResponse> updateToModerator(String email) {
+    public ResponseEntity<RestResponse> updateToModerator(String email) {
         var user = userService.findUserByEmail(email);
-        if (user.getRole().equals(Role.ADMIN)) throw new CredentialEx(ResponseCode.ACCESS_DENIED);
+        if (user.getRole().equals(Role.ADMIN)) throw new RestException(AuthMessage.ACCESS_DENIED);
         userService.updateRole(user, Role.MODERATOR);
-        return ResponseEntity.ok(StatusResponse.create(
-                ResponseCode.PERMISSION_UPDATED_MODERATOR, StatusLevel.SUCCESS));
+        return ResponseEntity.ok(RestResponse.create(ModeratorMessage.PERMISSION_UPDATED_MODERATOR));
     }
 
-    public ResponseEntity<StatusResponse> updateToUser(String email) {
+    public ResponseEntity<RestResponse> updateToUser(String email) {
         var user = userService.findUserByEmail(email);
-        if (user.getRole().equals(Role.ADMIN)) throw new CredentialEx(ResponseCode.ACCESS_DENIED);
+        if (user.getRole().equals(Role.ADMIN)) throw new RestException(AuthMessage.ACCESS_DENIED);
         userService.updateRole(user, Role.USER);
-        return ResponseEntity.ok(StatusResponse.create(
-                ResponseCode.PERMISSION_UPDATED_USER, StatusLevel.SUCCESS));
+        return ResponseEntity.ok(RestResponse.create(ModeratorMessage.PERMISSION_UPDATED_USER));
     }
 
     public ResponseEntity<UsersResponse> getModerList(Pageable pageable) {

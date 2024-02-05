@@ -1,8 +1,7 @@
 package com.github.gribanoveu.cuddle.exeptions.entrypoint;
 
-import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
-import com.github.gribanoveu.cuddle.dtos.enums.StatusLevel;
-import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
+import com.github.gribanoveu.cuddle.exeptions.errors.AuthMessage;
+import com.github.gribanoveu.cuddle.exeptions.responses.RestResponse;
 import com.github.gribanoveu.cuddle.utils.JsonUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +28,7 @@ public class AccessDeniedEntryPoint implements AccessDeniedHandler {
             HttpServletResponse response,
             AccessDeniedException accessDeniedException
     ) throws IOException, ServletException {
-        var error = StatusResponse.create(ResponseCode.ACCESS_DENIED, StatusLevel.ERROR);
+        var error = RestResponse.create(AuthMessage.ACCESS_DENIED);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

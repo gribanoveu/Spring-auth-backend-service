@@ -1,8 +1,7 @@
 package com.github.gribanoveu.cuddle.exeptions.entrypoint;
 
-import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
-import com.github.gribanoveu.cuddle.dtos.enums.StatusLevel;
-import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
+import com.github.gribanoveu.cuddle.exeptions.errors.AuthMessage;
+import com.github.gribanoveu.cuddle.exeptions.responses.RestResponse;
 import com.github.gribanoveu.cuddle.utils.JsonUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,8 +27,7 @@ public class AuthErrorEntryPoint implements AuthenticationEntryPoint {
             HttpServletResponse response,
             AuthenticationException authException
     ) throws IOException {
-        var error = StatusResponse.create(
-                ResponseCode.UNAUTHORIZED, authException.getLocalizedMessage(), StatusLevel.ERROR);
+        var error = RestResponse.create(AuthMessage.UNAUTHORIZED);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

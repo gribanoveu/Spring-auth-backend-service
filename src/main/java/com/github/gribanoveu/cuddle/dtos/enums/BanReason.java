@@ -1,6 +1,7 @@
 package com.github.gribanoveu.cuddle.dtos.enums;
 
-import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
+import com.github.gribanoveu.cuddle.exeptions.errors.UserMessage;
+import com.github.gribanoveu.cuddle.exeptions.responses.RestException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -21,7 +22,7 @@ public enum BanReason {
 
     public static BanReason getBanExpirationByCode(String code) {
         for (var reason : values()) if (reason.code.equals(code)) return reason;
-        throw new CredentialEx(ResponseCode.BAN_REASON_NOT_FOUND);
+        throw new RestException(UserMessage.BAN_REASON_NOT_FOUND);
     }
 
     public static String getBanMessageByCode(String code) {
@@ -30,6 +31,6 @@ public enum BanReason {
                 return reason.message;
             }
         }
-        throw new CredentialEx(ResponseCode.BAN_REASON_NOT_FOUND);
+        throw new RestException(UserMessage.BAN_REASON_NOT_FOUND);
     }
 }

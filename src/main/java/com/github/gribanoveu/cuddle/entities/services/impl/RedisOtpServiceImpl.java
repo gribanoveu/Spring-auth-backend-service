@@ -1,8 +1,8 @@
 package com.github.gribanoveu.cuddle.entities.services.impl;
 
-import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import com.github.gribanoveu.cuddle.entities.services.RedisOtpService;
-import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
+import com.github.gribanoveu.cuddle.exeptions.errors.UserMessage;
+import com.github.gribanoveu.cuddle.exeptions.responses.RestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class RedisOtpServiceImpl implements RedisOtpService {
     @Override
     public void saveOptCode(String email, String code, Duration codeDuration) {
         var otpCode = getOtpCode(email);
-        if (otpCode.isPresent()) throw new CredentialEx(ResponseCode.OTP_CODE_EXIST);
+        if (otpCode.isPresent()) throw new RestException(UserMessage.OTP_CODE_EXIST);
         redisTemplate.opsForValue().set(email, code, codeDuration);
     }
 
@@ -46,10 +46,6 @@ public class RedisOtpServiceImpl implements RedisOtpService {
 
     /**
      * Checks if the provided OTP code is valid for the given email.
-     *
-     * @param  email  the email for which the OTP code is being checked
-     * @param  code   the OTP code to be validated
-     * @return        true if the OTP code is valid, false otherwise
      */
     @Override
     public Boolean otpCodeValid(String email, String code) {

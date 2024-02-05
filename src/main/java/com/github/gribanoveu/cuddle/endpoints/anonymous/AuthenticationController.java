@@ -4,7 +4,6 @@ import com.github.gribanoveu.cuddle.controllers.anonymous.AuthenticationControll
 import com.github.gribanoveu.cuddle.dtos.request.LoginDto;
 import com.github.gribanoveu.cuddle.dtos.request.RefreshTokenDto;
 import com.github.gribanoveu.cuddle.dtos.response.TokenResponse;
-import com.github.gribanoveu.cuddle.utils.aspects.LogResponse;
 import com.nimbusds.jose.jwk.JWKSet;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

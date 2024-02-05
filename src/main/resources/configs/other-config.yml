@@ -1,6 +1,7 @@
 spring:
   jackson:
     serialization:
+      write-empty-json-arrays: false
       write-dates-as-timestamps: false
   web:
     resources:

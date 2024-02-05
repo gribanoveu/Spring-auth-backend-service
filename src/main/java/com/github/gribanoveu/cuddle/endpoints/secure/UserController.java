@@ -1,16 +1,18 @@
 package com.github.gribanoveu.cuddle.endpoints.secure;
 
 import com.github.gribanoveu.cuddle.controllers.secure.UserControllerImpl;
-import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
 import com.github.gribanoveu.cuddle.dtos.response.UserDataResponse;
-import com.github.gribanoveu.cuddle.utils.aspects.LogRequest;
+import com.github.gribanoveu.cuddle.exeptions.responses.RestResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Evgeny Gribanov
@@ -36,7 +38,7 @@ public class UserController {
     @Operation(summary = "Удалить текущего авторизованного пользователя")
     @SecurityRequirement(name = "JWT")
     @DeleteMapping
-    public ResponseEntity<StatusResponse> deleteUser(Authentication authentication) {
+    public ResponseEntity<RestResponse> deleteUser(Authentication authentication) {
         return userControllerImpl.deleteUser(authentication);
     }
 }

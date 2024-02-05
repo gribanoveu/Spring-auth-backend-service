@@ -1,7 +1,6 @@
 package com.github.gribanoveu.cuddle.exeptions.entrypoint;
 
-import com.github.gribanoveu.cuddle.dtos.enums.StatusLevel;
-import com.github.gribanoveu.cuddle.dtos.response.StatusResponse;
+import com.github.gribanoveu.cuddle.exeptions.responses.RestResponse;
 import com.github.gribanoveu.cuddle.utils.JsonUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,7 +13,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static com.github.gribanoveu.cuddle.dtos.enums.ResponseCode.*;
+import static com.github.gribanoveu.cuddle.exeptions.errors.ServerMessage.SERVER_ERROR;
+import static com.github.gribanoveu.cuddle.exeptions.errors.UserMessage.ACCOUNT_BANNED;
+import static com.github.gribanoveu.cuddle.exeptions.errors.UserMessage.ACCOUNT_DISABLED;
 
 /**
  * @author Evgeny Gribanov
@@ -31,15 +32,11 @@ public class ServerErrorEntryPoint implements AuthenticationEntryPoint {
             HttpServletResponse response,
             AuthenticationException authException
     ) throws IOException {
-        StatusResponse error;
+        RestResponse error;
 
-        if (authException instanceof DisabledException) {
-            error = StatusResponse.create(ACCOUNT_DISABLED, ACCOUNT_DISABLED.getMessage(), StatusLevel.ERROR);
-
-        } else if (authException instanceof LockedException) {
-            error = StatusResponse.create(ACCOUNT_BANNED, ACCOUNT_BANNED.getMessage(), StatusLevel.ERROR);
-
-        } else error = StatusResponse.create(SERVER_ERROR, StatusLevel.ERROR);
+        if (authException instanceof DisabledException) error = RestResponse.create(ACCOUNT_DISABLED);
+        else if (authException instanceof LockedException) error = RestResponse.create(ACCOUNT_BANNED);
+        else error = RestResponse.create(SERVER_ERROR);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

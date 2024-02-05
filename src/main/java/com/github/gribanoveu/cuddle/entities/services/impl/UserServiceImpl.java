@@ -1,11 +1,11 @@
 package com.github.gribanoveu.cuddle.entities.services.impl;
 
-import com.github.gribanoveu.cuddle.dtos.enums.ResponseCode;
 import com.github.gribanoveu.cuddle.dtos.enums.Role;
 import com.github.gribanoveu.cuddle.entities.repositories.UserRepository;
 import com.github.gribanoveu.cuddle.entities.services.UserService;
 import com.github.gribanoveu.cuddle.entities.tables.User;
-import com.github.gribanoveu.cuddle.exeptions.CredentialEx;
+import com.github.gribanoveu.cuddle.exeptions.errors.UserMessage;
+import com.github.gribanoveu.cuddle.exeptions.responses.RestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,25 +30,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() ->
-                new CredentialEx(ResponseCode.USER_NOT_EXIST));
+                new RestException(UserMessage.USER_NOT_EXIST));
     }
 
     @Override
     public User findUserById(Long id) {
         return userRepository.findUserById(id).orElseThrow(() ->
-                new CredentialEx(ResponseCode.USER_NOT_EXIST));
+                new RestException(UserMessage.USER_NOT_EXIST));
     }
 
     @Override
     public void deleteUserById(Long userId) {
         if (userRepository.existsById(userId)) userRepository.deleteById(userId);
-        else throw new CredentialEx(ResponseCode.USER_NOT_EXIST);
+        else throw new RestException(UserMessage.USER_NOT_EXIST);
     }
 
     @Override
     public void deleteUserByEmail(String userEmail) {
         if (userRepository.existsByEmail(userEmail)) userRepository.deleteByEmail(userEmail);
-        else throw new CredentialEx(ResponseCode.USER_NOT_EXIST);
+        else throw new RestException(UserMessage.USER_NOT_EXIST);
     }
 
     @Override
@@ -59,13 +59,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers(Pageable pageable) {
         return userRepository.findAllByRoleEquals(Role.USER, pageable).orElseThrow(() ->
-                new CredentialEx(ResponseCode.USERS_NOT_FOUND));
+                new RestException(UserMessage.USERS_NOT_FOUND));
     }
 
     @Override
     public List<User> getAllModers(Pageable pageable) {
         return userRepository.findAllByRoleEquals(Role.MODERATOR, pageable).orElseThrow(() ->
-                new CredentialEx(ResponseCode.USERS_NOT_FOUND));
+                new RestException(UserMessage.USERS_NOT_FOUND));
     }
 
     @Override
